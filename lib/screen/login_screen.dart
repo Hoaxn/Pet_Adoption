@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pet_adoption_app/components/buttons.dart';
 import 'package:pet_adoption_app/components/square_tile.dart';
 import 'package:pet_adoption_app/components/text_fields.dart';
+import 'package:pet_adoption_app/screen/home_page_screen.dart';
 import 'package:pet_adoption_app/screen/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -16,7 +17,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final _passwordController = TextEditingController();
 
-  void signUserIn() {}
+  void signUserIn(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const HomePageScreen(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 25),
                       Buttons(
-                        onTap: () => signUserIn,
+                        onTap: () => signUserIn(context),
                         showLoginButton: true,
                       ),
                       const SizedBox(height: 25),
