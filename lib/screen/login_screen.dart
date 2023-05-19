@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pet_adoption_app/components/buttons.dart';
 import 'package:pet_adoption_app/components/square_tile.dart';
 import 'package:pet_adoption_app/components/text_fields.dart';
+import 'package:pet_adoption_app/screen/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final _passwordController = TextEditingController();
 
-  void signUserIn(BuildContext context) {}
+  void signUserIn() {}
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 25),
                       Buttons(
-                        onTap: () => signUserIn(context),
+                        onTap: () => signUserIn,
                         showLoginButton: true,
                       ),
                       const SizedBox(height: 25),
@@ -121,20 +122,28 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 50),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Text(
+                        children: [
+                          const Text(
                             "Not already logged in?",
                             style: TextStyle(
                               color: Color.fromARGB(255, 0, 0, 0),
                             ),
                           ),
-                          SizedBox(width: 4),
-                          Text(
-                            "Register",
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 187, 0, 255),
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
+                          const SizedBox(width: 4),
+                          GestureDetector(
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const RegisterScreen(),
+                              ),
+                            ),
+                            child: const Text(
+                              "Register",
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 187, 0, 255),
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ],
