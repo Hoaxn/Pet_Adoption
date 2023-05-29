@@ -118,13 +118,17 @@ class _MenuScreenState extends State<MenuScreen> {
                     ),
                   ],
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: menuItems
-                      .asMap()
-                      .entries
-                      .map((mapEntry) => buildMenuRow(mapEntry.key))
-                      .toList(),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: menuItems
+                          .asMap()
+                          .entries
+                          .map((mapEntry) => buildMenuRow(mapEntry.key))
+                          .toList(),
+                    ),
+                  ),
                 ),
                 Row(
                   children: [
