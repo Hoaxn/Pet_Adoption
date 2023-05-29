@@ -38,50 +38,48 @@ class _RegisterScreenState extends State<RegisterScreen> {
             width: double.infinity,
             height: double.infinity,
           ),
-          SafeArea(
-            child: Center(
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.lock,
-                      size: 100,
+          Center(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.lock,
+                    size: 100,
+                  ),
+                  const SizedBox(height: 50),
+                  const Text(
+                    "Register Here",
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 0, 0, 0),
+                      fontSize: 17,
+                      fontWeight: FontWeight.w400,
                     ),
-                    const SizedBox(height: 50),
-                    const Text(
-                      "Register Here",
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 0, 0, 0),
-                        fontSize: 17,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    const SizedBox(height: 50),
-                    TextFields(
-                      controller: _usernameController,
-                      hintText: "Username",
-                      obscureText: false,
-                    ),
-                    const SizedBox(height: 10),
-                    TextFields(
-                      controller: _passwordController,
-                      hintText: "Password",
-                      obscureText: true,
-                    ),
-                    const SizedBox(height: 10),
-                    TextFields(
-                      controller: _emailController,
-                      hintText: "Email",
-                      obscureText: false,
-                    ),
-                    const SizedBox(height: 25),
-                    Buttons(
-                      onTap: () => registerUserIn(context),
-                      showRegisterButton: true,
-                    ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 50),
+                  TextFields(
+                    controller: _usernameController,
+                    hintText: "Username",
+                    obscureText: false,
+                  ),
+                  const SizedBox(height: 10),
+                  TextFields(
+                    controller: _passwordController,
+                    hintText: "Password",
+                    obscureText: true,
+                  ),
+                  const SizedBox(height: 10),
+                  TextFields(
+                    controller: _emailController,
+                    hintText: "Email",
+                    obscureText: false,
+                  ),
+                  const SizedBox(height: 25),
+                  Buttons(
+                    onTap: () => registerUserIn(context),
+                    showRegisterButton: true,
+                  ),
+                ],
               ),
             ),
           )
