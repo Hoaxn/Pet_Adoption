@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+Color mainColor = const Color.fromRGBO(168, 135, 107, 1.0);
+Color secondaryColor = const Color.fromRGBO(70, 112, 112, 1.0);
+
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
 
@@ -63,16 +66,13 @@ class _MenuScreenState extends State<MenuScreen> {
     );
   }
 
-  Color upperColor = const Color.fromRGBO(168, 135, 107, 1.0);
-  Color lowerColor = const Color.fromRGBO(70, 112, 112, 1.0);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [upperColor, lowerColor],
+            colors: [mainColor, secondaryColor],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -90,8 +90,8 @@ class _MenuScreenState extends State<MenuScreen> {
                   children: [
                     const CircleAvatar(
                       radius: 25.0,
-                      backgroundImage: AssetImage(
-                        'lib/assets/images/profile.jpeg',
+                      backgroundImage: NetworkImage(
+                        'https://www.pexels.com/photo/2486168/download/',
                       ),
                     ),
                     const SizedBox(
