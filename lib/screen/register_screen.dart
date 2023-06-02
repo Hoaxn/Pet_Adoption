@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pet_adoption_app/app.dart';
 import 'package:pet_adoption_app/components/buttons.dart';
 import 'package:pet_adoption_app/components/text_fields.dart';
 import 'package:pet_adoption_app/screen/login_screen.dart';
-
-import './menu_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

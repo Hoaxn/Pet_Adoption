@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pet_adoption_app/app.dart';
 
-Color mainColor = const Color.fromRGBO(168, 135, 107, 1.0);
-Color secondaryColor = const Color.fromRGBO(70, 112, 112, 1.0);
+import '../model/menu_model.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -13,22 +13,6 @@ class MenuScreen extends StatefulWidget {
 
 class _MenuScreenState extends State<MenuScreen> {
   int selectedMenuIndex = 0;
-
-  List<String> menuItems = [
-    'Home',
-    'Search',
-    'Like',
-    'Chat',
-    'Profile',
-  ];
-
-  List<IconData> icons = [
-    FontAwesomeIcons.paw,
-    FontAwesomeIcons.magnifyingGlass,
-    FontAwesomeIcons.solidHeart,
-    FontAwesomeIcons.solidMessage,
-    FontAwesomeIcons.solidUser,
-  ];
 
   Widget buildMenuRow(int index) {
     return InkWell(
