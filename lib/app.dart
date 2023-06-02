@@ -14,7 +14,9 @@ class App extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
-      routes: {'/': (context) => const HomePageScreen()},
+      routes: {
+        '/': (context) => const HomePageScreen(),
+      },
     );
   }
 }

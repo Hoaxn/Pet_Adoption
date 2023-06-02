@@ -151,6 +151,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                             style: TextStyle(
                               fontSize: 21.0,
                               fontWeight: FontWeight.w600,
+                              // fontFamily: "MerriweatherSans",
                             ),
                           ),
                           const Text(

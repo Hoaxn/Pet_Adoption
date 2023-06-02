@@ -125,9 +125,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     const SizedBox(height: 50),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         SquareTile(imagePath: 'lib/assets/images/google.png'),
                         SizedBox(width: 10),
                         SquareTile(imagePath: 'lib/assets/images/apple.png'),
