@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../model/home_page_model.dart';
+import 'adoption_screen.dart';
 
 class HomePageScreen extends StatefulWidget {
   const HomePageScreen({super.key});
@@ -190,138 +191,153 @@ class _HomePageScreenState extends State<HomePageScreen> {
                           itemBuilder: (content, index) {
                             final animal = animals[index];
 
-                            return Padding(
-                              padding: const EdgeInsets.only(
-                                bottom: 10.0,
-                                left: 25.0,
-                                right: 25.0,
-                              ),
-                              child: Stack(
-                                alignment: Alignment.centerLeft,
-                                children: [
-                                  Material(
-                                    borderRadius: BorderRadius.circular(30.0),
-                                    elevation: 5.0,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 20.0,
-                                        horizontal: 12.0,
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          SizedBox(
-                                            width: deviceWidth * 0.4,
-                                          ),
-                                          Flexible(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Text(
-                                                      animal.name,
-                                                      style: TextStyle(
-                                                        fontSize: 26.0,
-                                                        color: Theme.of(context)
-                                                            .primaryColor,
-                                                        fontWeight:
-                                                            FontWeight.bold,
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        AdoptionScreen(animal: animal),
+                                  ),
+                                );
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                  bottom: 10.0,
+                                  left: 25.0,
+                                  right: 25.0,
+                                ),
+                                child: Stack(
+                                  alignment: Alignment.centerLeft,
+                                  children: [
+                                    Material(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                      elevation: 5.0,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 20.0,
+                                          horizontal: 12.0,
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            SizedBox(
+                                              width: deviceWidth * 0.4,
+                                            ),
+                                            Flexible(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Text(
+                                                        animal.name,
+                                                        style: TextStyle(
+                                                          fontSize: 26.0,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .primaryColor,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
                                                       ),
-                                                    ),
-                                                    Icon(
-                                                      animal.isFemale
-                                                          ? FontAwesomeIcons
-                                                              .venus
-                                                          : FontAwesomeIcons
-                                                              .mars,
-                                                      color: Colors.grey,
-                                                    ),
-                                                  ],
-                                                ),
-                                                const SizedBox(
-                                                  height: 10.0,
-                                                ),
-                                                Text(
-                                                  animal.scientificName,
-                                                  style: TextStyle(
-                                                    fontSize: 16.0,
-                                                    color: Theme.of(context)
-                                                        .primaryColor,
-                                                    fontWeight: FontWeight.w500,
+                                                      Icon(
+                                                        animal.isFemale
+                                                            ? FontAwesomeIcons
+                                                                .venus
+                                                            : FontAwesomeIcons
+                                                                .mars,
+                                                        color: Colors.grey,
+                                                      ),
+                                                    ],
                                                   ),
-                                                ),
-                                                const SizedBox(
-                                                  height: 10.0,
-                                                ),
-                                                Text(
-                                                  "${animal.age} years old",
-                                                  style: const TextStyle(
-                                                    color: Colors.grey,
-                                                    fontWeight: FontWeight.w600,
+                                                  const SizedBox(
+                                                    height: 10.0,
                                                   ),
-                                                ),
-                                                const SizedBox(
-                                                  height: 10.0,
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Icon(
-                                                      FontAwesomeIcons
-                                                          .locationDot,
+                                                  Text(
+                                                    animal.scientificName,
+                                                    style: TextStyle(
+                                                      fontSize: 16.0,
                                                       color: Theme.of(context)
                                                           .primaryColor,
-                                                      size: 16.0,
+                                                      fontWeight:
+                                                          FontWeight.w500,
                                                     ),
-                                                    const SizedBox(
-                                                      width: 5.0,
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 10.0,
+                                                  ),
+                                                  Text(
+                                                    "${animal.age} years old",
+                                                    style: const TextStyle(
+                                                      color: Colors.grey,
+                                                      fontWeight:
+                                                          FontWeight.w600,
                                                     ),
-                                                    Text(
-                                                      "Distance: ${animal.distanceToUser}",
-                                                      style: TextStyle(
-                                                        fontSize: 16.0,
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 10.0,
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Icon(
+                                                        FontAwesomeIcons
+                                                            .locationDot,
                                                         color: Theme.of(context)
                                                             .primaryColor,
-                                                        fontWeight:
-                                                            FontWeight.w400,
+                                                        size: 16.0,
                                                       ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
+                                                      const SizedBox(
+                                                        width: 5.0,
+                                                      ),
+                                                      Text(
+                                                        "Distance: ${animal.distanceToUser}",
+                                                        style: TextStyle(
+                                                          fontSize: 16.0,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .primaryColor,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Stack(
-                                    alignment: Alignment.center,
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: animal.backgroundColor,
-                                          borderRadius:
-                                              BorderRadius.circular(20.0),
+                                    Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: animal.backgroundColor,
+                                            borderRadius:
+                                                BorderRadius.circular(20.0),
+                                          ),
+                                          height: 200.0,
+                                          width: deviceWidth * 0.4,
                                         ),
-                                        height: 200.0,
-                                        width: deviceWidth * 0.4,
-                                      ),
-                                      Image(
-                                        image: AssetImage(animal.imageUrl),
-                                        height: 220.0,
-                                        width: deviceWidth * 0.4,
-                                      )
-                                    ],
-                                  ),
-                                ],
+                                        Image(
+                                          image: AssetImage(animal.imageUrl),
+                                          height: 220.0,
+                                          width: deviceWidth * 0.4,
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             );
                           },
