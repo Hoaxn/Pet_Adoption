@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 List<String> menuItems = [
   'Home',
-  'Search',
+  'Add Pet',
   'Like',
   'Chat',
   'Profile',
@@ -11,7 +11,7 @@ List<String> menuItems = [
 
 List<IconData> icons = [
   FontAwesomeIcons.paw,
-  FontAwesomeIcons.magnifyingGlass,
+  FontAwesomeIcons.plus,
   FontAwesomeIcons.solidHeart,
   FontAwesomeIcons.solidMessage,
   FontAwesomeIcons.solidUser,
