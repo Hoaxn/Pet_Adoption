@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pet_adoption_app/app.dart';
 import 'package:pet_adoption_app/components/buttons.dart';
 import 'package:pet_adoption_app/components/square_tile.dart';
 import 'package:pet_adoption_app/components/text_fields.dart';
-import 'package:pet_adoption_app/screen/menu_screen.dart';
-import 'package:pet_adoption_app/screen/register_screen.dart';
+import 'package:pet_adoption_app/core/app.dart';
+import 'package:pet_adoption_app/features/auth/presentation/view/register_screen.dart';
+import 'package:pet_adoption_app/features/home/presentation/view/menu_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);

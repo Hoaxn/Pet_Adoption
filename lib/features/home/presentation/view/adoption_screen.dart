@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../model/home_page_model.dart';
+import '../../../../model/home_page_model.dart';
 
 class AdoptionScreen extends StatelessWidget {
   final Animal animal;
 
-  const AdoptionScreen({Key? key, required this.animal}) : super(key: key);
+  // const AdoptionScreen({Key? key, required this.animal}) : super(key: key);
+  const AdoptionScreen({super.key, required this.animal});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,6 @@ class AdoptionScreen extends StatelessWidget {
                 children: [
                   Container(
                     height: screenHeight * 0.5,
-                    // color: Theme.of(context).primaryColor,
                     color: animal.backgroundColor,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -34,9 +34,14 @@ class AdoptionScreen extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Icon(
-                                FontAwesomeIcons.arrowLeft,
-                                color: Theme.of(context).primaryColor,
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Icon(
+                                  FontAwesomeIcons.arrowLeft,
+                                  color: Theme.of(context).primaryColor,
+                                ),
                               ),
                               Icon(
                                 FontAwesomeIcons.share,
@@ -50,9 +55,12 @@ class AdoptionScreen extends StatelessWidget {
                   ),
                   SizedBox(
                     height: screenHeight * 0.37,
-                    child: const Image(
-                      image: AssetImage('lib/assets/images/sola.png'),
-                      fit: BoxFit.fitHeight,
+                    child: Hero(
+                      tag: animal.name,
+                      child: const Image(
+                        image: AssetImage('lib/assets/images/sola.png'),
+                        fit: BoxFit.fitHeight,
+                      ),
                     ),
                   ),
                 ],

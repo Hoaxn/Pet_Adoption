@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pet_adoption_app/screen/home_page_screen.dart';
+import 'package:pet_adoption_app/features/auth/presentation/view/login_screen.dart';
 
-Color mainColor = const Color.fromRGBO(168, 135, 107, 1.0);
-Color secondaryColor = const Color.fromRGBO(70, 112, 112, 1.0);
+Color mainColor = const Color.fromRGBO(70, 112, 112, 1.0);
+Color secondaryColor = const Color.fromRGBO(168, 135, 107, 1.0);
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -16,7 +16,8 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => const HomePageScreen(),
+        '/': (context) => const LoginScreen(),
+        // '/adoption': (context) => const AdoptionScreen(),
       },
     );
   }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:pet_adoption_app/app.dart';
+import 'package:pet_adoption_app/core/app.dart';
 
-import '../model/menu_model.dart';
+import '../../../../model/menu_model.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
