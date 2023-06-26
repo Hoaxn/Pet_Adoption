@@ -1,31 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_adoption_app/components/buttons.dart';
-import 'package:pet_adoption_app/components/square_tile.dart';
 import 'package:pet_adoption_app/components/text_fields.dart';
 import 'package:pet_adoption_app/core/app.dart';
 import 'package:pet_adoption_app/features/auth/presentation/view/register_screen.dart';
-import 'package:pet_adoption_app/features/home/presentation/view/menu_screen.dart';
+import 'package:pet_adoption_app/features/auth/presentation/viewmodel/auth_view_model.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class LoginScreen extends ConsumerStatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final _usernameController = TextEditingController();
+class _LoginScreenState extends ConsumerState<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
+
+  final _emailController = TextEditingController();
 
   final _passwordController = TextEditingController();
 
-  void signUserIn(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const MenuScreen(),
-      ),
-    );
-  }
+  // void signUserIn(BuildContext context) {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (context) => const MenuOpenScreen(),
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -39,131 +41,167 @@ class _LoginScreenState extends State<LoginScreen> {
           //   width: MediaQuery.of(context).size.width,
           //   height: MediaQuery.of(context).size.height,
           // ),
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [mainColor, secondaryColor],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+          Form(
+            key: _formKey,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [mainColor, secondaryColor],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
               ),
-            ),
-            child: Center(
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.lock,
-                      size: 100,
-                    ),
-                    const SizedBox(height: 50),
-                    const Text(
-                      "Petdoption",
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 0, 0, 0),
-                        fontSize: 40,
-                        fontWeight: FontWeight.w400,
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.lock,
+                        size: 100,
                       ),
-                    ),
-                    const SizedBox(height: 50),
-                    TextFields(
-                      controller: _usernameController,
-                      hintText: "Username",
-                      obscureText: false,
-                    ),
-                    const SizedBox(height: 10),
-                    TextFields(
-                      controller: _passwordController,
-                      hintText: "Password",
-                      obscureText: true,
-                    ),
-                    const SizedBox(height: 10),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            "Forgot Password ?",
-                            style: TextStyle(color: Colors.grey[700]),
-                          ),
-                        ],
+                      const SizedBox(height: 50),
+                      const Text(
+                        "Petdoption",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0),
+                          fontSize: 40,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 25),
-                    Buttons(
-                      onTap: () => signUserIn(context),
-                      showLoginButton: true,
-                    ),
-                    const SizedBox(height: 25),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Row(
+                      const SizedBox(height: 50),
+                      TextFields(
+                        controller: _emailController,
+                        hintText: "Email",
+                        obscureText: false,
+                      ),
+                      const SizedBox(height: 10),
+                      TextFields(
+                        controller: _passwordController,
+                        hintText: "Password",
+                        obscureText: true,
+                      ),
+                      const SizedBox(height: 10),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              "Forgot Password ?",
+                              style: TextStyle(color: Colors.grey[700]),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 25),
+                      Buttons(
+                        // onTap: () => signUserIn(context),
+                        onTap: () async {
+                          if (_formKey.currentState!.validate()) {
+                            await ref
+                                .read(authViewModelProvider.notifier)
+                                .loginUser(
+                                  context,
+                                  _emailController.text,
+                                  _passwordController.text,
+                                );
+                          }
+                        },
+                        showLoginButton: true,
+                      ),
+                      const SizedBox(height: 25),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Divider(
+                                thickness: 2,
+                                color: Colors.grey[400],
+                              ),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Text(
+                                "Or Continue With",
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Divider(
+                                thickness: 2,
+                                color: Colors.grey[400],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 50),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Expanded(
-                            child: Divider(
-                              thickness: 2,
-                              color: Colors.grey[400],
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: secondaryColor),
+                              borderRadius: BorderRadius.circular(8),
+                              color: secondaryColor,
+                            ),
+                            child: Image.asset(
+                              'assets/images/google.png',
+                              height: 60,
                             ),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Text(
-                              "Or Continue With",
+                          // SquareTile(imagePath: 'lib/assets/images/google.png'),
+                          const SizedBox(width: 10),
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: secondaryColor),
+                              borderRadius: BorderRadius.circular(8),
+                              color: secondaryColor,
+                            ),
+                            child: Image.asset(
+                              'assets/images/apple.png',
+                              height: 60,
+                            ),
+                          ),
+                          // const SquareTile(imagePath: 'assets/images/apple.png'),
+                        ],
+                      ),
+                      const SizedBox(height: 50),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "Not already logged in?",
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 0, 0, 0),
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          GestureDetector(
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const RegisterScreen(),
+                              ),
+                            ),
+                            child: const Text(
+                              "Register",
                               style: TextStyle(
-                                color: Color.fromARGB(255, 0, 0, 0),
-                                fontSize: 16,
+                                color: Color.fromARGB(255, 187, 0, 255),
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                          Expanded(
-                            child: Divider(
-                              thickness: 2,
-                              color: Colors.grey[400],
-                            ),
-                          ),
                         ],
                       ),
-                    ),
-                    const SizedBox(height: 50),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SquareTile(imagePath: 'lib/assets/images/google.png'),
-                        SizedBox(width: 10),
-                        SquareTile(imagePath: 'lib/assets/images/apple.png'),
-                      ],
-                    ),
-                    const SizedBox(height: 50),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          "Not already logged in?",
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          ),
-                        ),
-                        const SizedBox(width: 4),
-                        GestureDetector(
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const RegisterScreen(),
-                            ),
-                          ),
-                          child: const Text(
-                            "Register",
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 187, 0, 255),
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

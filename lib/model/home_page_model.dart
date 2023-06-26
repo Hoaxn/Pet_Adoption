@@ -28,7 +28,7 @@ final List<Animal> animals = [
     age: 2.0,
     distanceToUser: '3.6 km',
     isFemale: true,
-    imageUrl: 'lib/assets/images/sola.png',
+    imageUrl: 'assets/images/sola.png',
     backgroundColor: const Color.fromRGBO(203, 213, 216, 1.0),
   ),
   Animal(
@@ -37,7 +37,7 @@ final List<Animal> animals = [
     age: 1.5,
     distanceToUser: '7.8 km',
     isFemale: false,
-    imageUrl: 'lib/assets/images/sola.png',
+    imageUrl: 'assets/images/sola.png',
     backgroundColor: const Color.fromRGBO(237, 214, 180, 1.0),
   ),
 ];

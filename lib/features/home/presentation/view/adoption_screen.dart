@@ -58,7 +58,7 @@ class AdoptionScreen extends StatelessWidget {
                     child: Hero(
                       tag: animal.name,
                       child: const Image(
-                        image: AssetImage('lib/assets/images/sola.png'),
+                        image: AssetImage('assets/images/sola.png'),
                         fit: BoxFit.fitHeight,
                       ),
                     ),
@@ -82,10 +82,11 @@ class AdoptionScreen extends StatelessWidget {
                           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           // mainAxisSize: MainAxisSize.max,
                           children: [
-                            const CircleAvatar(
+                            CircleAvatar(
                               radius: 20.0,
+                              backgroundColor: Theme.of(context).primaryColor,
                               backgroundImage:
-                                  AssetImage('lib/assets/images/apple.png'),
+                                  const AssetImage('assets/images/apple.png'),
                             ),
                             const SizedBox(
                               width: 8.0,

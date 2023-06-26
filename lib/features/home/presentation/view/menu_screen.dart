@@ -5,7 +5,9 @@ import 'package:pet_adoption_app/core/app.dart';
 import '../../../../model/menu_model.dart';
 
 class MenuScreen extends StatefulWidget {
-  const MenuScreen({super.key});
+  final Function(int)? menuCallback;
+
+  const MenuScreen({super.key, this.menuCallback});
 
   @override
   State<MenuScreen> createState() => _MenuScreenState();
@@ -19,6 +21,7 @@ class _MenuScreenState extends State<MenuScreen> {
       onTap: () {
         setState(() {
           selectedMenuIndex = index;
+          widget.menuCallback!(index);
         });
       },
       child: Padding(
