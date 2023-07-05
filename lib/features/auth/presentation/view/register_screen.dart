@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_adoption_app/components/buttons.dart';
 import 'package:pet_adoption_app/components/text_fields.dart';
 import 'package:pet_adoption_app/core/app.dart';
-import 'package:pet_adoption_app/core/common/my_snackbar.dart';
 import 'package:pet_adoption_app/features/auth/domain/entity/user_entity.dart';
 import 'package:pet_adoption_app/features/auth/presentation/viewmodel/auth_view_model.dart';
 
@@ -119,20 +118,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
                             ref
                                 .read(authViewModelProvider.notifier)
-                                .registerUser(user);
-
-                            if (authState.error != null) {
-                              showSnackBar(
-                                message: authState.error.toString(),
-                                context: context,
-                                color: Colors.red,
-                              );
-                            } else {
-                              showSnackBar(
-                                message: 'Registered successfully',
-                                context: context,
-                              );
-                            }
+                                .registerUser(context, user);
                           }
                         },
                         showRegisterButton: true,

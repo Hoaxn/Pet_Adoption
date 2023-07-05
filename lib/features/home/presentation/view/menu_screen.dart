@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pet_adoption_app/core/app.dart';
+import 'package:pet_adoption_app/core/shared_pref/user_shared_pref.dart';
 
 import '../../../../model/menu_model.dart';
 
-class MenuScreen extends StatefulWidget {
+class MenuScreen extends ConsumerStatefulWidget {
   final Function(int)? menuCallback;
 
   const MenuScreen({super.key, this.menuCallback});
 
   @override
-  State<MenuScreen> createState() => _MenuScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _MenuScreenState();
 }
 
-class _MenuScreenState extends State<MenuScreen> {
+class _MenuScreenState extends ConsumerState<MenuScreen> {
   int selectedMenuIndex = 0;
 
   Widget buildMenuRow(int index) {
@@ -126,12 +128,42 @@ class _MenuScreenState extends State<MenuScreen> {
                     const SizedBox(
                       width: 16.0,
                     ),
-                    Text(
-                      "Settings   |   Log out",
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.5),
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
+                    GestureDetector(
+                      onTap: () async {
+                        // Handle drawer item tap for Analytics
+
+                        final userSharedPrefsProvider =
+                            Provider<UserSharedPrefs>((ref) {
+                          return UserSharedPrefs();
+                        });
+
+                        // Inside the class or widget where you want to perform logout
+
+                        final userSharedPrefs =
+                            ref.read(userSharedPrefsProvider);
+
+                        final result = await userSharedPrefs.removeUserToken();
+
+                        result.fold(
+                          (failure) {
+                            // Handle the failure, e.g., display an error message
+
+                            print('Failed to remove token: ${failure.error}');
+                          },
+                          (success) {
+                            print('Token removed successfully');
+
+                            Navigator.pushNamed(context, '/login');
+                          },
+                        );
+                      },
+                      child: Text(
+                        "Settings   |   Log out",
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(0.5),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ],

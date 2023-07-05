@@ -7,7 +7,7 @@ class Buttons extends StatelessWidget {
 
   const Buttons({
     super.key,
-    required this.onTap,
+    this.onTap,
     this.showLoginButton = false,
     this.showRegisterButton = false,
   });

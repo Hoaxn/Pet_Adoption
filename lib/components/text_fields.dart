@@ -4,12 +4,14 @@ class TextFields extends StatelessWidget {
   final controller;
   final String hintText;
   final bool obscureText;
+  final String? Function(String?)? validator;
 
   const TextFields({
     super.key,
     required this.controller,
     required this.hintText,
     required this.obscureText,
+    this.validator,
   });
 
   @override
@@ -17,6 +19,7 @@ class TextFields extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: TextFormField(
+        validator: validator,
         controller: controller,
         obscureText: obscureText,
         decoration: InputDecoration(

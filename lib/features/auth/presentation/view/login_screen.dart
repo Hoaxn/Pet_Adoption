@@ -16,9 +16,9 @@ class LoginScreen extends ConsumerStatefulWidget {
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  final _emailController = TextEditingController();
+  final _emailController = TextEditingController(text: 'abcd@example.com');
 
-  final _passwordController = TextEditingController();
+  final _passwordController = TextEditingController(text: '12345678');
 
   // void signUserIn(BuildContext context) {
   //   Navigator.push(
@@ -74,12 +74,24 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         controller: _emailController,
                         hintText: "Email",
                         obscureText: false,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please Enter Email';
+                          }
+                          return null;
+                        },
                       ),
                       const SizedBox(height: 10),
                       TextFields(
                         controller: _passwordController,
                         hintText: "Password",
                         obscureText: true,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please Enter Password';
+                          }
+                          return null;
+                        },
                       ),
                       const SizedBox(height: 10),
                       Padding(

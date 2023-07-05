@@ -65,8 +65,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
   Widget build(BuildContext context) {
     final deviceWidth = MediaQuery.of(context).size.width;
 
-    return Material(
-      child: Padding(
+    return Scaffold(
+      body: Padding(
         padding: const EdgeInsets.only(top: 60.0),
         child: Column(
           children: [
@@ -84,13 +84,13 @@ class _HomePageScreenState extends State<HomePageScreen> {
                   ),
                   Column(
                     children: [
-                      Text(
+                      const Text(
                         "Location",
                         style: TextStyle(
                           fontSize: 17.0,
                           fontWeight: FontWeight.w400,
-                          color:
-                              Theme.of(context).primaryColor.withOpacity(0.5),
+                          // color:
+                          //     Theme.of(context).primaryColor.withOpacity(0.5),
                         ),
                       ),
                       Row(

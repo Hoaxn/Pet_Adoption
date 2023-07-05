@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pet_adoption_app/core/common/my_snackbar.dart';
 import 'package:pet_adoption_app/features/auth/domain/entity/user_entity.dart';
 import 'package:pet_adoption_app/features/auth/domain/use_case/auth_use_case.dart';
 import 'package:pet_adoption_app/features/home/presentation/state/auth_state.dart';
-import 'package:pet_adoption_app/features/home/presentation/view/home_page_screen.dart';
 
 final authViewModelProvider =
     StateNotifierProvider<AuthViewModel, AuthState>((ref) {
@@ -18,18 +16,28 @@ class AuthViewModel extends StateNotifier<AuthState> {
 
   AuthViewModel(this._authUseCase) : super(AuthState(isLoading: false));
 
-  Future<void> registerUser(UserEntity user) async {
+  Future<void> registerUser(BuildContext context, UserEntity user) async {
     state = state.copyWith(isLoading: true);
     var data = await _authUseCase.registerUser(user);
     data.fold(
-      (failure) => state = state.copyWith(
-        isLoading: false,
-        error: failure.error,
-      ),
-      (success) => state = state.copyWith(
-        isLoading: false,
-        error: null,
-      ),
+      (failure) {
+        state = state.copyWith(
+          isLoading: false,
+          error: failure.error,
+        );
+        // showSnackBar(
+        //   message: failure.error,
+        //   context: context,
+        //   color: Colors.green,
+        // );
+      },
+      (success) {
+        state = state.copyWith(
+          isLoading: false,
+          error: null,
+        );
+        // showSnackBar(message: "Successfully registered", context: context);
+      },
     );
   }
 
@@ -41,17 +49,15 @@ class AuthViewModel extends StateNotifier<AuthState> {
     data.fold(
       (failure) {
         state = state.copyWith(isLoading: false, error: failure.error);
-        showSnackBar(
-            message: failure.error, context: context, color: Colors.red);
+        // showSnackBar(
+        //   message: failure.error,
+        //   context: context,
+        //   color: Colors.red,
+        // );
       },
       (success) {
         state = state.copyWith(isLoading: false, error: null);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomePageScreen(),
-          ),
-        );
+        // Navigator.pushReplacementNamed(context, AppRoute.homeRoute);
         isLogin = success;
       },
     );
