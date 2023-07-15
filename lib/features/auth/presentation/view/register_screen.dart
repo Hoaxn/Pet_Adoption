@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_adoption_app/components/buttons.dart';
 import 'package:pet_adoption_app/components/text_fields.dart';
-import 'package:pet_adoption_app/core/app.dart';
+import 'package:pet_adoption_app/config/constants/theme_constant.dart';
 import 'package:pet_adoption_app/features/auth/domain/entity/user_entity.dart';
 import 'package:pet_adoption_app/features/auth/presentation/viewmodel/auth_view_model.dart';
 
@@ -22,15 +22,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  // void registerUserIn(BuildContext context) {
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(
-  //       builder: (context) => const LoginScreen(),
-  //     ),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authViewModelProvider);
@@ -48,9 +39,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           Form(
             key: _key,
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [mainColor, secondaryColor],
+                  colors: [
+                    ThemeConstant.mainColor,
+                    ThemeConstant.secondaryColor
+                  ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                 ),

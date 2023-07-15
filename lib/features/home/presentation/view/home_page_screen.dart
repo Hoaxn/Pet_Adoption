@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pet_adoption_app/features/home/presentation/view/adoption_screen.dart';
+import 'package:pet_adoption_app/features/pets/presentation/viewmodel/pet_viewmodel.dart';
 
 import '../../../../model/home_page_model.dart';
-import 'adoption_screen.dart';
 
-class HomePageScreen extends StatefulWidget {
-  final void Function()? menuCallback;
-
-  const HomePageScreen({super.key, this.menuCallback});
+class HomePageScreen extends ConsumerStatefulWidget {
+  const HomePageScreen({super.key});
 
   @override
-  State<HomePageScreen> createState() => _HomePageScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _HomePageScreenState();
 }
 
-class _HomePageScreenState extends State<HomePageScreen> {
+class _HomePageScreenState extends ConsumerState<HomePageScreen> {
   int selectedAnimalIconIndex = 0;
 
   Widget buildAnimalIcons(int index) {
@@ -23,9 +23,11 @@ class _HomePageScreenState extends State<HomePageScreen> {
         children: [
           InkWell(
             onTap: () {
-              setState(() {
-                selectedAnimalIconIndex = index;
-              });
+              setState(
+                () {
+                  selectedAnimalIconIndex = index;
+                },
+              );
             },
             child: Material(
               color: selectedAnimalIconIndex == index
@@ -65,70 +67,71 @@ class _HomePageScreenState extends State<HomePageScreen> {
   Widget build(BuildContext context) {
     final deviceWidth = MediaQuery.of(context).size.width;
 
+    final petState = ref.watch(petViewModelProvider);
+
+    // final internetStatus = ref.watch(connectivityStatusProvider);
+
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(top: 60.0),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                    onTap: widget.menuCallback,
-                    child: const Icon(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 60.0),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Icon(
                       FontAwesomeIcons.barsStaggered,
                     ),
-                  ),
-                  Column(
-                    children: [
-                      const Text(
-                        "Location",
-                        style: TextStyle(
-                          fontSize: 17.0,
-                          fontWeight: FontWeight.w400,
-                          // color:
-                          //     Theme.of(context).primaryColor.withOpacity(0.5),
+                    Column(
+                      children: [
+                        Text(
+                          "Location",
+                          style: TextStyle(
+                            fontSize: 17.0,
+                            fontWeight: FontWeight.w400,
+                            color:
+                                Theme.of(context).primaryColor.withOpacity(0.6),
+                          ),
                         ),
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            FontAwesomeIcons.locationDot,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          const Text(
-                            "Kathmandu, ",
-                            style: TextStyle(
-                              fontSize: 21.0,
-                              fontWeight: FontWeight.w600,
-                              // fontFamily: "MerriweatherSans",
+                        Row(
+                          children: [
+                            Icon(
+                              FontAwesomeIcons.locationDot,
+                              color: Theme.of(context).primaryColor,
                             ),
-                          ),
-                          const Text(
-                            "Nepal",
-                            style: TextStyle(
-                              fontSize: 21.0,
-                              fontWeight: FontWeight.w300,
+                            const Text(
+                              "Kathmandu, ",
+                              style: TextStyle(
+                                fontSize: 21.0,
+                                fontWeight: FontWeight.w600,
+                                // fontFamily: "MerriweatherSans",
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const CircleAvatar(
-                    radius: 20.0,
-                    backgroundImage: NetworkImage(
-                      'https://www.pexels.com/photo/2486168/download/',
+                            const Text(
+                              "Nepal",
+                              style: TextStyle(
+                                fontSize: 21.0,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                  ),
-                ],
+                    const CircleAvatar(
+                      radius: 20.0,
+                      backgroundImage: NetworkImage(
+                        'https://www.pexels.com/photo/2486168/download/',
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Expanded(
-              child: Padding(
+              Padding(
                 padding: const EdgeInsets.only(top: 30),
                 child: Container(
                   decoration: BoxDecoration(
@@ -191,20 +194,35 @@ class _HomePageScreenState extends State<HomePageScreen> {
                           }),
                         ),
                       ),
-                      Expanded(
-                        child: ListView.builder(
+                      if (petState.isLoading) ...{
+                        const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      } else if (petState.error != null) ...{
+                        Center(
+                          child: Text(petState.error!),
+                        )
+                      } else if (petState.pets.isEmpty) ...{
+                        const Center(
+                          child: Text("No Pets"),
+                        ),
+                      } else ...{
+                        ListView.builder(
                           padding: const EdgeInsets.only(top: 10.0),
-                          itemCount: animals.length,
+                          shrinkWrap: true,
+                          // physics: const NeverScrollableScrollPhysics(),
+                          itemCount: petState.pets.length,
                           itemBuilder: (content, index) {
-                            final animal = animals[index];
+                            final pet = petState.pets[index];
 
                             return InkWell(
                               onTap: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        AdoptionScreen(animal: animal),
+                                    builder: (context) => AdoptionScreen(
+                                      pet: pet,
+                                    ),
                                   ),
                                 );
                               },
@@ -245,18 +263,18 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                         MainAxisSize.max,
                                                     children: [
                                                       Text(
-                                                        animal.name,
+                                                        pet.name,
                                                         style: TextStyle(
                                                           fontSize: 26.0,
                                                           color:
                                                               Theme.of(context)
                                                                   .primaryColor,
                                                           fontWeight:
-                                                              FontWeight.bold,
+                                                              FontWeight.w800,
                                                         ),
                                                       ),
                                                       Icon(
-                                                        animal.isFemale
+                                                        pet.gender == 'female'
                                                             ? FontAwesomeIcons
                                                                 .venus
                                                             : FontAwesomeIcons
@@ -269,53 +287,41 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                     height: 10.0,
                                                   ),
                                                   Text(
-                                                    animal.scientificName,
+                                                    pet.species,
                                                     style: TextStyle(
-                                                      fontSize: 16.0,
+                                                      fontSize: 19.0,
+                                                      fontWeight:
+                                                          FontWeight.w600,
                                                       color: Theme.of(context)
                                                           .primaryColor,
-                                                      fontWeight:
-                                                          FontWeight.w500,
                                                     ),
                                                   ),
                                                   const SizedBox(
                                                     height: 10.0,
                                                   ),
                                                   Text(
-                                                    "${animal.age} years old",
-                                                    style: const TextStyle(
-                                                      color: Colors.grey,
+                                                    pet.breed,
+                                                    style: TextStyle(
+                                                      fontSize: 15.0,
                                                       fontWeight:
-                                                          FontWeight.w600,
+                                                          FontWeight.w500,
+                                                      color: Theme.of(context)
+                                                          .primaryColor
+                                                          .withOpacity(0.8),
                                                     ),
                                                   ),
                                                   const SizedBox(
                                                     height: 10.0,
                                                   ),
-                                                  Row(
-                                                    children: [
-                                                      Icon(
-                                                        FontAwesomeIcons
-                                                            .locationDot,
-                                                        color: Theme.of(context)
-                                                            .primaryColor,
-                                                        size: 16.0,
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 5.0,
-                                                      ),
-                                                      Text(
-                                                        "Distance: ${animal.distanceToUser}",
-                                                        style: TextStyle(
-                                                          fontSize: 16.0,
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .primaryColor,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                        ),
-                                                      ),
-                                                    ],
+                                                  Text(
+                                                    "${pet.age} years old",
+                                                    style: TextStyle(
+                                                      color: Theme.of(context)
+                                                          .primaryColor
+                                                          .withOpacity(0.5),
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
                                                   ),
                                                 ],
                                               ),
@@ -329,7 +335,15 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                       children: [
                                         Container(
                                           decoration: BoxDecoration(
-                                            color: animal.backgroundColor,
+                                            color: pet.color != null &&
+                                                    pet.color!.isNotEmpty
+                                                ? Color(
+                                                    int.parse(
+                                                      '0xFF${pet.color?.substring(0)}',
+                                                    ),
+                                                  )
+                                                : Theme.of(context)
+                                                    .primaryColor,
                                             borderRadius:
                                                 BorderRadius.circular(20.0),
                                           ),
@@ -337,9 +351,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                           width: deviceWidth * 0.4,
                                         ),
                                         Hero(
-                                          tag: animal.name,
-                                          child: Image(
-                                            image: AssetImage(animal.imageUrl),
+                                          tag: pet.name,
+                                          child: Image.network(
+                                            "http://localhost:3000/uploads/${pet.image}",
                                             height: 220.0,
                                             width: deviceWidth * 0.4,
                                           ),
@@ -352,13 +366,13 @@ class _HomePageScreenState extends State<HomePageScreen> {
                             );
                           },
                         ),
-                      )
+                      },
                     ],
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

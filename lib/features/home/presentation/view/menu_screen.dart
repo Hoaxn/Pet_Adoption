@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:pet_adoption_app/core/app.dart';
+import 'package:pet_adoption_app/config/constants/theme_constant.dart';
 import 'package:pet_adoption_app/core/shared_pref/user_shared_pref.dart';
 
 import '../../../../model/menu_model.dart';
 
 class MenuScreen extends ConsumerStatefulWidget {
-  final Function(int)? menuCallback;
-
-  const MenuScreen({super.key, this.menuCallback});
+  const MenuScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _MenuScreenState();
@@ -21,10 +19,11 @@ class _MenuScreenState extends ConsumerState<MenuScreen> {
   Widget buildMenuRow(int index) {
     return InkWell(
       onTap: () {
-        setState(() {
-          selectedMenuIndex = index;
-          widget.menuCallback!(index);
-        });
+        setState(
+          () {
+            selectedMenuIndex = index;
+          },
+        );
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 30.0),
@@ -59,9 +58,9 @@ class _MenuScreenState extends ConsumerState<MenuScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [mainColor, secondaryColor],
+            colors: [ThemeConstant.thirdColor, ThemeConstant.mainColor],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
