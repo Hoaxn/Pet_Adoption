@@ -9,6 +9,7 @@ import 'package:pet_adoption_app/config/routers/app_route.dart';
 import 'package:pet_adoption_app/features/auth/domain/entity/user_entity.dart';
 import 'package:pet_adoption_app/features/auth/domain/use_case/auth_use_case.dart';
 import 'package:pet_adoption_app/features/auth/presentation/view/register_screen.dart';
+import 'package:pet_adoption_app/features/auth/presentation/viewmodel/auth_view_model.dart';
 
 import '../../../../unit_test/auth_unit_test.mocks.dart';
 
@@ -64,11 +65,11 @@ void main() {
 
       await tester.pumpWidget(
         ProviderScope(
-          // overrides: [
-          //   authViewModelProvider.overrideWith(
-          //     (ref) => AuthViewModel(mockAuthUsecase),
-          //   ),
-          // ],
+          overrides: [
+            authViewModelProvider.overrideWith(
+              (ref) => AuthViewModel(mockAuthUsecase),
+            ),
+          ],
           child: MaterialApp(
             initialRoute: AppRoute.registerRoute,
             routes: AppRoute.getApplicationRoute(),

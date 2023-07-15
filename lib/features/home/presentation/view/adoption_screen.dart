@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pet_adoption_app/features/pets/domain/entity/pets_entity.dart';
 
-import '../../../../model/home_page_model.dart';
+class AdoptionScreen extends ConsumerStatefulWidget {
+  final PetEntity pet;
 
-class AdoptionScreen extends StatelessWidget {
-  final Animal animal;
+  const AdoptionScreen({Key? key, required this.pet}) : super(key: key);
 
-  // const AdoptionScreen({Key? key, required this.animal}) : super(key: key);
-  const AdoptionScreen({super.key, required this.animal});
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _AdoptionScreenState();
+}
 
+class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -24,7 +28,14 @@ class AdoptionScreen extends StatelessWidget {
                 children: [
                   Container(
                     height: screenHeight * 0.5,
-                    color: animal.backgroundColor,
+                    color:
+                        widget.pet.color != null && widget.pet.color!.isNotEmpty
+                            ? Color(
+                                int.parse(
+                                  '0xFF${widget.pet.color?.substring(0)}',
+                                ),
+                              )
+                            : Theme.of(context).primaryColor,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20.0, vertical: 60.0),
@@ -56,15 +67,16 @@ class AdoptionScreen extends StatelessWidget {
                   SizedBox(
                     height: screenHeight * 0.37,
                     child: Hero(
-                      tag: animal.name,
-                      child: const Image(
-                        image: AssetImage('assets/images/sola.png'),
+                      tag: widget.pet.name,
+                      child: Image.network(
+                        "http://localhost:3000/uploads/${widget.pet.image}",
                         fit: BoxFit.fitHeight,
                       ),
                     ),
                   ),
                 ],
               ),
+
               // Mid Description Part start
               Expanded(
                 child: Container(
@@ -76,11 +88,11 @@ class AdoptionScreen extends StatelessWidget {
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      // crossAxisAlignment: CrossAxisAlignment.stretch,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          // mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisSize: MainAxisSize.max,
                           children: [
                             CircleAvatar(
                               radius: 20.0,
@@ -100,7 +112,7 @@ class AdoptionScreen extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        "Avinav Bhatta",
+                                        "PetDoption",
                                         style: TextStyle(
                                           color: Theme.of(context).primaryColor,
                                           fontSize: 16.0,
@@ -134,9 +146,9 @@ class AdoptionScreen extends StatelessWidget {
                         const SizedBox(
                           height: 20.0,
                         ),
-                        const Text(
-                          "My job requires moving to another country. I don't have the opportunity to take the cat with me. I am looking for good people who will shelter Sola.",
-                          style: TextStyle(
+                        Text(
+                          widget.pet.description,
+                          style: const TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,
@@ -205,6 +217,7 @@ class AdoptionScreen extends StatelessWidget {
               // End Like and Adoption part end
             ],
           ),
+
           // Hovering Part start
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 22.0),
@@ -226,10 +239,10 @@ class AdoptionScreen extends StatelessWidget {
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      // mainAxisSize: MainAxisSize.max,
+                      mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          animal.name,
+                          widget.pet.name,
                           style: TextStyle(
                             fontSize: 26.0,
                             color: Theme.of(context).primaryColor,
@@ -237,7 +250,7 @@ class AdoptionScreen extends StatelessWidget {
                           ),
                         ),
                         Icon(
-                          animal.isFemale
+                          widget.pet.gender == 'female'
                               ? FontAwesomeIcons.venus
                               : FontAwesomeIcons.mars,
                           color: Colors.grey,
@@ -251,7 +264,7 @@ class AdoptionScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          animal.scientificName,
+                          widget.pet.breed,
                           style: const TextStyle(
                             fontSize: 16.0,
                             color: Colors.grey,
@@ -259,7 +272,7 @@ class AdoptionScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "${animal.age} years old",
+                          "${widget.pet.age} years old",
                           style: const TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.w600,
@@ -281,7 +294,7 @@ class AdoptionScreen extends StatelessWidget {
                           width: 5.0,
                         ),
                         Text(
-                          "Address",
+                          "Kathmandu, Nepal",
                           style: TextStyle(
                             fontSize: 16.0,
                             color: Colors.grey.withOpacity(0.6),

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:pet_adoption_app/components/text_fields.dart';
 
 class AddPetScreen extends StatefulWidget {
-  const AddPetScreen({super.key});
+  final void Function()? menuCallback;
+
+  const AddPetScreen({super.key, this.menuCallback});
 
   @override
   State<AddPetScreen> createState() => _AddPetScreenState();
@@ -81,9 +83,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
             ),
             const SizedBox(height: 16.0),
             ElevatedButton(
-              onPressed: () {
-                // TODO: Implement adding the pet
-              },
+              onPressed: widget.menuCallback,
               child: const Text('Add Pet'),
             ),
           ],

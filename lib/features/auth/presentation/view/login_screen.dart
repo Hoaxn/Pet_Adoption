@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_adoption_app/components/buttons.dart';
 import 'package:pet_adoption_app/components/text_fields.dart';
-import 'package:pet_adoption_app/core/app.dart';
+import 'package:pet_adoption_app/config/constants/theme_constant.dart';
 import 'package:pet_adoption_app/features/auth/presentation/view/register_screen.dart';
 import 'package:pet_adoption_app/features/auth/presentation/viewmodel/auth_view_model.dart';
 
@@ -20,19 +20,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   final _passwordController = TextEditingController(text: '12345678');
 
-  // void signUserIn(BuildContext context) {
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(
-  //       builder: (context) => const MenuOpenScreen(),
-  //     ),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Theme.of(context).primaryColor,
       body: Stack(
         children: [
           // Image.network(
@@ -44,9 +34,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           Form(
             key: _formKey,
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [mainColor, secondaryColor],
+                  colors: [ThemeConstant.thirdColor, ThemeConstant.mainColor],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                 ),
@@ -158,29 +148,23 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         children: [
                           Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: secondaryColor),
+                              border:
+                                  Border.all(color: ThemeConstant.thirdColor),
                               borderRadius: BorderRadius.circular(8),
-                              color: secondaryColor,
+                              gradient: const LinearGradient(
+                                colors: [
+                                  ThemeConstant.thirdColor,
+                                  ThemeConstant.mainColor
+                                ],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                              ),
                             ),
                             child: Image.asset(
                               'assets/images/google.png',
                               height: 60,
                             ),
                           ),
-                          // SquareTile(imagePath: 'lib/assets/images/google.png'),
-                          const SizedBox(width: 10),
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: secondaryColor),
-                              borderRadius: BorderRadius.circular(8),
-                              color: secondaryColor,
-                            ),
-                            child: Image.asset(
-                              'assets/images/apple.png',
-                              height: 60,
-                            ),
-                          ),
-                          // const SquareTile(imagePath: 'assets/images/apple.png'),
                         ],
                       ),
                       const SizedBox(height: 50),
