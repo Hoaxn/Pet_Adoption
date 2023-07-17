@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pet_adoption_app/config/routers/app_route.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/pets_entity.dart';
 
 class AdoptionScreen extends ConsumerStatefulWidget {
@@ -13,6 +14,13 @@ class AdoptionScreen extends ConsumerStatefulWidget {
 }
 
 class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
+  void goBackToHomeScreen() {
+    Navigator.popUntil(
+      context,
+      ModalRoute.withName(AppRoute.homeRoute),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -47,7 +55,8 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  Navigator.pop(context);
+                                  goBackToHomeScreen();
+                                  // Navigator.pop(context);
                                 },
                                 child: Icon(
                                   FontAwesomeIcons.arrowLeft,
@@ -196,16 +205,19 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                           borderRadius: BorderRadius.circular(20.0),
                           elevation: 4.0,
                           color: Theme.of(context).primaryColor,
-                          child: const Padding(
-                            padding: EdgeInsets.all(20.0),
-                            child: Text(
-                              "Adoption",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
+                          child: InkWell(
+                            onTap: () {},
+                            child: const Padding(
+                              padding: EdgeInsets.all(20.0),
+                              child: Text(
+                                "Adoption",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.center,
                               ),
-                              textAlign: TextAlign.center,
                             ),
                           ),
                         ),

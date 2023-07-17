@@ -73,7 +73,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:pet_adoption_app/components/buttons.dart';
-import 'package:pet_adoption_app/components/text_fields.dart';
 import 'package:pet_adoption_app/config/routers/app_route.dart';
 import 'package:pet_adoption_app/features/auth/domain/use_case/auth_use_case.dart';
 import 'package:pet_adoption_app/features/auth/presentation/view/login_screen.dart';
@@ -129,9 +128,9 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.enterText(
-          find.byType(TextFields).at(0), 'avinav@example.com');
+          find.byType(TextFormField).at(0), 'avinav@example.com');
 
-      await tester.enterText(find.byType(TextFields).at(1), 'avinav123');
+      await tester.enterText(find.byType(TextFormField).at(1), 'avinav123');
 
       await tester.tap(find.widgetWithText(Buttons, 'Login'));
 

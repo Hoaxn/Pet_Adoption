@@ -7,7 +7,6 @@ import 'package:pet_adoption_app/core/shared_pref/user_shared_pref.dart';
 import 'package:pet_adoption_app/features/home/presentation/view/adoption_screen.dart';
 import 'package:pet_adoption_app/features/pets/presentation/viewmodel/pet_viewmodel.dart';
 import 'package:pet_adoption_app/model/home_page_model.dart';
-import 'package:pet_adoption_app/model/menu_model.dart';
 
 class HomePageScreen extends ConsumerStatefulWidget {
   const HomePageScreen({super.key});
@@ -18,8 +17,6 @@ class HomePageScreen extends ConsumerStatefulWidget {
 
 class _HomePageScreenState extends ConsumerState<HomePageScreen> {
   int selectedAnimalIconIndex = 0;
-
-  int selectedMenuIndex = 0;
 
   Widget buildAnimalIcons(int index) {
     return Padding(
@@ -64,44 +61,6 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget buildMenuRow(int index) {
-    return InkWell(
-      onTap: () {
-        setState(
-          () {
-            selectedMenuIndex = index;
-          },
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 30.0),
-        child: Row(
-          children: [
-            Icon(
-              icons[index],
-              color: selectedMenuIndex == index
-                  ? Colors.red
-                  : Colors.red.withOpacity(0.5),
-            ),
-            const SizedBox(
-              width: 16.0,
-            ),
-            Text(
-              menuItems[index],
-              style: TextStyle(
-                color: selectedMenuIndex == index
-                    ? Colors.red
-                    : Colors.red.withOpacity(0.5),
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -169,7 +128,7 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
             ),
             InkWell(
               onTap: () {
-                Navigator.pushReplacementNamed(context, AppRoute.addPetRoute);
+                // Navigator.pushReplacementNamed(context, AppRoute.addPetRoute);
               },
               child: Row(
                 children: [
@@ -280,10 +239,6 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // IconButton(
-                  //   onPressed: openDrawer,
-                  //   icon: const Icon(FontAwesomeIcons.barsStaggered),
-                  // ),
                   InkWell(
                     onTap: openDrawer,
                     child: const Icon(
@@ -415,6 +370,7 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                         Expanded(
                           child: ListView.builder(
                             padding: const EdgeInsets.only(top: 10.0),
+                            physics: const AlwaysScrollableScrollPhysics(),
                             itemCount: petState.pets.length,
                             itemBuilder: (content, index) {
                               final pet = petState.pets[index];
