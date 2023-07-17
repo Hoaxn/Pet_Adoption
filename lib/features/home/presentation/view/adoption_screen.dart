@@ -35,7 +35,7 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                                   '0xFF${widget.pet.color?.substring(0)}',
                                 ),
                               )
-                            : Theme.of(context).primaryColor,
+                            : Colors.white,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20.0, vertical: 60.0),

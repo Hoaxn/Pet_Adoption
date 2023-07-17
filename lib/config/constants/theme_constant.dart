@@ -4,6 +4,6 @@ class ThemeConstant {
   ThemeConstant._();
 
   static const Color mainColor = Color.fromRGBO(70, 112, 112, 1.0);
-  static const Color secondaryColor = Color.fromRGBO(168, 135, 107, 1.0);
-  static const Color thirdColor = Color.fromARGB(126, 65, 70, 215);
+  // static const Color secondaryColor = Color.fromRGBO(168, 135, 107, 1.0);
+  static const Color secondaryColor = Color.fromARGB(126, 65, 70, 215);
 }

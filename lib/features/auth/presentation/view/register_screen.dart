@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pet_adoption_app/components/buttons.dart';
 import 'package:pet_adoption_app/components/text_fields.dart';
 import 'package:pet_adoption_app/config/constants/theme_constant.dart';
@@ -24,8 +25,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authState = ref.watch(authViewModelProvider);
-
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: Stack(
@@ -42,8 +42,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    ThemeConstant.mainColor,
-                    ThemeConstant.secondaryColor
+                    ThemeConstant.secondaryColor,
+                    ThemeConstant.mainColor
                   ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
@@ -54,8 +54,24 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Row(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Icon(
+                                FontAwesomeIcons.arrowLeft,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                       const Icon(
-                        Icons.lock,
+                        Icons.lock_open,
                         size: 100,
                       ),
                       const SizedBox(height: 50),

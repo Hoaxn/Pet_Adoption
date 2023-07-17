@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pet_adoption_app/config/constants/theme_constant.dart';
+import 'package:pet_adoption_app/config/routers/app_route.dart';
+import 'package:pet_adoption_app/core/shared_pref/user_shared_pref.dart';
 import 'package:pet_adoption_app/features/home/presentation/view/adoption_screen.dart';
 import 'package:pet_adoption_app/features/pets/presentation/viewmodel/pet_viewmodel.dart';
-
-import '../../../../model/home_page_model.dart';
+import 'package:pet_adoption_app/model/home_page_model.dart';
+import 'package:pet_adoption_app/model/menu_model.dart';
 
 class HomePageScreen extends ConsumerStatefulWidget {
   const HomePageScreen({super.key});
@@ -15,6 +18,8 @@ class HomePageScreen extends ConsumerStatefulWidget {
 
 class _HomePageScreenState extends ConsumerState<HomePageScreen> {
   int selectedAnimalIconIndex = 0;
+
+  int selectedMenuIndex = 0;
 
   Widget buildAnimalIcons(int index) {
     return Padding(
@@ -63,75 +68,275 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
     );
   }
 
+  Widget buildMenuRow(int index) {
+    return InkWell(
+      onTap: () {
+        setState(
+          () {
+            selectedMenuIndex = index;
+          },
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 30.0),
+        child: Row(
+          children: [
+            Icon(
+              icons[index],
+              color: selectedMenuIndex == index
+                  ? Colors.red
+                  : Colors.red.withOpacity(0.5),
+            ),
+            const SizedBox(
+              width: 16.0,
+            ),
+            Text(
+              menuItems[index],
+              style: TextStyle(
+                color: selectedMenuIndex == index
+                    ? Colors.red
+                    : Colors.red.withOpacity(0.5),
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final deviceWidth = MediaQuery.of(context).size.width;
 
     final petState = ref.watch(petViewModelProvider);
 
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+    void openDrawer() {
+      scaffoldKey.currentState?.openDrawer();
+    }
+
     // final internetStatus = ref.watch(connectivityStatusProvider);
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 60.0),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Icon(
-                      FontAwesomeIcons.barsStaggered,
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          "Location",
-                          style: TextStyle(
-                            fontSize: 17.0,
-                            fontWeight: FontWeight.w400,
-                            color:
-                                Theme.of(context).primaryColor.withOpacity(0.6),
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              FontAwesomeIcons.locationDot,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            const Text(
-                              "Kathmandu, ",
-                              style: TextStyle(
-                                fontSize: 21.0,
-                                fontWeight: FontWeight.w600,
-                                // fontFamily: "MerriweatherSans",
-                              ),
-                            ),
-                            const Text(
-                              "Nepal",
-                              style: TextStyle(
-                                fontSize: 21.0,
-                                fontWeight: FontWeight.w300,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const CircleAvatar(
-                      radius: 20.0,
-                      backgroundImage: NetworkImage(
-                        'https://www.pexels.com/photo/2486168/download/',
-                      ),
-                    ),
-                  ],
+      key: scaffoldKey,
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            const DrawerHeader(
+              decoration: BoxDecoration(color: ThemeConstant.mainColor),
+              child: Center(
+                child: Text(
+                  'Menu',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 27,
+                  ),
                 ),
               ),
-              Padding(
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.pushReplacementNamed(context, AppRoute.homeRoute);
+              },
+              child: Row(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Icon(FontAwesomeIcons.paw),
+                  ),
+                  const SizedBox(
+                    width: 16.0,
+                  ),
+                  Text(
+                    "Home",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.pushReplacementNamed(context, AppRoute.addPetRoute);
+              },
+              child: Row(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Icon(FontAwesomeIcons.plus),
+                  ),
+                  const SizedBox(
+                    width: 16.0,
+                  ),
+                  Text(
+                    "Add Pet",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            InkWell(
+              onTap: () {
+                // Navigator.pushReplacementNamed(context, AppRoute.addPetRoute);
+              },
+              child: Row(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Icon(FontAwesomeIcons.gear),
+                  ),
+                  const SizedBox(
+                    width: 16.0,
+                  ),
+                  Text(
+                    "Settings",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            InkWell(
+              onTap: () async {
+                // Handle drawer item tap for Analytics
+
+                final userSharedPrefsProvider = Provider<UserSharedPrefs>(
+                  (ref) {
+                    return UserSharedPrefs();
+                  },
+                );
+
+                // Inside the class or widget where you want to perform logout
+
+                final userSharedPrefs = ref.read(userSharedPrefsProvider);
+
+                final result = await userSharedPrefs.removeUserToken();
+
+                result.fold(
+                  (failure) {
+                    // Handle the failure, e.g., display an error message
+
+                    print('Failed to remove token: ${failure.error}');
+                  },
+                  (success) {
+                    print('Token removed successfully');
+
+                    Navigator.pushNamed(context, '/login');
+                  },
+                );
+              },
+              child: Row(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Icon(FontAwesomeIcons.rightFromBracket),
+                  ),
+                  const SizedBox(
+                    width: 16.0,
+                  ),
+                  Text(
+                    "Log out",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 60.0),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // IconButton(
+                  //   onPressed: openDrawer,
+                  //   icon: const Icon(FontAwesomeIcons.barsStaggered),
+                  // ),
+                  InkWell(
+                    onTap: openDrawer,
+                    child: const Icon(
+                      FontAwesomeIcons.barsStaggered,
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        "Location",
+                        style: TextStyle(
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.w400,
+                          color:
+                              Theme.of(context).primaryColor.withOpacity(0.6),
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            FontAwesomeIcons.locationDot,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          const Text(
+                            "Kathmandu, ",
+                            style: TextStyle(
+                              fontSize: 21.0,
+                              fontWeight: FontWeight.w600,
+                              // fontFamily: "MerriweatherSans",
+                            ),
+                          ),
+                          const Text(
+                            "Nepal",
+                            style: TextStyle(
+                              fontSize: 21.0,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const CircleAvatar(
+                    radius: 20.0,
+                    backgroundImage: NetworkImage(
+                      'https://www.pexels.com/photo/2486168/download/',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Padding(
                 padding: const EdgeInsets.only(top: 30),
                 child: Container(
                   decoration: BoxDecoration(
@@ -153,34 +358,34 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                           padding: const EdgeInsets.symmetric(
                             horizontal: 11.0,
                           ),
-                          child: Row(
-                            children: [
-                              Icon(
-                                FontAwesomeIcons.magnifyingGlass,
-                                color: Colors.grey[500],
-                              ),
-                              Expanded(
-                                child: TextField(
-                                  style: const TextStyle(
-                                    fontSize: 17,
-                                  ),
-                                  decoration: InputDecoration(
-                                    border: const OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    hintText: "Search ...",
-                                    hintStyle: TextStyle(
-                                      color: Colors.grey[500],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Icon(
-                                FontAwesomeIcons.filter,
-                                color: Colors.grey[500],
-                              ),
-                            ],
-                          ),
+                          // child: Row(
+                          //   children: [
+                          //     Icon(
+                          //       FontAwesomeIcons.magnifyingGlass,
+                          //       color: Colors.grey[500],
+                          //     ),
+                          //     Expanded(
+                          //       child: TextField(
+                          //         style: const TextStyle(
+                          //           fontSize: 17,
+                          //         ),
+                          //         decoration: InputDecoration(
+                          //           border: const OutlineInputBorder(
+                          //             borderSide: BorderSide.none,
+                          //           ),
+                          //           hintText: "Search ...",
+                          //           hintStyle: TextStyle(
+                          //             color: Colors.grey[500],
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     ),
+                          //     Icon(
+                          //       FontAwesomeIcons.filter,
+                          //       color: Colors.grey[500],
+                          //     ),
+                          //   ],
+                          // ),
                         ),
                       ),
                       SizedBox(
@@ -207,172 +412,172 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                           child: Text("No Pets"),
                         ),
                       } else ...{
-                        ListView.builder(
-                          padding: const EdgeInsets.only(top: 10.0),
-                          shrinkWrap: true,
-                          // physics: const NeverScrollableScrollPhysics(),
-                          itemCount: petState.pets.length,
-                          itemBuilder: (content, index) {
-                            final pet = petState.pets[index];
+                        Expanded(
+                          child: ListView.builder(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            itemCount: petState.pets.length,
+                            itemBuilder: (content, index) {
+                              final pet = petState.pets[index];
 
-                            return InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AdoptionScreen(
-                                      pet: pet,
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                  bottom: 10.0,
-                                  left: 25.0,
-                                  right: 25.0,
-                                ),
-                                child: Stack(
-                                  alignment: Alignment.centerLeft,
-                                  children: [
-                                    Material(
-                                      borderRadius: BorderRadius.circular(30.0),
-                                      elevation: 5.0,
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: 20.0,
-                                          horizontal: 12.0,
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            SizedBox(
-                                              width: deviceWidth * 0.4,
-                                            ),
-                                            Flexible(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    children: [
-                                                      Text(
-                                                        pet.name,
-                                                        style: TextStyle(
-                                                          fontSize: 26.0,
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .primaryColor,
-                                                          fontWeight:
-                                                              FontWeight.w800,
-                                                        ),
-                                                      ),
-                                                      Icon(
-                                                        pet.gender == 'female'
-                                                            ? FontAwesomeIcons
-                                                                .venus
-                                                            : FontAwesomeIcons
-                                                                .mars,
-                                                        color: Colors.grey,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 10.0,
-                                                  ),
-                                                  Text(
-                                                    pet.species,
-                                                    style: TextStyle(
-                                                      fontSize: 19.0,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color: Theme.of(context)
-                                                          .primaryColor,
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 10.0,
-                                                  ),
-                                                  Text(
-                                                    pet.breed,
-                                                    style: TextStyle(
-                                                      fontSize: 15.0,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Theme.of(context)
-                                                          .primaryColor
-                                                          .withOpacity(0.8),
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 10.0,
-                                                  ),
-                                                  Text(
-                                                    "${pet.age} years old",
-                                                    style: TextStyle(
-                                                      color: Theme.of(context)
-                                                          .primaryColor
-                                                          .withOpacity(0.5),
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => AdoptionScreen(
+                                        pet: pet,
                                       ),
                                     ),
-                                    Stack(
-                                      alignment: Alignment.center,
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: pet.color != null &&
-                                                    pet.color!.isNotEmpty
-                                                ? Color(
-                                                    int.parse(
-                                                      '0xFF${pet.color?.substring(0)}',
-                                                    ),
-                                                  )
-                                                : Theme.of(context)
-                                                    .primaryColor,
-                                            borderRadius:
-                                                BorderRadius.circular(20.0),
+                                  );
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                    bottom: 10.0,
+                                    left: 25.0,
+                                    right: 25.0,
+                                  ),
+                                  child: Stack(
+                                    alignment: Alignment.centerLeft,
+                                    children: [
+                                      Material(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0),
+                                        elevation: 5.0,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 20.0,
+                                            horizontal: 12.0,
                                           ),
-                                          height: 200.0,
-                                          width: deviceWidth * 0.4,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SizedBox(
+                                                width: deviceWidth * 0.4,
+                                              ),
+                                              Flexible(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      children: [
+                                                        Text(
+                                                          pet.name,
+                                                          style: TextStyle(
+                                                            fontSize: 26.0,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .primaryColor,
+                                                            fontWeight:
+                                                                FontWeight.w800,
+                                                          ),
+                                                        ),
+                                                        Icon(
+                                                          pet.gender == 'female'
+                                                              ? FontAwesomeIcons
+                                                                  .venus
+                                                              : FontAwesomeIcons
+                                                                  .mars,
+                                                          color: Colors.grey,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 10.0,
+                                                    ),
+                                                    Text(
+                                                      pet.species,
+                                                      style: TextStyle(
+                                                        fontSize: 19.0,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: Theme.of(context)
+                                                            .primaryColor,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 10.0,
+                                                    ),
+                                                    Text(
+                                                      pet.breed,
+                                                      style: TextStyle(
+                                                        fontSize: 15.0,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: Theme.of(context)
+                                                            .primaryColor
+                                                            .withOpacity(0.8),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 10.0,
+                                                    ),
+                                                    Text(
+                                                      "${pet.age} years old",
+                                                      style: TextStyle(
+                                                        color: Theme.of(context)
+                                                            .primaryColor
+                                                            .withOpacity(0.5),
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                        Hero(
-                                          tag: pet.name,
-                                          child: Image.network(
-                                            "http://localhost:3000/uploads/${pet.image}",
-                                            height: 220.0,
+                                      ),
+                                      Stack(
+                                        alignment: Alignment.center,
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: pet.color != null &&
+                                                      pet.color!.isNotEmpty
+                                                  ? Color(
+                                                      int.parse(
+                                                        '0xFF${pet.color?.substring(0)}',
+                                                      ),
+                                                    )
+                                                  : Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                            ),
+                                            height: 200.0,
                                             width: deviceWidth * 0.4,
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                          Hero(
+                                            tag: pet.name,
+                                            child: Image.network(
+                                              "http://localhost:3000/uploads/${pet.image}",
+                                              height: 220.0,
+                                              width: deviceWidth * 0.4,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
+                              );
+                            },
+                          ),
                         ),
                       },
                     ],
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

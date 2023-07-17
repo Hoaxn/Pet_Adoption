@@ -60,7 +60,7 @@ class _MenuScreenState extends ConsumerState<MenuScreen> {
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [ThemeConstant.thirdColor, ThemeConstant.mainColor],
+            colors: [ThemeConstant.secondaryColor, ThemeConstant.mainColor],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),

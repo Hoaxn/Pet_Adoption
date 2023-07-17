@@ -36,7 +36,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             child: Container(
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [ThemeConstant.thirdColor, ThemeConstant.mainColor],
+                  colors: [
+                    ThemeConstant.secondaryColor,
+                    ThemeConstant.mainColor,
+                  ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                 ),
@@ -112,62 +115,62 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         },
                         showLoginButton: true,
                       ),
-                      const SizedBox(height: 25),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Divider(
-                                thickness: 2,
-                                color: Colors.grey[400],
-                              ),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16.0),
-                              child: Text(
-                                "Or Continue With",
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 0, 0, 0),
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Divider(
-                                thickness: 2,
-                                color: Colors.grey[400],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 50),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              border:
-                                  Border.all(color: ThemeConstant.thirdColor),
-                              borderRadius: BorderRadius.circular(8),
-                              gradient: const LinearGradient(
-                                colors: [
-                                  ThemeConstant.thirdColor,
-                                  ThemeConstant.mainColor
-                                ],
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                              ),
-                            ),
-                            child: Image.asset(
-                              'assets/images/google.png',
-                              height: 60,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 50),
+                      // const SizedBox(height: 25),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      //   child: Row(
+                      //     children: [
+                      //       Expanded(
+                      //         child: Divider(
+                      //           thickness: 2,
+                      //           color: Colors.grey[400],
+                      //         ),
+                      //       ),
+                      //       const Padding(
+                      //         padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      //         child: Text(
+                      //           "Or Continue With",
+                      //           style: TextStyle(
+                      //             color: Color.fromARGB(255, 0, 0, 0),
+                      //             fontSize: 16,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //       Expanded(
+                      //         child: Divider(
+                      //           thickness: 2,
+                      //           color: Colors.grey[400],
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      const SizedBox(height: 30),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     Container(
+                      //       decoration: BoxDecoration(
+                      //         border:
+                      //             Border.all(color: ThemeConstant.thirdColor),
+                      //         borderRadius: BorderRadius.circular(8),
+                      //         gradient: const LinearGradient(
+                      //           colors: [
+                      //             ThemeConstant.thirdColor,
+                      //             ThemeConstant.mainColor
+                      //           ],
+                      //           begin: Alignment.topCenter,
+                      //           end: Alignment.bottomCenter,
+                      //         ),
+                      //       ),
+                      //       child: Image.asset(
+                      //         'assets/images/google.png',
+                      //         height: 60,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      // const SizedBox(height: 50),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
