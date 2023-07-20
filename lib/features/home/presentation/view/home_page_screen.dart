@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pet_adoption_app/config/constants/theme_constant.dart';
 import 'package:pet_adoption_app/config/routers/app_route.dart';
+import 'package:pet_adoption_app/core/common/provider/is_dark_theme.dart';
 import 'package:pet_adoption_app/features/home/presentation/view/adoption_screen.dart';
 import 'package:pet_adoption_app/features/home/presentation/viewmodel/home_viewmodel.dart';
 import 'package:pet_adoption_app/features/pets/presentation/viewmodel/pet_viewmodel.dart';
@@ -17,6 +18,13 @@ class HomePageScreen extends ConsumerStatefulWidget {
 
 class _HomePageScreenState extends ConsumerState<HomePageScreen> {
   int selectedAnimalIconIndex = 0;
+
+  late bool isDark;
+  @override
+  void initState() {
+    isDark = ref.read(isDarkThemeProvider);
+    super.initState();
+  }
 
   Widget buildAnimalIcons(int index) {
     return Padding(
@@ -33,7 +41,8 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
             },
             child: Material(
               color: selectedAnimalIconIndex == index
-                  ? Theme.of(context).primaryColor
+                  // ? Theme.of(context).primaryColor
+                  ? Theme.of(context).colorScheme.primary
                   : Colors.white,
               elevation: 6.0,
               borderRadius: BorderRadius.circular(20.0),
@@ -44,7 +53,8 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                   size: 30.0,
                   color: selectedAnimalIconIndex == index
                       ? Colors.white
-                      : Theme.of(context).primaryColor,
+                      // : Theme.of(context).primaryColor,
+                      : Theme.of(context).colorScheme.primary,
                 ),
               ),
             ),
@@ -55,7 +65,8 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
           Text(
             animalTypes[index],
             style: TextStyle(
-              color: Theme.of(context).primaryColor,
+              // color: Theme.of(context).primaryColor,
+              color: Theme.of(context).colorScheme.primary,
               fontSize: 15.0,
               fontWeight: FontWeight.w700,
             ),
@@ -80,6 +91,7 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
     // final internetStatus = ref.watch(connectivityStatusProvider);
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       key: scaffoldKey,
       drawer: Drawer(
         child: ListView(
@@ -117,7 +129,8 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                     "Home",
                     style: TextStyle(
                       fontSize: 15,
-                      color: Theme.of(context).primaryColor,
+                      // color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                 ],
@@ -143,7 +156,8 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                     "Add Pet",
                     style: TextStyle(
                       fontSize: 15,
-                      color: Theme.of(context).primaryColor,
+                      // color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                 ],
@@ -152,28 +166,52 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
             const SizedBox(
               height: 10,
             ),
-            InkWell(
-              onTap: () {
-                // Navigator.pushReplacementNamed(context, AppRoute.addPetRoute);
-              },
-              child: Row(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Icon(FontAwesomeIcons.gear),
-                  ),
-                  const SizedBox(
-                    width: 16.0,
-                  ),
-                  Text(
-                    "Settings",
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Theme.of(context).primaryColor,
+            Row(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Icon(Icons.dark_mode),
+                ),
+                const SizedBox(
+                  width: 16.0,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "Dark Mode",
+                      style: TextStyle(
+                        fontSize: 15,
+                        // color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                     ),
-                  ),
-                ],
-              ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Switch(
+                      value: isDark,
+                      onChanged: (value) {
+                        setState(
+                          () {
+                            isDark = value;
+                            ref
+                                .read(isDarkThemeProvider.notifier)
+                                .updateTheme(value);
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                // Text(
+                //   "Settings",
+                //   style: TextStyle(
+                //     fontSize: 15,
+                //     // color: Theme.of(context).primaryColor,
+                //     color: Theme.of(context).colorScheme.primary,
+                //   ),
+                // ),
+              ],
             ),
             const SizedBox(
               height: 10,
@@ -195,7 +233,8 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                     "Log out",
                     style: TextStyle(
                       fontSize: 15,
-                      color: Theme.of(context).primaryColor,
+                      // color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                 ],
@@ -228,15 +267,20 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                           style: TextStyle(
                             fontSize: 17.0,
                             fontWeight: FontWeight.w400,
-                            color:
-                                Theme.of(context).primaryColor.withOpacity(0.6),
+                            // color:
+                            //     Theme.of(context).primaryColor.withOpacity(0.6),
+                            color: Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withOpacity(0.6),
                           ),
                         ),
                         Row(
                           children: [
                             Icon(
                               FontAwesomeIcons.locationDot,
-                              color: Theme.of(context).primaryColor,
+                              // color: Theme.of(context).primaryColor,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                             const Text(
                               "Kathmandu, ",
@@ -271,7 +315,9 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40.0),
-                    color: Theme.of(context).primaryColor.withOpacity(0.07),
+                    // color: Theme.of(context).primaryColor.withOpacity(0.07),
+                    color:
+                        Theme.of(context).colorScheme.primary.withOpacity(0.07),
                   ),
                   child: Column(
                     children: [
@@ -401,9 +447,13 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                                                         pet.name,
                                                         style: TextStyle(
                                                           fontSize: 25.0,
+                                                          // color:
+                                                          //     Theme.of(context)
+                                                          //         .primaryColor,
                                                           color:
                                                               Theme.of(context)
-                                                                  .primaryColor,
+                                                                  .colorScheme
+                                                                  .primary,
                                                           fontWeight:
                                                               FontWeight.w800,
                                                         ),
@@ -427,8 +477,11 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                                                       fontSize: 19.0,
                                                       fontWeight:
                                                           FontWeight.w600,
+                                                      // color: Theme.of(context)
+                                                      //     .primaryColor,
                                                       color: Theme.of(context)
-                                                          .primaryColor,
+                                                          .colorScheme
+                                                          .primary,
                                                     ),
                                                   ),
                                                   const SizedBox(
@@ -440,8 +493,12 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                                                       fontSize: 15.0,
                                                       fontWeight:
                                                           FontWeight.w500,
+                                                      // color: Theme.of(context)
+                                                      //     .primaryColor
+                                                      //     .withOpacity(0.8),
                                                       color: Theme.of(context)
-                                                          .primaryColor
+                                                          .colorScheme
+                                                          .primary
                                                           .withOpacity(0.8),
                                                     ),
                                                   ),
@@ -451,8 +508,12 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                                                   Text(
                                                     "${pet.age} years old",
                                                     style: TextStyle(
+                                                      // color: Theme.of(context)
+                                                      //     .primaryColor
+                                                      //     .withOpacity(0.5),
                                                       color: Theme.of(context)
-                                                          .primaryColor
+                                                          .colorScheme
+                                                          .primary
                                                           .withOpacity(0.5),
                                                       fontWeight:
                                                           FontWeight.w600,

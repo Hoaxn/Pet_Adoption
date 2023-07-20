@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pet_adoption_app/config/constants/theme_constant.dart';
 import 'package:pet_adoption_app/core/common/widget/primary_button.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/adoption_form_entity.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/pets_entity.dart';
@@ -62,7 +63,8 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                         },
                         child: Icon(
                           FontAwesomeIcons.arrowLeft,
-                          color: Theme.of(context).primaryColor,
+                          // color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                       Text(
@@ -70,7 +72,8 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                         style: TextStyle(
                           fontSize: 25.0,
                           fontWeight: FontWeight.w600,
-                          color: Theme.of(context).primaryColor,
+                          // color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                       Text(
@@ -78,7 +81,8 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                         style: TextStyle(
                           fontSize: 17.0,
                           fontWeight: FontWeight.w400,
-                          color: Theme.of(context).primaryColor,
+                          // color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                     ],
@@ -90,7 +94,9 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40.0),
-                    color: Theme.of(context).primaryColor.withOpacity(0.07),
+                    // color: Theme.of(context).primaryColor.withOpacity(0.07),
+                    color:
+                        Theme.of(context).colorScheme.primary.withOpacity(0.07),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
@@ -104,7 +110,8 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                             style: TextStyle(
                               fontSize: 25.0,
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).primaryColor,
+                              // color: Theme.of(context).primaryColor,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
                         ),
@@ -116,7 +123,8 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                           style: TextStyle(
                             fontSize: 17.0,
                             fontWeight: FontWeight.w400,
-                            color: Theme.of(context).primaryColor,
+                            // color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                         const SizedBox(
@@ -127,7 +135,8 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                           style: TextStyle(
                             fontSize: 17.0,
                             fontWeight: FontWeight.w400,
-                            color: Theme.of(context).primaryColor,
+                            // color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                         const SizedBox(
@@ -138,7 +147,8 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                           style: TextStyle(
                             fontSize: 17.0,
                             fontWeight: FontWeight.w400,
-                            color: Theme.of(context).primaryColor,
+                            // color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                         const SizedBox(
@@ -149,7 +159,8 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                           style: TextStyle(
                             fontSize: 17.0,
                             fontWeight: FontWeight.w400,
-                            color: Theme.of(context).primaryColor,
+                            // color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                         const SizedBox(
@@ -160,7 +171,8 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                           style: TextStyle(
                             fontSize: 17.0,
                             fontWeight: FontWeight.w400,
-                            color: Theme.of(context).primaryColor,
+                            // color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                         AspectRatio(
@@ -179,7 +191,9 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40.0),
-                    color: Theme.of(context).primaryColor.withOpacity(0.07),
+                    // color: Theme.of(context).primaryColor.withOpacity(0.07),
+                    color:
+                        Theme.of(context).colorScheme.primary.withOpacity(0.07),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
@@ -196,7 +210,8 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                               style: TextStyle(
                                 fontSize: 25.0,
                                 fontWeight: FontWeight.bold,
-                                color: Theme.of(context).primaryColor,
+                                // color: Theme.of(context).primaryColor,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                           ),
@@ -205,7 +220,8 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                             decoration: InputDecoration(
                               hintText: 'Adopter\'s Full Name',
                               hintStyle: TextStyle(
-                                color: Theme.of(context).primaryColor,
+                                // color: Theme.of(context).primaryColor,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
@@ -216,7 +232,7 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
-                                  color: Color.fromARGB(255, 55, 0, 255),
+                                  color: ThemeConstant.secondaryColor,
                                 ),
                               ),
                             ),
@@ -233,7 +249,8 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                             decoration: InputDecoration(
                               hintText: 'Adopter\'s Email',
                               hintStyle: TextStyle(
-                                color: Theme.of(context).primaryColor,
+                                // color: Theme.of(context).primaryColor,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
@@ -244,7 +261,7 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
-                                  color: Color.fromARGB(255, 55, 0, 255),
+                                  color: ThemeConstant.secondaryColor,
                                 ),
                               ),
                             ),
@@ -262,7 +279,8 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                             decoration: InputDecoration(
                               hintText: 'Adopter\'s Phone',
                               hintStyle: TextStyle(
-                                color: Theme.of(context).primaryColor,
+                                // color: Theme.of(context).primaryColor,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
@@ -273,7 +291,7 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
-                                  color: Color.fromARGB(255, 55, 0, 255),
+                                  color: ThemeConstant.secondaryColor,
                                 ),
                               ),
                             ),
@@ -291,7 +309,8 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                             decoration: InputDecoration(
                               hintText: 'Adopter\'s Address',
                               hintStyle: TextStyle(
-                                color: Theme.of(context).primaryColor,
+                                // color: Theme.of(context).primaryColor,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
@@ -302,7 +321,7 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
-                                  color: Color.fromARGB(255, 55, 0, 255),
+                                  color: ThemeConstant.secondaryColor,
                                 ),
                               ),
                             ),

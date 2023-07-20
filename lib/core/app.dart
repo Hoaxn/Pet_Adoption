@@ -1,19 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:pet_adoption_app/config/constants/theme_constant.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_adoption_app/config/routers/app_route.dart';
+import 'package:pet_adoption_app/config/themes/app_theme.dart';
+import 'package:pet_adoption_app/core/common/provider/is_dark_theme.dart';
 
-class App extends StatelessWidget {
+class App extends ConsumerWidget {
   const App({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkTheme = ref.watch(isDarkThemeProvider);
     return MaterialApp(
-      theme: ThemeData(
-        primaryColor: ThemeConstant.mainColor,
-      ),
+      theme: AppTheme.getApplicationTheme(isDarkTheme),
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoute.splashRoute,
       routes: AppRoute.getApplicationRoute(),
     );
   }
 }
+
+// class App extends StatelessWidget {
+//   const App({super.key});
+
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+//     final isDarkTheme = ref.watch(isDarkThemeProvider);
+//     return MaterialApp(
+//       // theme: ThemeData(
+//       //   primaryColor: ThemeConstant.mainColor,
+//       // ),
+//       // theme: lightTheme,
+//       // darkTheme: darkTheme,
+//       theme: AppTheme.getApplicationTheme(isDarkTheme),
+//       debugShowCheckedModeBanner: false,
+//       initialRoute: AppRoute.splashRoute,
+//       routes: AppRoute.getApplicationRoute(),
+//     );
+//   }
+// }

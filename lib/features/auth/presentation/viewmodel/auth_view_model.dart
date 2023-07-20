@@ -30,7 +30,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
         showSnackBar(
           message: failure.error,
           context: context,
-          color: Colors.green,
+          color: Colors.red,
         );
       },
       (success) {
