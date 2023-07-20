@@ -19,30 +19,41 @@ class SplashViewModel extends StateNotifier<void> {
   init(BuildContext context) async {
     final data = await _userSharedPrefs.getUserToken();
 
-    data.fold((l) => null, (token) {
-      if (token != null) {
-        bool isTokenExpired = isValidToken(token);
-        if (isTokenExpired) {
-          // We will not do navigation like this,
-          // we will use mixin and navigator class for this
-          Navigator.popAndPushNamed(context, AppRoute.loginRoute);
-        } else {
-          Navigator.popAndPushNamed(context, AppRoute.homeRoute);
-        }
-      } else {
+    data.fold(
+      (failure) {
+        print("Error: ${failure.error}");
+        // Navigate to the login screen as the token is not available.
         Navigator.popAndPushNamed(context, AppRoute.loginRoute);
-      }
-    });
+      },
+      (token) {
+        if (token != null) {
+          bool isTokenExpired = isValidToken(token);
+          if (isTokenExpired) {
+            // We will not do navigation like this,
+            // we will use mixin and navigator class for this
+            Navigator.popAndPushNamed(context, AppRoute.loginRoute);
+          } else {
+            Navigator.popAndPushNamed(context, AppRoute.homeRoute);
+          }
+        } else {
+          Navigator.popAndPushNamed(context, AppRoute.loginRoute);
+        }
+      },
+    );
   }
 
-  bool isValidToken(String token) {
-    Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+  bool isValidToken(String? token) {
+    if (token == null) {
+      // If the token is null, it is considered expired.
+      return true;
+    }
 
-    // 10 digit
-    int expirationTimestamp = decodedToken['exp'];
-    // 13
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+    int? expirationTimestamp = decodedToken['exp'] as int?;
     final currentDate = DateTime.now().millisecondsSinceEpoch;
-    // If current date is greater than expiration timestamp then token is expired
-    return currentDate > expirationTimestamp * 1000;
+
+    // If current date is greater than expiration timestamp, the token is expired.
+    return expirationTimestamp != null &&
+        currentDate > expirationTimestamp * 1000;
   }
 }

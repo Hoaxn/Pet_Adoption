@@ -12,7 +12,7 @@ class App extends StatelessWidget {
         primaryColor: ThemeConstant.mainColor,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoute.homeRoute,
+      initialRoute: AppRoute.splashRoute,
       routes: AppRoute.getApplicationRoute(),
     );
   }

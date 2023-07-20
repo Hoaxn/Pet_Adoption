@@ -11,6 +11,7 @@ final userSharedPrefsProvider = Provider<UserSharedPrefs>(
 
 class UserSharedPrefs {
   late SharedPreferences _sharedPreferences;
+
   //Set User Token
   Future<Either<Failure, bool>> setUserToken(String token) async {
     try {
@@ -33,7 +34,11 @@ class UserSharedPrefs {
       final token = _sharedPreferences.getString('token');
       return right(token);
     } catch (e) {
-      return left(Failure(error: e.toString()));
+      return left(
+        Failure(
+          error: e.toString(),
+        ),
+      );
     }
   }
 
@@ -46,7 +51,11 @@ class UserSharedPrefs {
 
       return right(true);
     } catch (e) {
-      return left(Failure(error: e.toString()));
+      return left(
+        Failure(
+          error: e.toString(),
+        ),
+      );
     }
   }
 }

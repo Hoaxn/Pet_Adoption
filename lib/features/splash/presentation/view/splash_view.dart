@@ -14,9 +14,12 @@ class _SplashViewState extends ConsumerState<SplashView> {
   @override
   void initState() {
     // Wait for 2 seconds and then navigate
-    Future.delayed(const Duration(seconds: 2), () {
-      ref.read(splashViewModelProvider.notifier).init(context);
-    });
+    Future.delayed(
+      const Duration(seconds: 2),
+      () {
+        ref.read(splashViewModelProvider.notifier).init(context);
+      },
+    );
 
     super.initState();
   }
