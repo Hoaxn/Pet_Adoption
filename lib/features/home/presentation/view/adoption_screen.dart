@@ -28,6 +28,7 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Stack(
         alignment: Alignment.center,
         children: [
@@ -57,17 +58,18 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  // goBackToHomeScreen();
                                   Navigator.pop(context);
                                 },
                                 child: Icon(
                                   FontAwesomeIcons.arrowLeft,
-                                  color: Theme.of(context).primaryColor,
+                                  // color: Theme.of(context).primaryColor,
+                                  color: Theme.of(context).colorScheme.primary,
                                 ),
                               ),
                               Icon(
                                 FontAwesomeIcons.share,
-                                color: Theme.of(context).primaryColor,
+                                // color: Theme.of(context).primaryColor,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ],
                           ),
@@ -81,7 +83,7 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                       tag: widget.pet.name,
                       child: Image.network(
                         "http://localhost:3000/uploads/${widget.pet.image}",
-                        // fit: BoxFit.cover,
+                        fit: BoxFit.fitHeight,
                       ),
                     ),
                   ),
@@ -90,81 +92,82 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
 
               // Mid Description Part start
               Flexible(
-                child: Container(
-                  color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 22.0,
-                      vertical: 30.0,
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          // mainAxisSize: MainAxisSize.max,
-                          children: [
-                            CircleAvatar(
-                              radius: 20.0,
-                              backgroundColor: Theme.of(context).primaryColor,
-                              backgroundImage:
-                                  const AssetImage('assets/images/apple.png'),
-                            ),
-                            const SizedBox(
-                              width: 8.0,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  // mainAxisAlignment:
-                                  //     MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "PetDoption",
-                                      style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    // const Text(
-                                    //   "Jan 01, 2023",
-                                    //   style: TextStyle(
-                                    //     color: Colors.grey,
-                                    //     fontWeight: FontWeight.w600,
-                                    //   ),
-                                    // ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 8.0,
-                                ),
-                                const Text(
-                                  "Owner",
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20.0,
-                        ),
-                        Text(
-                          widget.pet.description,
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16.0,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 22.0,
+                    vertical: 30.0,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Row(
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        // mainAxisSize: MainAxisSize.max,
+                        children: [
+                          CircleAvatar(
+                            radius: 20.0,
+                            // backgroundColor: Theme.of(context).primaryColor,
+                            backgroundColor:
+                                Theme.of(context).colorScheme.primary,
+                            backgroundImage:
+                                const AssetImage('assets/images/apple.png'),
                           ),
+                          const SizedBox(
+                            width: 8.0,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                // mainAxisAlignment:
+                                //     MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "PetDoption",
+                                    style: TextStyle(
+                                      // color: Theme.of(context).primaryColor,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  // const Text(
+                                  //   "Jan 01, 2023",
+                                  //   style: TextStyle(
+                                  //     color: Colors.grey,
+                                  //     fontWeight: FontWeight.w600,
+                                  //   ),
+                                  // ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 8.0,
+                              ),
+                              const Text(
+                                "Owner",
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      Text(
+                        widget.pet.description,
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16.0,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -174,7 +177,9 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
               Container(
                 height: 150,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor.withOpacity(0.06),
+                  // color: Theme.of(context).primaryColor.withOpacity(0.07),
+                  color:
+                      Theme.of(context).colorScheme.primary.withOpacity(0.07),
                   borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(30.0),
                     topLeft: Radius.circular(30.0),
@@ -196,7 +201,8 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                         child: Material(
                           borderRadius: BorderRadius.circular(20.0),
                           elevation: 4.0,
-                          color: Theme.of(context).primaryColor,
+                          // color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                           child: InkWell(
                             onTap: () {
                               Navigator.push(
@@ -243,7 +249,8 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                 ),
                 height: 140.0,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  // color: Colors.white,
+                  // color: Theme.of(context).colorScheme.background,
                   borderRadius: BorderRadius.circular(20.0),
                 ),
                 child: Column(
@@ -257,7 +264,8 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                           widget.pet.name,
                           style: TextStyle(
                             fontSize: 26.0,
-                            color: Theme.of(context).primaryColor,
+                            // color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).colorScheme.primary,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -299,7 +307,8 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                       children: [
                         Icon(
                           FontAwesomeIcons.locationDot,
-                          color: Theme.of(context).primaryColor,
+                          // color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                           size: 16.0,
                         ),
                         const SizedBox(
