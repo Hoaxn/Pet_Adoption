@@ -9,7 +9,7 @@ class PetEntity extends Equatable {
   final String gender;
   final String description;
   final String? color;
-  final String image;
+  final String? image;
 
   @override
   List<Object?> get props =>
@@ -24,7 +24,7 @@ class PetEntity extends Equatable {
     required this.gender,
     required this.description,
     this.color,
-    required this.image,
+    this.image,
   });
 
   factory PetEntity.fromJson(Map<String, dynamic> json) {

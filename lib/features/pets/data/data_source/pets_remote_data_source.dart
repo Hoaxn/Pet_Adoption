@@ -5,7 +5,8 @@ import 'package:pet_adoption_app/config/constants/api_endpoint.dart';
 import 'package:pet_adoption_app/core/failure/failure.dart';
 import 'package:pet_adoption_app/core/network/remote/http_service.dart';
 import 'package:pet_adoption_app/core/shared_pref/user_shared_pref.dart';
-import 'package:pet_adoption_app/features/pets/data/model/pets_api_model.dart';
+import 'package:pet_adoption_app/features/pets/data/model/pet_api_model.dart';
+import 'package:pet_adoption_app/features/pets/domain/entity/adoption_form_entity.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/pets_entity.dart';
 
 final petRemoteDataSourceProvider = Provider<PetRemoteDataSource>(
@@ -32,6 +33,39 @@ class PetRemoteDataSource {
         data: pet.toJson(),
       );
       if (response.statusCode == 200) {
+        return const Right(true);
+      } else {
+        return Left(
+          Failure(
+            error: response.data["message"],
+            statusCode: response.statusCode.toString(),
+          ),
+        );
+      }
+    } on DioException catch (e) {
+      return Left(
+        Failure(
+          error: e.error.toString(),
+          statusCode: e.response?.statusCode.toString() ?? '0',
+        ),
+      );
+    }
+  }
+
+  Future<Either<Failure, bool>> adoptPet(
+      AdoptionFormEntity adoptFormData) async {
+    try {
+      Response response = await dio.post(
+        ApiEndpoints.postAdoptionForm,
+        data: {
+          "fullName": adoptFormData.fullName,
+          "email": adoptFormData.email,
+          "phone": adoptFormData.phone,
+          "address": adoptFormData.address,
+          "petId": adoptFormData.petId
+        },
+      );
+      if (response.statusCode == 201) {
         return const Right(true);
       } else {
         return Left(

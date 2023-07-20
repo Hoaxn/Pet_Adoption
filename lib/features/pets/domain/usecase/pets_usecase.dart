@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_adoption_app/core/failure/failure.dart';
+import 'package:pet_adoption_app/features/pets/domain/entity/adoption_form_entity.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/pets_entity.dart';
 import 'package:pet_adoption_app/features/pets/domain/repository/pets_repository.dart';
 
@@ -28,6 +29,10 @@ class PetUseCase {
     return petRepository.deletePet(id);
   }
 
+  Future<Either<Failure, bool>> adoptPet(
+      AdoptionFormEntity adoptFormData) async {
+    return petRepository.adoptPet(adoptFormData);
+  }
   // Future<Either<Failure, List<BatchEntity>>> getAllBatches() async {
   //   return const Right([]);
   // }

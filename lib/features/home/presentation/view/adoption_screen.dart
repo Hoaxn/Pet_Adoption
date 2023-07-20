@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:like_button/like_button.dart';
 import 'package:pet_adoption_app/config/routers/app_route.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/pets_entity.dart';
+import 'package:pet_adoption_app/screen/adoption_form_screen.dart';
 
 class AdoptionScreen extends ConsumerStatefulWidget {
   final PetEntity pet;
 
-  const AdoptionScreen({Key? key, required this.pet}) : super(key: key);
+  const AdoptionScreen({super.key, required this.pet});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _AdoptionScreenState();
@@ -55,8 +57,8 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  goBackToHomeScreen();
-                                  // Navigator.pop(context);
+                                  // goBackToHomeScreen();
+                                  Navigator.pop(context);
                                 },
                                 child: Icon(
                                   FontAwesomeIcons.arrowLeft,
@@ -74,12 +76,12 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: screenHeight * 0.37,
+                    height: screenHeight * 0.34,
                     child: Hero(
                       tag: widget.pet.name,
                       child: Image.network(
                         "http://localhost:3000/uploads/${widget.pet.image}",
-                        fit: BoxFit.fitHeight,
+                        // fit: BoxFit.cover,
                       ),
                     ),
                   ),
@@ -87,7 +89,7 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
               ),
 
               // Mid Description Part start
-              Expanded(
+              Flexible(
                 child: Container(
                   color: Colors.white,
                   child: Padding(
@@ -100,8 +102,8 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          mainAxisSize: MainAxisSize.max,
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          // mainAxisSize: MainAxisSize.max,
                           children: [
                             CircleAvatar(
                               radius: 20.0,
@@ -112,43 +114,41 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                             const SizedBox(
                               width: 8.0,
                             ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "PetDoption",
-                                        style: TextStyle(
-                                          color: Theme.of(context).primaryColor,
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  // mainAxisAlignment:
+                                  //     MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "PetDoption",
+                                      style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                                      const Text(
-                                        "Jan 01, 2023",
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 8.0,
-                                  ),
-                                  const Text(
-                                    "Owner",
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.w600,
                                     ),
+                                    // const Text(
+                                    //   "Jan 01, 2023",
+                                    //   style: TextStyle(
+                                    //     color: Colors.grey,
+                                    //     fontWeight: FontWeight.w600,
+                                    //   ),
+                                    // ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 8.0,
+                                ),
+                                const Text(
+                                  "Owner",
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.w600,
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -170,7 +170,7 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
               ),
               // Mid Description Part start
 
-              // End Like and Adoption part start
+              // End Like and Adopt Me ! part start
               Container(
                 height: 150,
                 decoration: BoxDecoration(
@@ -185,17 +185,9 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Material(
-                        borderRadius: BorderRadius.circular(20.0),
-                        elevation: 4.0,
-                        color: Theme.of(context).primaryColor,
-                        child: const Padding(
-                          padding: EdgeInsets.all(20.0),
-                          child: Icon(
-                            FontAwesomeIcons.heart,
-                            color: Colors.white,
-                          ),
-                        ),
+                      const Padding(
+                        padding: EdgeInsets.all(20.0),
+                        child: LikeButton(),
                       ),
                       const SizedBox(
                         width: 25.0,
@@ -206,11 +198,19 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                           elevation: 4.0,
                           color: Theme.of(context).primaryColor,
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      AdoptionFormScreen(pet: widget.pet),
+                                ),
+                              );
+                            },
                             child: const Padding(
                               padding: EdgeInsets.all(20.0),
                               child: Text(
-                                "Adoption",
+                                "Adopt Me !",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 18.0,
@@ -226,7 +226,7 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                   ),
                 ),
               ),
-              // End Like and Adoption part end
+              // End Like and Adopt Me ! part end
             ],
           ),
 

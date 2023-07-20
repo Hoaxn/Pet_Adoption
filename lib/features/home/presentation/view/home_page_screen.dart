@@ -67,11 +67,11 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
     final deviceWidth = MediaQuery.of(context).size.width;
 
     final petState = ref.watch(petViewModelProvider);
-
-    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
     void openDrawer() {
       scaffoldKey.currentState?.openDrawer();
@@ -229,69 +229,69 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
           ],
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 60.0),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                    onTap: openDrawer,
-                    child: const Icon(
-                      FontAwesomeIcons.barsStaggered,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 60.0),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: openDrawer,
+                      child: const Icon(
+                        FontAwesomeIcons.barsStaggered,
+                      ),
                     ),
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        "Location",
-                        style: TextStyle(
-                          fontSize: 17.0,
-                          fontWeight: FontWeight.w400,
-                          color:
-                              Theme.of(context).primaryColor.withOpacity(0.6),
+                    Column(
+                      children: [
+                        Text(
+                          "Location",
+                          style: TextStyle(
+                            fontSize: 17.0,
+                            fontWeight: FontWeight.w400,
+                            color:
+                                Theme.of(context).primaryColor.withOpacity(0.6),
+                          ),
                         ),
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            FontAwesomeIcons.locationDot,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          const Text(
-                            "Kathmandu, ",
-                            style: TextStyle(
-                              fontSize: 21.0,
-                              fontWeight: FontWeight.w600,
-                              // fontFamily: "MerriweatherSans",
+                        Row(
+                          children: [
+                            Icon(
+                              FontAwesomeIcons.locationDot,
+                              color: Theme.of(context).primaryColor,
                             ),
-                          ),
-                          const Text(
-                            "Nepal",
-                            style: TextStyle(
-                              fontSize: 21.0,
-                              fontWeight: FontWeight.w300,
+                            const Text(
+                              "Kathmandu, ",
+                              style: TextStyle(
+                                fontSize: 21.0,
+                                fontWeight: FontWeight.w600,
+                                // fontFamily: "MerriweatherSans",
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const CircleAvatar(
-                    radius: 20.0,
-                    backgroundImage: NetworkImage(
-                      'https://www.pexels.com/photo/2486168/download/',
+                            const Text(
+                              "Nepal",
+                              style: TextStyle(
+                                fontSize: 21.0,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                  ),
-                ],
+                    const CircleAvatar(
+                      radius: 20.0,
+                      backgroundImage: NetworkImage(
+                        'https://www.pexels.com/photo/2486168/download/',
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Expanded(
-              child: Padding(
+              Padding(
                 padding: const EdgeInsets.only(top: 30),
                 child: Container(
                   decoration: BoxDecoration(
@@ -367,173 +367,171 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                           child: Text("No Pets"),
                         ),
                       } else ...{
-                        Expanded(
-                          child: ListView.builder(
-                            padding: const EdgeInsets.only(top: 10.0),
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            itemCount: petState.pets.length,
-                            itemBuilder: (content, index) {
-                              final pet = petState.pets[index];
+                        ListView.builder(
+                          padding: const EdgeInsets.only(top: 10.0),
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: petState.pets.length,
+                          itemBuilder: (content, index) {
+                            final pet = petState.pets[index];
 
-                              return InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => AdoptionScreen(
-                                        pet: pet,
-                                      ),
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AdoptionScreen(
+                                      pet: pet,
                                     ),
-                                  );
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                    bottom: 10.0,
-                                    left: 25.0,
-                                    right: 25.0,
                                   ),
-                                  child: Stack(
-                                    alignment: Alignment.centerLeft,
-                                    children: [
-                                      Material(
-                                        borderRadius:
-                                            BorderRadius.circular(30.0),
-                                        elevation: 5.0,
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            vertical: 20.0,
-                                            horizontal: 12.0,
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SizedBox(
-                                                width: deviceWidth * 0.4,
-                                              ),
-                                              Flexible(
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
-                                                        Text(
-                                                          pet.name,
-                                                          style: TextStyle(
-                                                            fontSize: 26.0,
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .primaryColor,
-                                                            fontWeight:
-                                                                FontWeight.w800,
-                                                          ),
-                                                        ),
-                                                        Icon(
-                                                          pet.gender == 'female'
-                                                              ? FontAwesomeIcons
-                                                                  .venus
-                                                              : FontAwesomeIcons
-                                                                  .mars,
-                                                          color: Colors.grey,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 10.0,
-                                                    ),
-                                                    Text(
-                                                      pet.species,
-                                                      style: TextStyle(
-                                                        fontSize: 19.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: Theme.of(context)
-                                                            .primaryColor,
-                                                      ),
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 10.0,
-                                                    ),
-                                                    Text(
-                                                      pet.breed,
-                                                      style: TextStyle(
-                                                        fontSize: 15.0,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        color: Theme.of(context)
-                                                            .primaryColor
-                                                            .withOpacity(0.8),
-                                                      ),
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 10.0,
-                                                    ),
-                                                    Text(
-                                                      "${pet.age} years old",
-                                                      style: TextStyle(
-                                                        color: Theme.of(context)
-                                                            .primaryColor
-                                                            .withOpacity(0.5),
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+                                );
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                  bottom: 10.0,
+                                  left: 25.0,
+                                  right: 25.0,
+                                ),
+                                child: Stack(
+                                  alignment: Alignment.centerLeft,
+                                  children: [
+                                    Material(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                      elevation: 5.0,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 20.0,
+                                          horizontal: 12.0,
                                         ),
-                                      ),
-                                      Stack(
-                                        alignment: Alignment.center,
-                                        children: [
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              color: pet.color != null &&
-                                                      pet.color!.isNotEmpty
-                                                  ? Color(
-                                                      int.parse(
-                                                        '0xFF${pet.color?.substring(0)}',
-                                                      ),
-                                                    )
-                                                  : Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(20.0),
-                                            ),
-                                            height: 200.0,
-                                            width: deviceWidth * 0.4,
-                                          ),
-                                          Hero(
-                                            tag: pet.name,
-                                            child: Image.network(
-                                              "http://localhost:3000/uploads/${pet.image}",
-                                              height: 220.0,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            SizedBox(
                                               width: deviceWidth * 0.4,
                                             ),
-                                          ),
-                                        ],
+                                            Flexible(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Text(
+                                                        pet.name,
+                                                        style: TextStyle(
+                                                          fontSize: 25.0,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .primaryColor,
+                                                          fontWeight:
+                                                              FontWeight.w800,
+                                                        ),
+                                                      ),
+                                                      Icon(
+                                                        pet.gender == 'female'
+                                                            ? FontAwesomeIcons
+                                                                .venus
+                                                            : FontAwesomeIcons
+                                                                .mars,
+                                                        color: Colors.grey,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 10.0,
+                                                  ),
+                                                  Text(
+                                                    pet.species,
+                                                    style: TextStyle(
+                                                      fontSize: 19.0,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: Theme.of(context)
+                                                          .primaryColor,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 10.0,
+                                                  ),
+                                                  Text(
+                                                    pet.breed,
+                                                    style: TextStyle(
+                                                      fontSize: 15.0,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: Theme.of(context)
+                                                          .primaryColor
+                                                          .withOpacity(0.8),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 10.0,
+                                                  ),
+                                                  Text(
+                                                    "${pet.age} years old",
+                                                    style: TextStyle(
+                                                      color: Theme.of(context)
+                                                          .primaryColor
+                                                          .withOpacity(0.5),
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                    Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: pet.color != null &&
+                                                    pet.color!.isNotEmpty
+                                                ? Color(
+                                                    int.parse(
+                                                      '0xFF${pet.color?.substring(0)}',
+                                                    ),
+                                                  )
+                                                : Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(20.0),
+                                          ),
+                                          height: 200.0,
+                                          width: deviceWidth * 0.4,
+                                        ),
+                                        Hero(
+                                          tag: pet.name,
+                                          child: Image.network(
+                                            "http://localhost:3000/uploads/${pet.image}",
+                                            height: 220.0,
+                                            width: deviceWidth * 0.4,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                              );
-                            },
-                          ),
+                              ),
+                            );
+                          },
                         ),
                       },
                     ],
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
