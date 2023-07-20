@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/pets_entity.dart';
 
+part 'pet_api_model.g.dart';
+
 final petApiModelProvider = Provider<PetApiModel>(
   (ref) => PetApiModel.empty(),
 );
@@ -17,7 +19,7 @@ class PetApiModel {
   final String gender;
   final String description;
   final String? color;
-  final String image;
+  final String? image;
 
   PetApiModel({
     required this.petId,
@@ -28,7 +30,7 @@ class PetApiModel {
     required this.gender,
     required this.description,
     this.color,
-    required this.image,
+    this.image,
   });
 
   PetApiModel.empty()

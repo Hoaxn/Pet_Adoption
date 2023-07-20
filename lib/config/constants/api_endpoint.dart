@@ -15,4 +15,8 @@ class ApiEndpoints {
   static const String deletePet = "/pets/:id";
   static const String getAllPets = "/pets";
   static const String imageUrl = "http://localhost:3000/uploads/";
+
+  // ====================== Adoption Form Routes ======================
+  static const String postAdoptionForm = "/adoptionForm";
+  static const String getAllAdoptionForms = "/adoptionForm";
 }

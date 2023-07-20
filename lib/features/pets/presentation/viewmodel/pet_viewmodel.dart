@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_adoption_app/core/common/my_snackbar.dart';
+import 'package:pet_adoption_app/features/pets/domain/entity/adoption_form_entity.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/pets_entity.dart';
 import 'package:pet_adoption_app/features/pets/domain/usecase/pets_usecase.dart';
 import 'package:pet_adoption_app/features/pets/presentation/state/pet_state.dart';
@@ -70,7 +71,7 @@ class PetViewModel extends StateNotifier<PetState> {
               (item) => PetEntity(
                 petId: item['_id']?.toString(),
                 name: item['name'],
-                age: "10",
+                age: item['age'].toString(),
                 species: item['species'],
                 breed: item['breed'],
                 gender: item['gender'],
@@ -88,5 +89,32 @@ class PetViewModel extends StateNotifier<PetState> {
         );
       },
     );
+  }
+
+  Future<void> adoptPet(BuildContext context, AdoptionFormEntity product,
+      Function resetFields) async {
+    state = state.copyWith(isLoading: true);
+    var data = await petUseCase.adoptPet(product);
+    data.fold((failure) {
+      state = state.copyWith(
+        isLoading: false,
+        error: failure.error,
+      );
+      showSnackBar(message: failure.error, context: context, color: Colors.red);
+    }, (success) {
+      state = state.copyWith(
+        isLoading: false,
+        error: null,
+      );
+      showSnackBar(
+          message: "Pet Adoption Successful !",
+          context: context,
+          color: Colors.green);
+      resetFields();
+
+      // Call the resetFields function to reset the input fields
+      // resetFields();
+      // Navigator.pushNamed(context, AppRoute.homeRoute);
+    });
   }
 }
