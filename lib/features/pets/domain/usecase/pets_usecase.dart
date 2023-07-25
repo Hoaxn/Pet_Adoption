@@ -33,7 +33,4 @@ class PetUseCase {
       AdoptionFormEntity adoptFormData) async {
     return petRepository.adoptPet(adoptFormData);
   }
-  // Future<Either<Failure, List<BatchEntity>>> getAllBatches() async {
-  //   return const Right([]);
-  // }
 }

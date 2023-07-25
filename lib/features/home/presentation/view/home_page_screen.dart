@@ -6,6 +6,7 @@ import 'package:pet_adoption_app/config/routers/app_route.dart';
 import 'package:pet_adoption_app/core/common/provider/is_dark_theme.dart';
 import 'package:pet_adoption_app/features/home/presentation/view/adoption_screen.dart';
 import 'package:pet_adoption_app/features/home/presentation/viewmodel/home_viewmodel.dart';
+import 'package:pet_adoption_app/features/pets/domain/entity/pets_entity.dart';
 import 'package:pet_adoption_app/features/pets/presentation/viewmodel/pet_viewmodel.dart';
 import 'package:pet_adoption_app/model/home_page_model.dart';
 
@@ -20,13 +21,41 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
   int selectedAnimalIconIndex = 0;
 
   late bool isDark;
+
   @override
   void initState() {
     isDark = ref.read(isDarkThemeProvider);
     super.initState();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Set the initial filter to show all dogs
+    filterPetsBySpecies(animalTypes[0].toLowerCase());
+  }
+
+  List<PetEntity> filteredPets = []; // List to store the filtered pets.
+
+  void filterPetsBySpecies(String species) {
+    print("Filtering by species: $species");
+    setState(
+      () {
+        final petState = ref.watch(petViewModelProvider);
+        filteredPets = petState.pets
+            .where(
+              (pet) => pet.species.toLowerCase().contains(
+                    species.toLowerCase(),
+                  ),
+            )
+            .toList();
+        print("Filtered pets count: ${filteredPets.length}");
+      },
+    );
+  }
+
   Widget buildAnimalIcons(int index) {
+    final String animalType = animalTypes[index].toLowerCase();
     return Padding(
       padding: const EdgeInsets.only(right: 30.0),
       child: Column(
@@ -36,6 +65,7 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
               setState(
                 () {
                   selectedAnimalIconIndex = index;
+                  filterPetsBySpecies(animalType);
                 },
               );
             },
@@ -392,9 +422,11 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                           padding: const EdgeInsets.only(top: 10.0),
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: petState.pets.length,
+                          // itemCount: petState.pets.length,
+                          itemCount: filteredPets.length,
                           itemBuilder: (content, index) {
-                            final pet = petState.pets[index];
+                            // final pet = petState.pets[index];
+                            final pet = filteredPets[index];
 
                             return InkWell(
                               onTap: () {

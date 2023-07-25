@@ -22,4 +22,8 @@ class ApiEndpoints {
   // ====================== Adoption Form Routes ======================
   static const String postAdoptionForm = "/adoptionForm";
   static const String getAllAdoptionForms = "/adoptionForm";
+
+  // ====================== Liked Pet Routes ======================
+  static const String saveLikedPet = "/liked-pets";
+  static const String getLikedPetsByUserId = "/liked-pets/:userId";
 }

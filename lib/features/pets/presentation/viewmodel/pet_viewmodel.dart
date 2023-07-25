@@ -91,30 +91,41 @@ class PetViewModel extends StateNotifier<PetState> {
     );
   }
 
-  Future<void> adoptPet(BuildContext context, AdoptionFormEntity product,
-      Function resetFields) async {
+  Future<void> adoptPet(
+    BuildContext context,
+    AdoptionFormEntity product,
+    Function resetFields,
+  ) async {
     state = state.copyWith(isLoading: true);
     var data = await petUseCase.adoptPet(product);
-    data.fold((failure) {
-      state = state.copyWith(
-        isLoading: false,
-        error: failure.error,
-      );
-      showSnackBar(message: failure.error, context: context, color: Colors.red);
-    }, (success) {
-      state = state.copyWith(
-        isLoading: false,
-        error: null,
-      );
-      showSnackBar(
+    data.fold(
+      (failure) {
+        state = state.copyWith(
+          isLoading: false,
+          error: failure.error,
+        );
+        showSnackBar(
+          message: failure.error,
+          context: context,
+          color: Colors.red,
+        );
+      },
+      (success) {
+        state = state.copyWith(
+          isLoading: false,
+          error: null,
+        );
+        showSnackBar(
           message: "Pet Adoption Successful !",
           context: context,
-          color: Colors.green);
-      resetFields();
+          color: Colors.green,
+        );
+        resetFields();
 
-      // Call the resetFields function to reset the input fields
-      // resetFields();
-      // Navigator.pushNamed(context, AppRoute.homeRoute);
-    });
+        // Call the resetFields function to reset the input fields
+        // resetFields();
+        // Navigator.pushNamed(context, AppRoute.homeRoute);
+      },
+    );
   }
 }

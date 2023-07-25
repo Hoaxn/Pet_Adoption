@@ -33,12 +33,14 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
         alignment: Alignment.center,
         children: [
           Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Stack(
                 alignment: Alignment.center,
                 children: [
                   Container(
                     height: screenHeight * 0.5,
+                    // height: screenHeight * 0.35,
                     color:
                         widget.pet.color != null && widget.pet.color!.isNotEmpty
                             ? Color(
@@ -79,6 +81,7 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                   ),
                   SizedBox(
                     height: screenHeight * 0.34,
+                    // height: screenHeight * 0.2,
                     child: Hero(
                       tag: widget.pet.name,
                       child: Image.network(
@@ -92,6 +95,7 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
 
               // Mid Description Part start
               Flexible(
+                fit: FlexFit.loose,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 22.0,
