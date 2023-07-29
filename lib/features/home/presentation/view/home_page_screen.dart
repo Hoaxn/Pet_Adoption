@@ -101,12 +101,6 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
     );
   }
 
-  // Future<void> _handleRefresh() async {
-  //   final petViewModel = ref.read(petViewModelProvider.notifier);
-  //   await petViewModel.getAllPets();
-  //   await Future.delayed(const Duration(seconds: 2));
-  // }
-
   Future<void> _handleRefresh() async {
     final petViewModel = ref.read(petViewModelProvider.notifier);
     await petViewModel.getAllPets();
@@ -285,7 +279,7 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
       body: LiquidPullToRefresh(
         onRefresh: _handleRefresh,
         height: 250,
-        color: ThemeConstant.mainColor,
+        color: ThemeConstant.secondaryColor,
         // animSpeedFactor: 3,
         child: SingleChildScrollView(
           child: Padding(
@@ -513,6 +507,53 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                                                                   FontWeight
                                                                       .w800,
                                                             ),
+                                                          ),
+                                                          PopupMenuButton<
+                                                              String>(
+                                                            onSelected:
+                                                                (value) async {
+                                                              // Handle action selection
+                                                              if (value ==
+                                                                  'edit') {
+                                                                // Handle edit action
+                                                                Navigator.pushNamed(
+                                                                    context,
+                                                                    AppRoute
+                                                                        .addPetRoute,
+                                                                    arguments:
+                                                                        pet);
+                                                              } else if (value ==
+                                                                  'delete') {
+                                                                // Handle delete action
+                                                                final inventoryViewModel =
+                                                                    ref.read(
+                                                                        petViewModelProvider
+                                                                            .notifier);
+                                                                await inventoryViewModel
+                                                                    .deletePet(
+                                                                        context,
+                                                                        pet.petId!);
+                                                              }
+                                                            },
+                                                            itemBuilder:
+                                                                (BuildContext
+                                                                    context) {
+                                                              return [
+                                                                const PopupMenuItem<
+                                                                    String>(
+                                                                  value: 'edit',
+                                                                  child: Text(
+                                                                      'Edit'),
+                                                                ),
+                                                                const PopupMenuItem<
+                                                                    String>(
+                                                                  value:
+                                                                      'delete',
+                                                                  child: Text(
+                                                                      'Delete'),
+                                                                ),
+                                                              ];
+                                                            },
                                                           ),
                                                           Icon(
                                                             pet.gender ==

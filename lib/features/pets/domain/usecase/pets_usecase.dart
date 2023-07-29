@@ -27,8 +27,12 @@ class PetUseCase {
     return petRepository.getAllPets();
   }
 
-  Future<Either<Failure, bool>> deletePet(String id) async {
-    return petRepository.deletePet(id);
+  // Future<Either<Failure, bool>> deletePet(String id) async {
+  //   return petRepository.deletePet(id);
+  // }
+
+  Future<Either<Failure, Response>> deletePet(String petId) async {
+    return await petRepository.deletePet(petId);
   }
 
   Future<Either<Failure, bool>> adoptPet(

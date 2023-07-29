@@ -16,7 +16,7 @@ class ApiEndpoints {
 
   // ====================== Pet Routes ======================
   static const String createPet = "/pets";
-  static const String deletePet = "/pets/:id";
+  static const String deletePet = "/pets";
   static const String getAllPets = "/pets";
   static const String imageUrl = "http://localhost:3000/uploads/";
 
