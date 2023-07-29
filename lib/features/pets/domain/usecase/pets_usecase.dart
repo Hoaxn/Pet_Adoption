@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,8 +19,8 @@ class PetUseCase {
 
   PetUseCase({required this.petRepository});
 
-  Future<Either<Failure, bool>> addPet(PetEntity pet) {
-    return petRepository.addPet(pet);
+  Future<Either<Failure, bool>> addPet(PetEntity pet, File file) {
+    return petRepository.addPet(pet, file);
   }
 
   Future<Either<Failure, Response>> getAllPets() {
@@ -32,5 +34,21 @@ class PetUseCase {
   Future<Either<Failure, bool>> adoptPet(
       AdoptionFormEntity adoptFormData) async {
     return petRepository.adoptPet(adoptFormData);
+  }
+
+  // Future<Either<Failure, bool>> likePet(String petId) async {
+  //   return petRepository.likePet(petId);
+  // }
+
+  // Future<Either<Failure, bool>> unlikePet(String petId) async {
+  //   return petRepository.unlikePet(petId);
+  // }
+
+  Future<Either<Failure, bool>> likePet(String userId, String petId) async {
+    return petRepository.likePet(userId, petId);
+  }
+
+  Future<Either<Failure, bool>> unlikePet(String userId, String petId) async {
+    return petRepository.unlikePet(userId, petId);
   }
 }

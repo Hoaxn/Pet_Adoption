@@ -25,4 +25,8 @@ class AuthUseCase {
   Future<Either<Failure, bool>> loginUser(String email, String password) async {
     return await _authRepository.loginUser(email, password);
   }
+
+  // Future<Either<Failure, String>> uploadProfilePicture(File file) async {
+  //   return await _authRepository.uploadProfilePicture(file);
+  // }
 }

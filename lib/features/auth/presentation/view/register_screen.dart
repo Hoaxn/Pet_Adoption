@@ -13,11 +13,37 @@ class RegisterScreen extends ConsumerStatefulWidget {
 }
 
 class _RegisterScreenState extends ConsumerState<RegisterScreen> {
+  // checkCameraPermission() async {
+  //   if (await Permission.camera.request().isRestricted ||
+  //       await Permission.camera.request().isDenied) {
+  //     await Permission.camera.request();
+  //   }
+  // }
+
+  // File? _img;
+  // Future _browseImage(WidgetRef ref, ImageSource imageSource) async {
+  //   try {
+  //     final image = await ImagePicker().pickImage(source: imageSource);
+  //     if (image != null) {
+  //       setState(() {
+  //         _img = File(image.path);
+  //         ref.read(authViewModelProvider.notifier).uploadImage(_img!);
+  //       });
+  //     } else {
+  //       return;
+  //     }
+  //   } catch (e) {
+  //     debugPrint(e.toString());
+  //   }
+  // }
+
   final _key = GlobalKey<FormState>();
 
   final _fnameController = TextEditingController();
   final _lnameController = TextEditingController();
   final _phoneNumController = TextEditingController();
+  final _cityController = TextEditingController();
+  final _countryController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -51,7 +77,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               child: Center(
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.all(20),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 100,
+                      horizontal: 20,
+                    ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -72,7 +101,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           ),
                         ),
                         const Icon(
-                          Icons.lock_open,
+                          Icons.lock,
                           size: 100,
                         ),
                         const SizedBox(height: 50),
@@ -80,11 +109,66 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           "Register Here",
                           style: TextStyle(
                             color: Color.fromARGB(255, 0, 0, 0),
-                            fontSize: 17,
+                            fontSize: 25,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
                         const SizedBox(height: 50),
+                        // InkWell(
+                        //   onTap: () {
+                        //     showModalBottomSheet(
+                        //       backgroundColor: Colors.grey[300],
+                        //       context: context,
+                        //       isScrollControlled: true,
+                        //       shape: const RoundedRectangleBorder(
+                        //         borderRadius: BorderRadius.vertical(
+                        //           top: Radius.circular(20),
+                        //         ),
+                        //       ),
+                        //       builder: (context) => Padding(
+                        //         padding: const EdgeInsets.all(20),
+                        //         child: Row(
+                        //           mainAxisAlignment:
+                        //               MainAxisAlignment.spaceAround,
+                        //           children: [
+                        //             ElevatedButton.icon(
+                        //               onPressed: () {
+                        //                 checkCameraPermission();
+                        //                 _browseImage(ref, ImageSource.camera);
+                        //                 Navigator.pop(context);
+                        //                 // Upload image it is not null
+                        //               },
+                        //               icon: const Icon(Icons.camera),
+                        //               label: const Text('Camera'),
+                        //             ),
+                        //             ElevatedButton.icon(
+                        //               onPressed: () {
+                        //                 _browseImage(ref, ImageSource.gallery);
+                        //                 Navigator.pop(context);
+                        //               },
+                        //               icon: const Icon(Icons.image),
+                        //               label: const Text('Gallery'),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     );
+                        //   },
+                        //   child: SizedBox(
+                        //     height: 200,
+                        //     width: 200,
+                        //     child: CircleAvatar(
+                        //       radius: 50,
+                        //       backgroundImage: _img != null
+                        //           ? FileImage(_img!)
+                        //           : const AssetImage('assets/images/google.png')
+                        //               as ImageProvider,
+                        //     ),
+                        //   ),
+                        // ),
+                        const SizedBox(
+                          height: 50,
+                        ),
                         TextFormField(
                           controller: _fnameController,
                           decoration: InputDecoration(
@@ -179,6 +263,68 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         ),
                         const SizedBox(height: 10),
                         TextFormField(
+                          controller: _cityController,
+                          decoration: InputDecoration(
+                            hintText: 'City',
+                            hintStyle: TextStyle(
+                              color: Colors.grey[400],
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(color: Colors.white),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(
+                                color: Color.fromARGB(255, 55, 0, 255),
+                              ),
+                            ),
+                            prefixIcon: const Icon(
+                              Icons.mail_outline,
+                              color: Color.fromARGB(255, 55, 0, 255),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please Enter City';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.emailAddress,
+                        ),
+                        const SizedBox(height: 10),
+                        TextFormField(
+                          controller: _countryController,
+                          decoration: InputDecoration(
+                            hintText: 'Country',
+                            hintStyle: TextStyle(
+                              color: Colors.grey[400],
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(color: Colors.white),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(
+                                color: Color.fromARGB(255, 55, 0, 255),
+                              ),
+                            ),
+                            prefixIcon: const Icon(
+                              Icons.mail_outline,
+                              color: Color.fromARGB(255, 55, 0, 255),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please Enter Country';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.emailAddress,
+                        ),
+                        const SizedBox(height: 10),
+                        TextFormField(
                           controller: _emailController,
                           decoration: InputDecoration(
                             hintText: 'Email',
@@ -261,8 +407,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                 firstName: _fnameController.text,
                                 lastName: _lnameController.text,
                                 phoneNumber: _phoneNumController.text,
+                                city: _cityController.text,
+                                country: _countryController.text,
                                 email: _emailController.text,
                                 password: _passwordController.text,
+                                image:
+                                    ref.read(authViewModelProvider).imageName ??
+                                        '',
                               );
 
                               ref

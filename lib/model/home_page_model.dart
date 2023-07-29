@@ -5,18 +5,18 @@ List<String> animalTypes = [
   'Dog',
   'Cat',
   'Bird',
-  'Fish',
-  'Horse',
-  'Otter',
   'Pig',
+  'Fish',
+  'Otter',
+  'Fish',
 ];
 
 List<IconData> animalIcons = [
   FontAwesomeIcons.dog,
   FontAwesomeIcons.cat,
   FontAwesomeIcons.dove,
-  FontAwesomeIcons.fish,
-  FontAwesomeIcons.horse,
-  FontAwesomeIcons.otter,
   FontAwesomeIcons.piggyBank,
+  FontAwesomeIcons.fish,
+  FontAwesomeIcons.otter,
+  FontAwesomeIcons.horse,
 ];

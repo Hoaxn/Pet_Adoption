@@ -28,8 +28,11 @@ class AuthRemoteDataSource {
           "firstName": user.firstName,
           "lastName": user.lastName,
           "phoneNumber": user.phoneNumber,
+          "city": user.city,
+          "country": user.country,
           "email": user.email,
           "password": user.password,
+          "image": user.image,
         },
       );
       if (response.statusCode == 200) {
@@ -51,6 +54,37 @@ class AuthRemoteDataSource {
       );
     }
   }
+
+  // // Upload image using multipart
+  // Future<Either<Failure, String>> uploadProfilePicture(
+  //   File image,
+  // ) async {
+  //   try {
+  //     String fileName = image.path.split('/').last;
+  //     FormData formData = FormData.fromMap(
+  //       {
+  //         'image': await MultipartFile.fromFile(
+  //           image.path,
+  //           filename: fileName,
+  //         ),
+  //       },
+  //     );
+
+  //     Response response = await dio.post(
+  //       ApiEndpoints.register,
+  //       data: formData,
+  //     );
+
+  //     return Right(response.data["data"]);
+  //   } on DioException catch (e) {
+  //     return Left(
+  //       Failure(
+  //         error: e.error.toString(),
+  //         statusCode: e.response?.statusCode.toString() ?? '0',
+  //       ),
+  //     );
+  //   }
+  // }
 
   Future<Either<Failure, bool>> loginUser(
     String email,

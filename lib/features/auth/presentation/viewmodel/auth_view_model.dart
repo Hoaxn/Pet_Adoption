@@ -4,7 +4,7 @@ import 'package:pet_adoption_app/config/routers/app_route.dart';
 import 'package:pet_adoption_app/core/common/my_snackbar.dart';
 import 'package:pet_adoption_app/features/auth/domain/entity/user_entity.dart';
 import 'package:pet_adoption_app/features/auth/domain/use_case/auth_use_case.dart';
-import 'package:pet_adoption_app/features/home/presentation/state/auth_state.dart';
+import 'package:pet_adoption_app/features/auth/presentation/state/auth_state.dart';
 
 final authViewModelProvider =
     StateNotifierProvider<AuthViewModel, AuthState>((ref) {
@@ -66,4 +66,18 @@ class AuthViewModel extends StateNotifier<AuthState> {
 
     return isLogin;
   }
+
+  // Future<void> uploadImage(File? file) async {
+  //   state = state.copyWith(isLoading: true);
+  //   var data = await _authUseCase.uploadProfilePicture(file!);
+  //   data.fold(
+  //     (l) {
+  //       state = state.copyWith(isLoading: false, error: l.error);
+  //     },
+  //     (imageName) {
+  //       state =
+  //           state.copyWith(isLoading: false, error: null, imageName: imageName);
+  //     },
+  //   );
+  // }
 }

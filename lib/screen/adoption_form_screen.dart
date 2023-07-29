@@ -335,7 +335,7 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                           ),
                           const SizedBox(height: 24.0),
                           PrimaryButton(
-                            text: 'Adopt Pet',
+                            text: 'Adopt ${widget.pet.name}',
                             isLoading:
                                 ref.watch(petViewModelProvider).isLoading,
                             onPressed: () async {
