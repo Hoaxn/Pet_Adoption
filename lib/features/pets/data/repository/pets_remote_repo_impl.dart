@@ -29,9 +29,14 @@ class PetRemoteRepositoryImpl implements IPetRepository {
     return petRemoteDataSource.getAllPets();
   }
 
+  // @override
+  // Future<Either<Failure, bool>> deletePet(String id) {
+  //   return petRemoteDataSource.deletePet(id);
+  // }
+
   @override
-  Future<Either<Failure, bool>> deletePet(String id) {
-    return petRemoteDataSource.deletePet(id);
+  Future<Either<Failure, Response>> deletePet(String petId) {
+    return petRemoteDataSource.deletePet(petId);
   }
 
   @override

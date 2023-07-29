@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pet_adoption_app/config/routers/app_route.dart';
 import 'package:pet_adoption_app/core/common/widget/primary_button.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/pets_entity.dart';
 import 'package:pet_adoption_app/features/pets/presentation/viewmodel/pet_viewmodel.dart';
@@ -28,9 +29,6 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
   final TextEditingController _genderController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _colorController = TextEditingController();
-
-  // File? _image;
-  // final ImagePicker _picker = ImagePicker();
 
   String? _imagePath;
   File? _imageFile;
@@ -60,10 +58,10 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    // Retrieve the passed product argument
+    // Retrieve the passed pet argument
     pet = ModalRoute.of(context)!.settings.arguments as PetEntity?;
     print("pet ${pet?.petId}");
-    // Populate the form fields with the product data
+    // Populate the form fields with the pet data
     if (pet != null) {
       _nameController.text = pet!.name ?? '';
       _ageController.text = pet!.age ?? '';
@@ -92,7 +90,7 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
         child: Padding(
           padding: const EdgeInsets.only(top: 50.0),
           child: Padding(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(15),
             child: Column(
               children: [
                 Padding(
@@ -103,7 +101,10 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
                     children: [
                       InkWell(
                         onTap: () {
-                          Navigator.pop(context);
+                          Navigator.popAndPushNamed(
+                            context,
+                            AppRoute.homeRoute,
+                          );
                         },
                         child: Icon(
                           FontAwesomeIcons.arrowLeft,
@@ -112,7 +113,7 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
                         ),
                       ),
                       Text(
-                        "Adoption Form",
+                        "Add a Pet",
                         style: TextStyle(
                           fontSize: 25.0,
                           fontWeight: FontWeight.w600,
@@ -131,6 +132,9 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
                       ),
                     ],
                   ),
+                ),
+                const SizedBox(
+                  height: 25,
                 ),
                 Container(
                   decoration: BoxDecoration(

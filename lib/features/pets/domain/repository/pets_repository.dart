@@ -15,10 +15,9 @@ final petRepositoryProvider = Provider<IPetRepository>(
 abstract class IPetRepository {
   Future<Either<Failure, bool>> addPet(PetEntity pet, File file);
   Future<Either<Failure, Response>> getAllPets();
-  Future<Either<Failure, bool>> deletePet(String id);
+  // Future<Either<Failure, bool>> deletePet(String id);
+  Future<Either<Failure, Response>> deletePet(String petId);
   Future<Either<Failure, bool>> adoptPet(AdoptionFormEntity adoptFormData);
-  // Future<Either<Failure, bool>> likePet(String petId);
-  // Future<Either<Failure, bool>> unlikePet(String petId);
   Future<Either<Failure, bool>> likePet(String userId, String petId);
   Future<Either<Failure, bool>> unlikePet(String userId, String petId);
 }

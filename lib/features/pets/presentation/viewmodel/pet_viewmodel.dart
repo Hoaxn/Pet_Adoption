@@ -21,25 +21,49 @@ class PetViewModel extends StateNotifier<PetState> {
     getAllPets();
   }
 
-  Future<void> deletePet(BuildContext context, PetEntity pet) async {
-    state.copyWith(isLoading: true);
-    var data = await petUseCase.deletePet(pet.petId!);
+  // Future<void> deletePet(BuildContext context, PetEntity pet) async {
+  //   state.copyWith(isLoading: true);
+  //   var data = await petUseCase.deletePet(pet.petId!);
 
-    data.fold(
-      (l) {
-        showSnackBar(message: l.error, context: context, color: Colors.red);
+  //   data.fold(
+  //     (l) {
+  //       showSnackBar(message: l.error, context: context, color: Colors.red);
 
-        state = state.copyWith(isLoading: false, error: l.error);
-      },
-      (r) {
-        state.pets.remove(pet);
-        state = state.copyWith(isLoading: false, error: null);
-        showSnackBar(
-          message: 'Pet delete successfully',
+  //       state = state.copyWith(isLoading: false, error: l.error);
+  //     },
+  //     (r) {
+  //       state.pets.remove(pet);
+  //       state = state.copyWith(isLoading: false, error: null);
+  //       showSnackBar(
+  //         message: 'Pet delete successfully',
+  //         context: context,
+  //       );
+  //     },
+  //   );
+  // }
+
+  Future<void> deletePet(BuildContext context, String petId) async {
+    state = state.copyWith(isLoading: true);
+    var data = await petUseCase.deletePet(petId);
+    data.fold((failure) {
+      state = state.copyWith(
+        isLoading: false,
+        error: failure.error,
+      );
+      showSnackBar(message: failure.error, context: context, color: Colors.red);
+    }, (success) async {
+      state = state.copyWith(
+        isLoading: false,
+        error: null,
+      );
+      print('success ${success.data}');
+      showSnackBar(
+          message: "Delete Pet Successful !",
           context: context,
-        );
-      },
-    );
+          color: Colors.green);
+      await getAllPets();
+      // Navigator.pushNamed(context, AppRoute.homeRoute);
+    });
   }
 
   // Future<void> addPet(PetEntity pet) async {
@@ -125,11 +149,11 @@ class PetViewModel extends StateNotifier<PetState> {
 
   Future<void> adoptPet(
     BuildContext context,
-    AdoptionFormEntity product,
+    AdoptionFormEntity pet,
     Function resetFields,
   ) async {
     state = state.copyWith(isLoading: true);
-    var data = await petUseCase.adoptPet(product);
+    var data = await petUseCase.adoptPet(pet);
     data.fold(
       (failure) {
         state = state.copyWith(
