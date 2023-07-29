@@ -25,4 +25,9 @@ class AuthLocalRepository implements IAuthRepository {
   Future<Either<Failure, bool>> registerUser(UserEntity user) {
     return _authLocalDataSource.registerUser(user);
   }
+
+  // @override
+  // Future<Either<Failure, String>> uploadProfilePicture(File file) async {
+  //   return const Right("");
+  // }
 }

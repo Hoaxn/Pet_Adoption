@@ -1,21 +1,3 @@
-// class UserEntity {
-//   final String? id;
-//   final String firstName;
-//   final String lastName;
-//   final String phoneNumber;
-//   final String email;
-//   final String password;
-
-//   UserEntity({
-//     this.id,
-//     required this.firstName,
-//     required this.lastName,
-//     required this.phoneNumber,
-//     required this.email,
-//     required this.password,
-//   });
-// }
-
 import 'package:equatable/equatable.dart';
 
 class UserEntity extends Equatable {
@@ -23,20 +5,35 @@ class UserEntity extends Equatable {
   final String firstName;
   final String lastName;
   final String phoneNumber;
+  final String city;
+  final String country;
   final String email;
   final String password;
+  final String? image;
 
   @override
-  List<Object?> get props =>
-      [id, firstName, lastName, phoneNumber, email, password];
+  List<Object?> get props => [
+        id,
+        firstName,
+        lastName,
+        phoneNumber,
+        city,
+        country,
+        email,
+        password,
+        image
+      ];
 
   const UserEntity({
     this.id,
     required this.firstName,
     required this.lastName,
     required this.phoneNumber,
+    required this.city,
+    required this.country,
     required this.email,
     required this.password,
+    this.image,
   });
 
   factory UserEntity.fromJson(Map<String, dynamic> json) => UserEntity(
@@ -44,8 +41,11 @@ class UserEntity extends Equatable {
         firstName: json["fname"],
         lastName: json["lname"],
         phoneNumber: json["phone"],
-        email: json["username"],
+        city: json["city"],
+        country: json["country"],
+        email: json["email"],
         password: json["password"],
+        image: json["image"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -53,7 +53,10 @@ class UserEntity extends Equatable {
         "fname": firstName,
         "lname": lastName,
         "phone": phoneNumber,
-        "username": email,
+        "city": city,
+        "country": country,
+        "email": email,
         "password": password,
+        "image": image,
       };
 }

@@ -7,11 +7,12 @@ class ApiEndpoints {
   // static const String baseUrl = "http://192.168.1.64:3000/api/v1/";
 
   // ====================== Auth Routes ======================
-  static const String login = "/login";
-  static const String register = "/register";
-  static const String getAllUser = "/users";
-  static const String deleteUser = "/users/:id";
-  static const String updateUser = "/users/:id";
+  static const String login = "/auth/login";
+  static const String register = "/auth/register";
+  static const String getAllUser = "/auth/users";
+  static const String deleteUser = "/auth/users/:id";
+  static const String updateUser = "/auth/users/:id";
+  // static const String uploadImage = "auth/uploadImage";
 
   // ====================== Pet Routes ======================
   static const String createPet = "/pets";
@@ -24,6 +25,7 @@ class ApiEndpoints {
   static const String getAllAdoptionForms = "/adoptionForm";
 
   // ====================== Liked Pet Routes ======================
-  static const String saveLikedPet = "/liked-pets";
+  static const String likePet = "/liked-pets";
   static const String getLikedPetsByUserId = "/liked-pets/:userId";
+  static const String unlikePet = "/liked-pets/:userId/:petId";
 }

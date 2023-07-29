@@ -9,6 +9,8 @@ final authApiModelProvider = Provider<AuthApiModel>((ref) {
     firstName: '',
     lastName: '',
     phoneNumber: '',
+    city: '',
+    country: '',
     email: '',
     password: '',
   );
@@ -21,16 +23,22 @@ class AuthApiModel {
   final String firstName;
   final String lastName;
   final String phoneNumber;
+  final String city;
+  final String country;
   final String email;
   final String? password;
+  final String? image;
 
   AuthApiModel({
     this.id,
     required this.firstName,
     required this.lastName,
     required this.phoneNumber,
+    required this.city,
+    required this.country,
     required this.email,
     this.password,
+    this.image,
   });
 
   factory AuthApiModel.fromJson(Map<String, dynamic> json) =>
@@ -44,8 +52,11 @@ class AuthApiModel {
         firstName: firstName,
         lastName: lastName,
         phoneNumber: phoneNumber,
+        city: city,
+        country: country,
         email: email,
         password: password ?? '',
+        image: image,
       );
 
   // Convert AuthApiModel list to AuthEntity list
@@ -54,6 +65,6 @@ class AuthApiModel {
 
   @override
   String toString() {
-    return 'AuthApiModel(id: $id, firstName: $firstName, lastName: $lastName, phone: $phoneNumber, email: $email, password: $password)';
+    return 'AuthApiModel(id: $id, firstName: $firstName, lastName: $lastName, phone: $phoneNumber, city: $city, country: $country, email: $email, password: $password, image: $image)';
   }
 }

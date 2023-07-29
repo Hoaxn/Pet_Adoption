@@ -44,7 +44,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 child: Column(
                   children: [
                     const Icon(
-                      Icons.lock,
+                      Icons.lock_open,
                       size: 100,
                     ),
                     const SizedBox(height: 50),

@@ -68,11 +68,11 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                                   color: Theme.of(context).colorScheme.primary,
                                 ),
                               ),
-                              Icon(
-                                FontAwesomeIcons.share,
-                                // color: Theme.of(context).primaryColor,
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
+                              // Icon(
+                              //   FontAwesomeIcons.share,
+                              //   // color: Theme.of(context).primaryColor,
+                              //   color: Theme.of(context).colorScheme.primary,
+                              // ),
                             ],
                           ),
                         ],
@@ -217,11 +217,11 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                                 ),
                               );
                             },
-                            child: const Padding(
-                              padding: EdgeInsets.all(20.0),
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
                               child: Text(
-                                "Adopt Me !",
-                                style: TextStyle(
+                                "Adopt ${widget.pet.name} !",
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 18.0,
                                   fontWeight: FontWeight.bold,

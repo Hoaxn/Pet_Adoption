@@ -2,6 +2,7 @@ import 'package:pet_adoption_app/features/auth/presentation/view/login_screen.da
 import 'package:pet_adoption_app/features/auth/presentation/view/register_screen.dart';
 import 'package:pet_adoption_app/features/home/presentation/view/home_page_screen.dart';
 import 'package:pet_adoption_app/features/splash/presentation/view/splash_view.dart';
+import 'package:pet_adoption_app/screen/add_pet_screen.dart';
 
 class AppRoute {
   AppRoute._();
@@ -10,6 +11,7 @@ class AppRoute {
   static const String homeRoute = '/home';
   static const String loginRoute = '/login';
   static const String registerRoute = '/register';
+  static const String addPetRoute = '/addPet';
 
   static getApplicationRoute() {
     return {
@@ -17,6 +19,7 @@ class AppRoute {
       homeRoute: (context) => const HomePageScreen(),
       loginRoute: (context) => const LoginScreen(),
       registerRoute: (context) => const RegisterScreen(),
+      addPetRoute: (context) => const AddPetScreen(),
     };
   }
 }

@@ -25,9 +25,15 @@ class AuthHiveModel {
   final String phoneNumber;
 
   @HiveField(4)
-  final String email;
+  final String city;
 
   @HiveField(5)
+  final String country;
+
+  @HiveField(6)
+  final String email;
+
+  @HiveField(7)
   final String password;
 
   // Constructor
@@ -36,6 +42,8 @@ class AuthHiveModel {
     required this.firstName,
     required this.lastName,
     required this.phoneNumber,
+    required this.city,
+    required this.country,
     required this.email,
     required this.password,
   }) : userId = userId ?? const Uuid().v4();
@@ -47,6 +55,8 @@ class AuthHiveModel {
           firstName: '',
           lastName: '',
           phoneNumber: '',
+          city: '',
+          country: '',
           email: '',
           password: '',
         );
@@ -57,6 +67,8 @@ class AuthHiveModel {
         firstName: firstName,
         lastName: lastName,
         phoneNumber: phoneNumber,
+        city: city,
+        country: country,
         email: email,
         password: password,
       );
@@ -67,6 +79,8 @@ class AuthHiveModel {
         firstName: entity.firstName,
         lastName: entity.lastName,
         phoneNumber: entity.phoneNumber,
+        city: entity.city,
+        country: entity.country,
         email: entity.email,
         password: entity.password,
       );
@@ -77,6 +91,6 @@ class AuthHiveModel {
 
   @override
   String toString() {
-    return 'userId: $userId, firstName: $firstName, lastName: $lastName, phoneNumber: $phoneNumber, email: $email, password: $password';
+    return 'userId: $userId, firstName: $firstName, lastName: $lastName, phoneNumber: $phoneNumber, city: $city, country: $country,  email: $email, password: $password';
   }
 }

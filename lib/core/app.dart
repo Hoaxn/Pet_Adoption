@@ -18,23 +18,3 @@ class App extends ConsumerWidget {
     );
   }
 }
-
-// class App extends StatelessWidget {
-//   const App({super.key});
-
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     final isDarkTheme = ref.watch(isDarkThemeProvider);
-//     return MaterialApp(
-//       // theme: ThemeData(
-//       //   primaryColor: ThemeConstant.mainColor,
-//       // ),
-//       // theme: lightTheme,
-//       // darkTheme: darkTheme,
-//       theme: AppTheme.getApplicationTheme(isDarkTheme),
-//       debugShowCheckedModeBanner: false,
-//       initialRoute: AppRoute.splashRoute,
-//       routes: AppRoute.getApplicationRoute(),
-//     );
-//   }
-// }
