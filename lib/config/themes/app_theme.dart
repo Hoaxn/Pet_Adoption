@@ -8,11 +8,11 @@ class AppTheme {
     return ThemeData(
       // change the theme according to the user choice
       colorScheme: isDark
-          ? const ColorScheme.dark(
-              primary: ThemeConstant.mainColor,
+          ? ColorScheme.dark(
+              primary: ThemeConstant.secondaryColor,
             )
           : const ColorScheme.light(
-              primary: ThemeConstant.mainColor,
+              primary: ThemeConstant.mainsColor,
             ),
       brightness: isDark ? Brightness.dark : Brightness.light,
     );

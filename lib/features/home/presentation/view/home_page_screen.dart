@@ -136,9 +136,9 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            const DrawerHeader(
-              decoration: BoxDecoration(color: ThemeConstant.mainColor),
-              child: Center(
+            DrawerHeader(
+              decoration: BoxDecoration(color: ThemeConstant.secondaryColor),
+              child: const Center(
                 child: Text(
                   'Menu',
                   style: TextStyle(
@@ -313,10 +313,7 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                               fontWeight: FontWeight.w400,
                               // color:
                               //     Theme.of(context).primaryColor.withOpacity(0.6),
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primary
-                                  .withOpacity(0.6),
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
                           Row(

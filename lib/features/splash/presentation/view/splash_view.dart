@@ -45,7 +45,7 @@ class _SplashViewState extends ConsumerState<SplashView> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                const CircularProgressIndicator(
+                CircularProgressIndicator(
                   color: ThemeConstant.mainColor,
                   backgroundColor: ThemeConstant.secondaryColor,
                 ),

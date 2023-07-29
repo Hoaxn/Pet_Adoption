@@ -231,7 +231,7 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
+                                borderSide: BorderSide(
                                   color: ThemeConstant.secondaryColor,
                                 ),
                               ),
@@ -260,7 +260,7 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
+                                borderSide: BorderSide(
                                   color: ThemeConstant.secondaryColor,
                                 ),
                               ),
@@ -290,7 +290,7 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
+                                borderSide: BorderSide(
                                   color: ThemeConstant.secondaryColor,
                                 ),
                               ),
@@ -320,7 +320,7 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
+                                borderSide: BorderSide(
                                   color: ThemeConstant.secondaryColor,
                                 ),
                               ),

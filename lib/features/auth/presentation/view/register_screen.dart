@@ -1,6 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_adoption_app/config/constants/theme_constant.dart';
 import 'package:pet_adoption_app/features/auth/domain/entity/user_entity.dart';
 import 'package:pet_adoption_app/features/auth/presentation/viewmodel/auth_view_model.dart';
@@ -9,38 +10,14 @@ class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _RegisterScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _RegisterViewState();
 }
 
-class _RegisterScreenState extends ConsumerState<RegisterScreen> {
-  // checkCameraPermission() async {
-  //   if (await Permission.camera.request().isRestricted ||
-  //       await Permission.camera.request().isDenied) {
-  //     await Permission.camera.request();
-  //   }
-  // }
-
-  // File? _img;
-  // Future _browseImage(WidgetRef ref, ImageSource imageSource) async {
-  //   try {
-  //     final image = await ImagePicker().pickImage(source: imageSource);
-  //     if (image != null) {
-  //       setState(() {
-  //         _img = File(image.path);
-  //         ref.read(authViewModelProvider.notifier).uploadImage(_img!);
-  //       });
-  //     } else {
-  //       return;
-  //     }
-  //   } catch (e) {
-  //     debugPrint(e.toString());
-  //   }
-  // }
-
+class _RegisterViewState extends ConsumerState<RegisterScreen> {
   final _key = GlobalKey<FormState>();
 
-  final _fnameController = TextEditingController();
-  final _lnameController = TextEditingController();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
   final _phoneNumController = TextEditingController();
   final _cityController = TextEditingController();
   final _countryController = TextEditingController();
@@ -49,405 +26,326 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
   bool isObscure = true;
 
+  String image1 = "assets/images/image_1.png";
+
+  String userIcon = "assets/images/user_icon.svg";
+  String keyIcon = "assets/images/key_icon.svg";
+
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.grey[800],
-      body: Stack(
-        children: [
-          // Image.network(
-          //   'https://c4.wallpaperflare.com/wallpaper/772/84/49/dog-shiba-inu-sleeping-wallpaper-preview.jpg',
-          //   fit: BoxFit.cover,
-          //   width: double.infinity,
-          //   height: double.infinity,
-          // ),
-          Form(
-            key: _key,
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    ThemeConstant.secondaryColor,
-                    ThemeConstant.mainColor
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-              ),
-              child: Center(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 100,
-                      horizontal: 20,
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Row(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Icon(
-                                  FontAwesomeIcons.arrowLeft,
-                                  color: Color.fromARGB(255, 55, 0, 255),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const Icon(
-                          Icons.lock,
-                          size: 100,
-                        ),
-                        const SizedBox(height: 50),
-                        const Text(
-                          "Register Here",
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 0, 0, 0),
-                            fontSize: 25,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        const SizedBox(height: 50),
-                        // InkWell(
-                        //   onTap: () {
-                        //     showModalBottomSheet(
-                        //       backgroundColor: Colors.grey[300],
-                        //       context: context,
-                        //       isScrollControlled: true,
-                        //       shape: const RoundedRectangleBorder(
-                        //         borderRadius: BorderRadius.vertical(
-                        //           top: Radius.circular(20),
-                        //         ),
-                        //       ),
-                        //       builder: (context) => Padding(
-                        //         padding: const EdgeInsets.all(20),
-                        //         child: Row(
-                        //           mainAxisAlignment:
-                        //               MainAxisAlignment.spaceAround,
-                        //           children: [
-                        //             ElevatedButton.icon(
-                        //               onPressed: () {
-                        //                 checkCameraPermission();
-                        //                 _browseImage(ref, ImageSource.camera);
-                        //                 Navigator.pop(context);
-                        //                 // Upload image it is not null
-                        //               },
-                        //               icon: const Icon(Icons.camera),
-                        //               label: const Text('Camera'),
-                        //             ),
-                        //             ElevatedButton.icon(
-                        //               onPressed: () {
-                        //                 _browseImage(ref, ImageSource.gallery);
-                        //                 Navigator.pop(context);
-                        //               },
-                        //               icon: const Icon(Icons.image),
-                        //               label: const Text('Gallery'),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       ),
-                        //     );
-                        //   },
-                        //   child: SizedBox(
-                        //     height: 200,
-                        //     width: 200,
-                        //     child: CircleAvatar(
-                        //       radius: 50,
-                        //       backgroundImage: _img != null
-                        //           ? FileImage(_img!)
-                        //           : const AssetImage('assets/images/google.png')
-                        //               as ImageProvider,
-                        //     ),
-                        //   ),
-                        // ),
-                        const SizedBox(
-                          height: 50,
-                        ),
-                        TextFormField(
-                          controller: _fnameController,
-                          decoration: InputDecoration(
-                            hintText: 'First Name',
-                            hintStyle: TextStyle(
-                              color: Colors.grey[400],
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(color: Colors.white),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(
-                                color: Color.fromARGB(255, 55, 0, 255),
-                              ),
-                            ),
-                            prefixIcon: const Icon(
-                              Icons.person_2_outlined,
-                              color: Color.fromARGB(255, 55, 0, 255),
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please Enter First Name';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 10),
-                        TextFormField(
-                          controller: _lnameController,
-                          decoration: InputDecoration(
-                            hintText: 'Last Name',
-                            hintStyle: TextStyle(
-                              color: Colors.grey[400],
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(color: Colors.white),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(
-                                color: Color.fromARGB(255, 55, 0, 255),
-                              ),
-                            ),
-                            prefixIcon: const Icon(
-                              Icons.person_2_outlined,
-                              color: Color.fromARGB(255, 55, 0, 255),
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please Enter Last Name';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        TextFormField(
-                          controller: _phoneNumController,
-                          decoration: InputDecoration(
-                            hintText: 'Phone Number',
-                            hintStyle: TextStyle(
-                              color: Colors.grey[400],
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(color: Colors.white),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(
-                                color: Color.fromARGB(255, 55, 0, 255),
-                              ),
-                            ),
-                            prefixIcon: const Icon(
-                              Icons.phone_iphone,
-                              color: Color.fromARGB(255, 55, 0, 255),
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please Enter Phone Number';
-                            }
-                            return null;
-                          },
-                          keyboardType: TextInputType.phone,
-                        ),
-                        const SizedBox(height: 10),
-                        TextFormField(
-                          controller: _cityController,
-                          decoration: InputDecoration(
-                            hintText: 'City',
-                            hintStyle: TextStyle(
-                              color: Colors.grey[400],
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(color: Colors.white),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(
-                                color: Color.fromARGB(255, 55, 0, 255),
-                              ),
-                            ),
-                            prefixIcon: const Icon(
-                              Icons.mail_outline,
-                              color: Color.fromARGB(255, 55, 0, 255),
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please Enter City';
-                            }
-                            return null;
-                          },
-                          keyboardType: TextInputType.emailAddress,
-                        ),
-                        const SizedBox(height: 10),
-                        TextFormField(
-                          controller: _countryController,
-                          decoration: InputDecoration(
-                            hintText: 'Country',
-                            hintStyle: TextStyle(
-                              color: Colors.grey[400],
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(color: Colors.white),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(
-                                color: Color.fromARGB(255, 55, 0, 255),
-                              ),
-                            ),
-                            prefixIcon: const Icon(
-                              Icons.mail_outline,
-                              color: Color.fromARGB(255, 55, 0, 255),
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please Enter Country';
-                            }
-                            return null;
-                          },
-                          keyboardType: TextInputType.emailAddress,
-                        ),
-                        const SizedBox(height: 10),
-                        TextFormField(
-                          controller: _emailController,
-                          decoration: InputDecoration(
-                            hintText: 'Email',
-                            hintStyle: TextStyle(
-                              color: Colors.grey[400],
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(color: Colors.white),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(
-                                color: Color.fromARGB(255, 55, 0, 255),
-                              ),
-                            ),
-                            prefixIcon: const Icon(
-                              Icons.mail_outline,
-                              color: Color.fromARGB(255, 55, 0, 255),
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please Enter Email';
-                            }
-                            return null;
-                          },
-                          keyboardType: TextInputType.emailAddress,
-                        ),
-                        const SizedBox(height: 10),
-                        TextFormField(
-                          controller: _passwordController,
-                          decoration: InputDecoration(
-                            hintText: 'Password',
-                            hintStyle: TextStyle(
-                              color: Colors.grey[400],
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(color: Colors.white),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(
-                                color: Color.fromARGB(255, 55, 0, 255),
-                              ),
-                            ),
-                            prefixIcon: const Icon(
-                              Icons.key_outlined,
-                              color: Color.fromARGB(255, 55, 0, 255),
-                            ),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                isObscure
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                              ),
-                              onPressed: () {
-                                setState(
-                                  () {
-                                    isObscure = !isObscure;
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-                          obscureText: isObscure,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please Enter Password';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 25),
-                        InkWell(
-                          onTap: () {
-                            if (_key.currentState!.validate()) {
-                              var user = UserEntity(
-                                firstName: _fnameController.text,
-                                lastName: _lnameController.text,
-                                phoneNumber: _phoneNumController.text,
-                                city: _cityController.text,
-                                country: _countryController.text,
-                                email: _emailController.text,
-                                password: _passwordController.text,
-                                image:
-                                    ref.read(authViewModelProvider).imageName ??
-                                        '',
-                              );
-
-                              ref
-                                  .read(authViewModelProvider.notifier)
-                                  .registerUser(context, user);
-                            }
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(25),
-                            margin: const EdgeInsets.symmetric(horizontal: 25),
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                "Register",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+      body: Form(
+        key: _key,
+        child: Container(
+          height: double.maxFinite,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [ThemeConstant.mainColor, ThemeConstant.secondaryColor],
+            ),
+          ),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(size.height * 0.030),
+              child: OverflowBar(
+                overflowAlignment: OverflowBarAlignment.center,
+                overflowSpacing: size.height * 0.014,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 30),
+                    child: Image.asset(image1),
+                  ),
+                  Text(
+                    "Hi There !",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 20,
+                      color: ThemeConstant.kWhiteColor.withOpacity(0.7),
                     ),
                   ),
-                ),
+                  Text(
+                    "Let's Get Started",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 34,
+                      color: ThemeConstant.kWhiteColor,
+                    ),
+                  ),
+                  SizedBox(height: size.height * 0.024),
+                  TextFormField(
+                    controller: _firstNameController,
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(color: ThemeConstant.kInputColor),
+                    decoration: InputDecoration(
+                      contentPadding:
+                          const EdgeInsets.symmetric(vertical: 25.0),
+                      filled: true,
+                      hintText: "First Name",
+                      prefixIcon: IconButton(
+                        onPressed: () {},
+                        icon: SvgPicture.asset(userIcon),
+                      ),
+                      fillColor: ThemeConstant.kWhiteColor,
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(37),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please Enter a First Name';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    controller: _lastNameController,
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(color: ThemeConstant.kInputColor),
+                    decoration: InputDecoration(
+                      contentPadding:
+                          const EdgeInsets.symmetric(vertical: 25.0),
+                      filled: true,
+                      hintText: "Last Name",
+                      prefixIcon: IconButton(
+                        onPressed: () {},
+                        icon: SvgPicture.asset(userIcon),
+                      ),
+                      fillColor: ThemeConstant.kWhiteColor,
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(37),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please Enter a Last Name';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    controller: _phoneNumController,
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(color: ThemeConstant.kInputColor),
+                    decoration: InputDecoration(
+                      contentPadding:
+                          const EdgeInsets.symmetric(vertical: 25.0),
+                      filled: true,
+                      hintText: "Phone Number",
+                      prefixIcon: const Icon(
+                        Icons.phone_iphone,
+                      ),
+                      fillColor: ThemeConstant.kWhiteColor,
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(37),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please Enter a Phone Number';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    controller: _cityController,
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(color: ThemeConstant.kInputColor),
+                    decoration: InputDecoration(
+                      contentPadding:
+                          const EdgeInsets.symmetric(vertical: 25.0),
+                      filled: true,
+                      hintText: "City",
+                      prefixIcon: const Icon(
+                        Icons.location_city,
+                      ),
+                      fillColor: ThemeConstant.kWhiteColor,
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(37),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please Enter a City';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    controller: _countryController,
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(color: ThemeConstant.kInputColor),
+                    decoration: InputDecoration(
+                      contentPadding:
+                          const EdgeInsets.symmetric(vertical: 25.0),
+                      filled: true,
+                      hintText: "Country",
+                      prefixIcon: const Icon(
+                        Icons.location_city,
+                      ),
+                      fillColor: ThemeConstant.kWhiteColor,
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(37),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please Enter a Country';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    controller: _emailController,
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(color: ThemeConstant.kInputColor),
+                    decoration: InputDecoration(
+                      contentPadding:
+                          const EdgeInsets.symmetric(vertical: 25.0),
+                      filled: true,
+                      hintText: "Email",
+                      prefixIcon: IconButton(
+                        onPressed: () {},
+                        icon: SvgPicture.asset(userIcon),
+                      ),
+                      fillColor: ThemeConstant.kWhiteColor,
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(37),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please Enter an Email';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    controller: _passwordController,
+                    obscureText: isObscure,
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(color: ThemeConstant.kInputColor),
+                    decoration: InputDecoration(
+                      contentPadding:
+                          const EdgeInsets.symmetric(vertical: 25.0),
+                      filled: true,
+                      hintText: "Password",
+                      prefixIcon: IconButton(
+                        onPressed: () {},
+                        icon: SvgPicture.asset(keyIcon),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          isObscure
+                              ? Icons.visibility
+                              : Icons.visibility_off_outlined,
+                        ),
+                        onPressed: () {
+                          setState(
+                            () {
+                              isObscure = !isObscure;
+                            },
+                          );
+                        },
+                      ),
+                      fillColor: ThemeConstant.kWhiteColor,
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(37),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please Enter a Password';
+                      }
+                      return null;
+                    },
+                  ),
+                  CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: double.infinity,
+                      height: size.height * 0.080,
+                      decoration: BoxDecoration(
+                        color: ThemeConstant.kButtonColor,
+                        borderRadius: BorderRadius.circular(37),
+                      ),
+                      child: Text(
+                        "Create an Account",
+                        style: TextStyle(
+                          color: ThemeConstant.kWhiteColor,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    onPressed: () async {
+                      if (_key.currentState!.validate()) {
+                        var user = UserEntity(
+                          firstName: _firstNameController.text,
+                          lastName: _lastNameController.text,
+                          phoneNumber: _phoneNumController.text,
+                          city: _cityController.text,
+                          country: _countryController.text,
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                          // image:
+                          //     ref.read(authViewModelProvider).imageName ?? '',
+                        );
+
+                        ref
+                            .read(authViewModelProvider.notifier)
+                            .registerUser(context, user);
+                      }
+                    },
+                  ),
+                  SizedBox(height: size.height * 0.0),
+                  SvgPicture.asset("assets/images/deisgn.svg"),
+                  SizedBox(height: size.height * 0.0),
+                  CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: double.infinity,
+                      height: size.height * 0.080,
+                      decoration: BoxDecoration(
+                        boxShadow: const [
+                          BoxShadow(
+                            blurRadius: 45,
+                            spreadRadius: 0,
+                            color: Color.fromRGBO(120, 37, 139, 0.25),
+                            offset: Offset(0, 25),
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(37),
+                        color: const Color.fromRGBO(225, 225, 225, 0.28),
+                      ),
+                      child: Text(
+                        "Login",
+                        style: TextStyle(
+                          color: ThemeConstant.kWhiteColor,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
               ),
             ),
-          )
-        ],
+          ),
+        ),
       ),
     );
   }

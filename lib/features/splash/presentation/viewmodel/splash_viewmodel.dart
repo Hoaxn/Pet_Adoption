@@ -29,8 +29,6 @@ class SplashViewModel extends StateNotifier<void> {
         if (token != null) {
           bool isTokenExpired = isValidToken(token);
           if (isTokenExpired) {
-            // We will not do navigation like this,
-            // we will use mixin and navigator class for this
             Navigator.popAndPushNamed(context, AppRoute.loginRoute);
           } else {
             Navigator.popAndPushNamed(context, AppRoute.homeRoute);
