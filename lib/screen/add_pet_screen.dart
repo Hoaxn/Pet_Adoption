@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -45,16 +44,16 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
     }
   }
 
-  void _selectImage() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.image,
-    );
-    if (result != null) {
-      setState(() {
-        _imagePath = result.files.single.path!;
-      });
-    }
-  }
+  // void _selectImage() async {
+  //   FilePickerResult? result = await FilePicker.platform.pickFiles(
+  //     type: FileType.image,
+  //   );
+  //   if (result != null) {
+  //     setState(() {
+  //       _imagePath = result.files.single.path!;
+  //     });
+  //   }
+  // }
 
   @override
   void didChangeDependencies() {
@@ -62,7 +61,7 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
 
     // Retrieve the passed pet argument
     pet = ModalRoute.of(context)!.settings.arguments as PetEntity?;
-    print("pet ${pet?.petId}");
+    // print("pet ${pet?.petId}");
     // Populate the form fields with the pet data
     if (pet != null) {
       _nameController.text = pet!.name;
@@ -195,8 +194,8 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
                           ),
                           TextFormField(
                             controller: _genderController,
-                            decoration:
-                                const InputDecoration(labelText: 'Gender'),
+                            decoration: const InputDecoration(
+                                labelText: 'Gender male or female'),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter the pet\'s Gender';
@@ -217,8 +216,8 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
                           ),
                           TextFormField(
                             controller: _colorController,
-                            decoration:
-                                const InputDecoration(labelText: 'Color'),
+                            decoration: const InputDecoration(
+                                labelText: 'Color in Hexcode without #'),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter the pet\'s color';

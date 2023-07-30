@@ -26,14 +26,17 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
   List<PetEntity> filteredPets = [];
 
   @override
-  void initState() {
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
     isDark = ref.read(isDarkThemeProvider);
 
-    super.initState();
+    // Filter pets with species "dog" when the app is opened
+    filterPetsBySpecies("dog");
   }
 
   void filterPetsBySpecies(String species) {
-    print("Filtering by species: $species");
+    // print("Filtering by species: $species");
     setState(
       () {
         final petState = ref.watch(petViewModelProvider);
@@ -44,7 +47,7 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                   ),
             )
             .toList();
-        print("Filtered pets count: ${filteredPets.length}");
+        // print("Filtered pets count: ${filteredPets.length}");
       },
     );
   }
@@ -66,7 +69,6 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
             },
             child: Material(
               color: selectedAnimalIconIndex == index
-                  // ? Theme.of(context).primaryColor
                   ? Theme.of(context).colorScheme.primary
                   : Colors.white,
               elevation: 6.0,
@@ -78,7 +80,6 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                   size: 30.0,
                   color: selectedAnimalIconIndex == index
                       ? Colors.white
-                      // : Theme.of(context).primaryColor,
                       : Theme.of(context).colorScheme.primary,
                 ),
               ),
@@ -90,7 +91,6 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
           Text(
             animalTypes[index],
             style: TextStyle(
-              // color: Theme.of(context).primaryColor,
               color: Theme.of(context).colorScheme.primary,
               fontSize: 15.0,
               fontWeight: FontWeight.w700,
@@ -191,7 +191,6 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                     "Home",
                     style: TextStyle(
                       fontSize: 15,
-                      // color: Theme.of(context).primaryColor,
                       color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
@@ -218,7 +217,6 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                     "Add Pet",
                     style: TextStyle(
                       fontSize: 15,
-                      // color: Theme.of(context).primaryColor,
                       color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
@@ -243,7 +241,6 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                       "Dark Mode",
                       style: TextStyle(
                         fontSize: 15,
-                        // color: Theme.of(context).primaryColor,
                         color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
@@ -295,7 +292,6 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                     "Log out",
                     style: TextStyle(
                       fontSize: 15,
-                      // color: Theme.of(context).primaryColor,
                       color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
@@ -334,16 +330,16 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                             style: TextStyle(
                               fontSize: 17.0,
                               fontWeight: FontWeight.w400,
-                              // color:
-                              //     Theme.of(context).primaryColor.withOpacity(0.6),
-                              color: Theme.of(context).colorScheme.primary,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primary
+                                  .withOpacity(0.6),
                             ),
                           ),
                           Row(
                             children: [
                               Icon(
                                 FontAwesomeIcons.locationDot,
-                                // color: Theme.of(context).primaryColor,
                                 color: Theme.of(context).colorScheme.primary,
                               ),
                               const Text(
@@ -385,7 +381,6 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(40.0),
-                        // color: Theme.of(context).primaryColor.withOpacity(0.07),
                         color: Theme.of(context)
                             .colorScheme
                             .primary
@@ -447,12 +442,11 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                               }),
                             ),
                           ),
-                          // if (petState.isLoading) ...{
-                          //   const Center(
-                          //     child: CircularProgressIndicator(),
-                          //   )
-                          // }
-                          if (petState.error != null) ...{
+                          if (petState.isLoading) ...{
+                            const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          } else if (petState.error != null) ...{
                             Center(
                               child: Text(petState.error!),
                             )
@@ -525,9 +519,6 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                                                             pet.name,
                                                             style: TextStyle(
                                                               fontSize: 25.0,
-                                                              // color:
-                                                              //     Theme.of(context)
-                                                              //         .primaryColor,
                                                               color: Theme.of(
                                                                       context)
                                                                   .colorScheme
@@ -616,8 +607,6 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                                                           fontSize: 19.0,
                                                           fontWeight:
                                                               FontWeight.w600,
-                                                          // color: Theme.of(context)
-                                                          //     .primaryColor,
                                                           color:
                                                               Theme.of(context)
                                                                   .colorScheme
@@ -633,9 +622,6 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                                                           fontSize: 15.0,
                                                           fontWeight:
                                                               FontWeight.w500,
-                                                          // color: Theme.of(context)
-                                                          //     .primaryColor
-                                                          //     .withOpacity(0.8),
                                                           color: Theme.of(
                                                                   context)
                                                               .colorScheme
@@ -649,9 +635,6 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                                                       Text(
                                                         "${pet.age} years old",
                                                         style: TextStyle(
-                                                          // color: Theme.of(context)
-                                                          //     .primaryColor
-                                                          //     .withOpacity(0.5),
                                                           color: Theme.of(
                                                                   context)
                                                               .colorScheme
