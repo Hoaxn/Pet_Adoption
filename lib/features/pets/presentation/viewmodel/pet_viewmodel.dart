@@ -58,9 +58,10 @@ class PetViewModel extends StateNotifier<PetState> {
       );
       print('success ${success.data}');
       showSnackBar(
-          message: "Delete Pet Successful !",
-          context: context,
-          color: Colors.green);
+        message: "Pet Deleted Successfully !",
+        context: context,
+        color: Colors.green,
+      );
       await getAllPets();
       // Navigator.pushNamed(context, AppRoute.homeRoute);
     });
@@ -96,9 +97,10 @@ class PetViewModel extends StateNotifier<PetState> {
         error: null,
       );
       showSnackBar(
-          message: "Add Pet Successful !",
-          context: context,
-          color: Colors.green);
+        message: "Pet Added Successfully !",
+        context: context,
+        color: Colors.green,
+      );
       // Call the resetFields function to reset the input fields
       resetFields();
       // Navigator.pushNamed(context, AppRoute.homeRoute);

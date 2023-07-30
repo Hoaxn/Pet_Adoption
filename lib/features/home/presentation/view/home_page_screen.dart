@@ -109,6 +109,35 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
     // await Future.delayed(const Duration(seconds: 2));
   }
 
+  Future<bool> showConfirmationDialog(BuildContext context) async {
+    return await showDialog<bool>(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Confirm Delete'),
+              content: const Text('Are you sure you want to delete this pet?'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    // Close the dialog and return false (cancel)
+                    Navigator.of(context).pop(false);
+                  },
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    // Close the dialog and return true (confirm)
+                    Navigator.of(context).pop(true);
+                  },
+                  child: const Text('Delete'),
+                ),
+              ],
+            );
+          },
+        ) ??
+        false; // If showDialog returns null, consider it as "Cancel".
+  }
+
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -516,23 +545,33 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                                                               if (value ==
                                                                   'edit') {
                                                                 // Handle edit action
-                                                                Navigator.pushNamed(
-                                                                    context,
-                                                                    AppRoute
-                                                                        .addPetRoute,
-                                                                    arguments:
-                                                                        pet);
+                                                                Navigator
+                                                                    .pushNamed(
+                                                                  context,
+                                                                  AppRoute
+                                                                      .addPetRoute,
+                                                                  arguments:
+                                                                      pet,
+                                                                );
                                                               } else if (value ==
                                                                   'delete') {
-                                                                // Handle delete action
-                                                                final inventoryViewModel =
-                                                                    ref.read(
-                                                                        petViewModelProvider
-                                                                            .notifier);
-                                                                await inventoryViewModel
-                                                                    .deletePet(
-                                                                        context,
-                                                                        pet.petId!);
+                                                                // Show confirmation dialog for delete action
+                                                                bool
+                                                                    confirmDelete =
+                                                                    await showConfirmationDialog(
+                                                                        context);
+                                                                if (confirmDelete) {
+                                                                  // Handle delete action
+                                                                  final petViewModel =
+                                                                      ref.read(
+                                                                          petViewModelProvider
+                                                                              .notifier);
+                                                                  await petViewModel
+                                                                      .deletePet(
+                                                                    context,
+                                                                    pet.petId!,
+                                                                  );
+                                                                }
                                                               }
                                                             },
                                                             itemBuilder:
@@ -543,14 +582,16 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                                                                     String>(
                                                                   value: 'edit',
                                                                   child: Text(
-                                                                      'Edit'),
+                                                                    'Edit',
+                                                                  ),
                                                                 ),
                                                                 const PopupMenuItem<
                                                                     String>(
                                                                   value:
                                                                       'delete',
                                                                   child: Text(
-                                                                      'Delete'),
+                                                                    'Delete',
+                                                                  ),
                                                                 ),
                                                               ];
                                                             },

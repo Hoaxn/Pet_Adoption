@@ -225,30 +225,35 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
                             },
                           ),
                           const SizedBox(height: 16),
-                          ElevatedButton(
-                            onPressed: () {
-                              _pickImage(ImageSource.gallery);
-                            },
-                            child: Row(
-                              children: [
-                                const Text("Image"),
-                                if (_imageFile != null)
-                                  Image.file(
-                                    _imageFile!,
-                                    width: 150,
-                                    height: 150,
-                                  ),
-                                if (_imageFile == null &&
-                                    pet != null &&
-                                    pet!.image != null)
-                                  Image.network(
-                                    'http://localhost:8000/uploads/${pet!.image!}',
-                                    fit: BoxFit.cover,
-                                    width: 150,
-                                    height: 150,
-                                  ),
-                              ],
-                            ),
+                          Row(
+                            children: [
+                              PrimaryButton(
+                                text: 'Select Image',
+                                onPressed: () {
+                                  _pickImage(ImageSource.gallery);
+                                },
+                                buttonWidth: 170,
+                                verticalPadding: 9,
+                                isLoading: false,
+                              ),
+                              // const Text("Image"),
+                              const SizedBox(width: 16.0),
+                              if (_imageFile != null)
+                                Image.file(
+                                  _imageFile!,
+                                  width: 150,
+                                  height: 150,
+                                ),
+                              if (_imageFile == null &&
+                                  pet != null &&
+                                  pet!.image != null)
+                                Image.network(
+                                  'http://localhost:8000/uploads/${pet!.image!}',
+                                  fit: BoxFit.cover,
+                                  width: 150,
+                                  height: 150,
+                                ),
+                            ],
                           ),
                           PrimaryButton(
                             text: pet != null ? 'Update Pet' : 'Add Pet',

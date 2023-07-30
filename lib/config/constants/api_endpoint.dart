@@ -26,6 +26,6 @@ class ApiEndpoints {
 
   // ====================== Liked Pet Routes ======================
   static const String likePet = "/liked-pets";
-  static const String getLikedPetsByUserId = "/liked-pets/:userId";
-  static const String unlikePet = "/liked-pets/:userId/:petId";
+  static const String getLikedPetsByUserId = "/liked-pets";
+  static const String unlikePet = "/liked-pets=";
 }
