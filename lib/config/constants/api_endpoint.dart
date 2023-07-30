@@ -10,8 +10,8 @@ class ApiEndpoints {
   static const String login = "/auth/login";
   static const String register = "/auth/register";
   static const String getAllUser = "/auth/users";
-  static const String deleteUser = "/auth/users/:id";
-  static const String updateUser = "/auth/users/:id";
+  static const String deleteUser = "/auth/users";
+  static const String updateUser = "/auth/users";
   // static const String uploadImage = "auth/uploadImage";
 
   // ====================== Pet Routes ======================
@@ -27,5 +27,5 @@ class ApiEndpoints {
   // ====================== Liked Pet Routes ======================
   static const String likePet = "/liked-pets";
   static const String getLikedPetsByUserId = "/liked-pets";
-  static const String unlikePet = "/liked-pets=";
+  static const String unlikePet = "/liked-pets";
 }

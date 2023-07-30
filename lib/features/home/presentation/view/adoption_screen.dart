@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
 import 'package:pet_adoption_app/config/routers/app_route.dart';
+import 'package:pet_adoption_app/core/common/widget/primary_button.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/pets_entity.dart';
 import 'package:pet_adoption_app/screen/adoption_form_screen.dart';
 
@@ -26,6 +27,8 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+
+    Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -80,7 +83,7 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: screenHeight * 0.34,
+                    height: screenHeight * 0.33,
                     // height: screenHeight * 0.2,
                     child: Hero(
                       tag: widget.pet.name,
@@ -202,34 +205,21 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                         width: 25.0,
                       ),
                       Expanded(
-                        child: Material(
+                        child: PrimaryButton(
+                          text: "Adopt ${widget.pet.name}",
+                          isLoading: false,
                           borderRadius: BorderRadius.circular(20.0),
-                          elevation: 4.0,
-                          // color: Theme.of(context).primaryColor,
-                          color: Theme.of(context).colorScheme.primary,
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      AdoptionFormScreen(pet: widget.pet),
-                                ),
-                              );
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: Text(
-                                "Adopt ${widget.pet.name} !",
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textAlign: TextAlign.center,
+                          buttonHeight: size.height * 0.070,
+                          boxShadow: const [],
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    AdoptionFormScreen(pet: widget.pet),
                               ),
-                            ),
-                          ),
+                            );
+                          },
                         ),
                       ),
                     ],

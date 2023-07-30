@@ -74,7 +74,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 // import 'package:pet_adoption_app/components/buttons.dart';
 import 'package:pet_adoption_app/config/routers/app_route.dart';
-import 'package:pet_adoption_app/features/auth/domain/use_case/auth_use_case.dart';
+import 'package:pet_adoption_app/features/auth/domain/usecase/auth_usecase.dart';
 import 'package:pet_adoption_app/features/auth/presentation/view/login_screen.dart';
 import 'package:pet_adoption_app/features/auth/presentation/viewmodel/auth_view_model.dart';
 

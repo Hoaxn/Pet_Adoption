@@ -5,11 +5,11 @@ import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:pet_adoption_app/config/constants/theme_constant.dart';
 import 'package:pet_adoption_app/config/routers/app_route.dart';
 import 'package:pet_adoption_app/core/common/provider/is_dark_theme.dart';
+import 'package:pet_adoption_app/features/home/data/model/home_page_model.dart';
 import 'package:pet_adoption_app/features/home/presentation/view/adoption_screen.dart';
 import 'package:pet_adoption_app/features/home/presentation/viewmodel/home_viewmodel.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/pets_entity.dart';
 import 'package:pet_adoption_app/features/pets/presentation/viewmodel/pet_viewmodel.dart';
-import 'package:pet_adoption_app/model/home_page_model.dart';
 
 class HomePageScreen extends ConsumerStatefulWidget {
   const HomePageScreen({super.key});
@@ -439,7 +439,7 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                           SizedBox(
                             height: 120.0,
                             child: ListView.builder(
-                              padding: const EdgeInsets.only(left: 25.0),
+                              padding: const EdgeInsets.only(left: 20.0),
                               scrollDirection: Axis.horizontal,
                               itemCount: animalTypes.length,
                               itemBuilder: ((context, index) {
@@ -485,8 +485,8 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                                   child: Padding(
                                     padding: const EdgeInsets.only(
                                       bottom: 10.0,
-                                      left: 25.0,
-                                      right: 25.0,
+                                      left: 20.0,
+                                      right: 20.0,
                                     ),
                                     child: Stack(
                                       alignment: Alignment.centerLeft,

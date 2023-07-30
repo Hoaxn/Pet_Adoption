@@ -43,6 +43,8 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -338,6 +340,8 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                             text: 'Adopt ${widget.pet.name}',
                             isLoading:
                                 ref.watch(petViewModelProvider).isLoading,
+                            buttonHeight: size.height * 0.050,
+                            borderRadius: BorderRadius.circular(10),
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 String fullName = nameController.text;
@@ -346,7 +350,7 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                                 String address = addressController.text;
                                 String petId = widget.pet.petId ?? '';
 
-                                AdoptionFormEntity currentProduct =
+                                AdoptionFormEntity currentPet =
                                     AdoptionFormEntity(
                                   fullName: fullName,
                                   email: email,
@@ -358,7 +362,7 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                                     .read(petViewModelProvider.notifier)
                                     .adoptPet(
                                       context,
-                                      currentProduct,
+                                      currentPet,
                                       _resetFields,
                                     );
                               }

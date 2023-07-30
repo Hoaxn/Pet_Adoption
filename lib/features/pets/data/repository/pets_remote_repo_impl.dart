@@ -19,20 +19,16 @@ class PetRemoteRepositoryImpl implements IPetRepository {
   final PetRemoteDataSource petRemoteDataSource;
 
   PetRemoteRepositoryImpl({required this.petRemoteDataSource});
-  @override
-  Future<Either<Failure, bool>> addPet(PetEntity pet, File file) {
-    return petRemoteDataSource.addPet(pet, file);
-  }
 
   @override
   Future<Either<Failure, Response>> getAllPets() {
     return petRemoteDataSource.getAllPets();
   }
 
-  // @override
-  // Future<Either<Failure, bool>> deletePet(String id) {
-  //   return petRemoteDataSource.deletePet(id);
-  // }
+  @override
+  Future<Either<Failure, bool>> addPet(PetEntity pet, File file) {
+    return petRemoteDataSource.addPet(pet, file);
+  }
 
   @override
   Future<Either<Failure, Response>> deletePet(String petId) {
@@ -42,25 +38,5 @@ class PetRemoteRepositoryImpl implements IPetRepository {
   @override
   Future<Either<Failure, bool>> adoptPet(AdoptionFormEntity adoptFormData) {
     return petRemoteDataSource.adoptPet(adoptFormData);
-  }
-
-  // @override
-  // Future<Either<Failure, bool>> likePet(String petId) {
-  //   return petRemoteDataSource.likePet(petId);
-  // }
-
-  // @override
-  // Future<Either<Failure, bool>> unlikePet(String petId) {
-  //   return petRemoteDataSource.unlikePet(petId);
-  // }
-
-  @override
-  Future<Either<Failure, bool>> likePet(String userId, String petId) {
-    return petRemoteDataSource.likePet(userId, petId);
-  }
-
-  @override
-  Future<Either<Failure, bool>> unlikePet(String userId, String petId) {
-    return petRemoteDataSource.unlikePet(userId, petId);
   }
 }

@@ -10,13 +10,12 @@ class PetEntity extends Equatable {
   final String description;
   final String? color;
   final String? image;
-  bool isLiked;
 
   @override
   List<Object?> get props =>
       [petId, name, age, species, breed, gender, description, color, image];
 
-  PetEntity({
+  const PetEntity({
     this.petId,
     required this.name,
     required this.age,
@@ -26,7 +25,6 @@ class PetEntity extends Equatable {
     required this.description,
     this.color,
     this.image,
-    this.isLiked = false,
   });
 
   factory PetEntity.fromJson(Map<String, dynamic> json) {

@@ -31,7 +31,9 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
   final TextEditingController _colorController = TextEditingController();
 
   String? _imagePath;
+
   File? _imageFile;
+
   Future<void> _pickImage(ImageSource source) async {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: source);
@@ -63,12 +65,12 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
     print("pet ${pet?.petId}");
     // Populate the form fields with the pet data
     if (pet != null) {
-      _nameController.text = pet!.name ?? '';
-      _ageController.text = pet!.age ?? '';
-      _speciesController.text = pet!.species ?? '';
-      _breedController.text = pet!.breed ?? '';
-      _genderController.text = pet!.gender ?? '';
-      _descriptionController.text = pet!.description ?? '';
+      _nameController.text = pet!.name;
+      _ageController.text = pet!.age;
+      _speciesController.text = pet!.species;
+      _breedController.text = pet!.breed;
+      _genderController.text = pet!.gender;
+      _descriptionController.text = pet!.description;
       _colorController.text = pet!.color ?? '';
     }
   }
@@ -224,7 +226,7 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
                               return null;
                             },
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 30),
                           Row(
                             children: [
                               PrimaryButton(
@@ -232,37 +234,40 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
                                 onPressed: () {
                                   _pickImage(ImageSource.gallery);
                                 },
-                                buttonWidth: 170,
-                                verticalPadding: 9,
+                                buttonWidth: 150,
                                 isLoading: false,
                               ),
-                              // const Text("Image"),
-                              const SizedBox(width: 16.0),
+                              const SizedBox(
+                                height: 100,
+                              ),
                               if (_imageFile != null)
                                 Image.file(
                                   _imageFile!,
-                                  width: 150,
-                                  height: 150,
+                                  width: 200,
+                                  height: 200,
                                 ),
                               if (_imageFile == null &&
                                   pet != null &&
                                   pet!.image != null)
                                 Image.network(
-                                  'http://localhost:8000/uploads/${pet!.image!}',
-                                  fit: BoxFit.cover,
-                                  width: 150,
-                                  height: 150,
+                                  'http://localhost:3000/uploads/${pet!.image!}',
+                                  fit: BoxFit.contain,
+                                  width: 200,
+                                  height: 200,
                                 ),
                             ],
                           ),
+                          const SizedBox(
+                            height: 30,
+                          ),
                           PrimaryButton(
-                            text: pet != null ? 'Update Pet' : 'Add Pet',
+                            text:
+                                pet != null ? 'Update ${pet?.name}' : 'Add Pet',
                             isLoading:
                                 ref.watch(petViewModelProvider).isLoading,
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                // Perform add product operation
-
+                                // Perform add pet operation
                                 String name = _nameController.text;
                                 String age = _ageController.text;
                                 String species = _speciesController.text;
@@ -274,14 +279,15 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
                                 String petId = pet?.petId ?? '';
 
                                 PetEntity currentPet = PetEntity(
-                                    petId: petId,
-                                    name: name,
-                                    age: age,
-                                    species: species,
-                                    breed: breed,
-                                    gender: gender,
-                                    description: description,
-                                    color: color);
+                                  petId: petId,
+                                  name: name,
+                                  age: age,
+                                  species: species,
+                                  breed: breed,
+                                  gender: gender,
+                                  description: description,
+                                  color: color,
+                                );
                                 await ref
                                     .read(petViewModelProvider.notifier)
                                     .addPet(context, currentPet, _imageFile!,

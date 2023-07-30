@@ -1,8 +1,6 @@
-// liked_pet.dart
-class LikedPetsEntity {
-  final String? id;
+class LikedPetEntity {
   final String userId;
   final String petId;
 
-  LikedPetsEntity({this.id, required this.userId, required this.petId});
+  LikedPetEntity({required this.userId, required this.petId});
 }

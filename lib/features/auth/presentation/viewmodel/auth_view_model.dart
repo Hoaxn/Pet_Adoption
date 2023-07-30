@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_adoption_app/config/routers/app_route.dart';
 import 'package:pet_adoption_app/core/common/my_snackbar.dart';
 import 'package:pet_adoption_app/features/auth/domain/entity/user_entity.dart';
-import 'package:pet_adoption_app/features/auth/domain/use_case/auth_use_case.dart';
+import 'package:pet_adoption_app/features/auth/domain/usecase/auth_usecase.dart';
 import 'package:pet_adoption_app/features/auth/presentation/state/auth_state.dart';
 
 final authViewModelProvider =

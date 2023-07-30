@@ -7,7 +7,7 @@ import 'package:mockito/mockito.dart';
 // import 'package:pet_adoption_app/components/buttons.dart';
 import 'package:pet_adoption_app/config/routers/app_route.dart';
 import 'package:pet_adoption_app/features/auth/domain/entity/user_entity.dart';
-import 'package:pet_adoption_app/features/auth/domain/use_case/auth_use_case.dart';
+import 'package:pet_adoption_app/features/auth/domain/usecase/auth_usecase.dart';
 import 'package:pet_adoption_app/features/auth/presentation/view/register_screen.dart';
 import 'package:pet_adoption_app/features/auth/presentation/viewmodel/auth_view_model.dart';
 
@@ -35,6 +35,8 @@ void main() {
         phoneNumber: '1234567890',
         email: 'abcd@example.com',
         password: '12345678',
+        city: 'Kathmandu',
+        country: 'Nepal',
       );
     },
   );

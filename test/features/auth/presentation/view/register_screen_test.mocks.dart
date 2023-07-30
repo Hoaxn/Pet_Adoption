@@ -10,7 +10,7 @@ import 'package:mockito/mockito.dart' as _i1;
 import 'package:pet_adoption_app/core/failure/failure.dart' as _i5;
 import 'package:pet_adoption_app/features/auth/domain/entity/user_entity.dart'
     as _i6;
-import 'package:pet_adoption_app/features/auth/domain/use_case/auth_use_case.dart'
+import 'package:pet_adoption_app/features/auth/domain/usecase/auth_usecase.dart'
     as _i3;
 
 // ignore_for_file: type=lint
