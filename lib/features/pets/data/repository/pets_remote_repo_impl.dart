@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_adoption_app/core/failure/failure.dart';
 import 'package:pet_adoption_app/features/pets/data/data_source/pets_remote_data_source.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/adoption_form_entity.dart';
-import 'package:pet_adoption_app/features/pets/domain/entity/pets_entity.dart';
+import 'package:pet_adoption_app/features/pets/domain/entity/pet_entity.dart';
 import 'package:pet_adoption_app/features/pets/domain/repository/pets_repository.dart';
 
 final petRemoteRepositoryProvider = Provider<IPetRepository>(
@@ -38,5 +38,20 @@ class PetRemoteRepositoryImpl implements IPetRepository {
   @override
   Future<Either<Failure, bool>> adoptPet(AdoptionFormEntity adoptFormData) {
     return petRemoteDataSource.adoptPet(adoptFormData);
+  }
+
+  @override
+  Future<Either<Failure, bool>> saveLikedPet(String? petId) {
+    return petRemoteDataSource.saveLikedPet(petId);
+  }
+
+  @override
+  Future<Either<Failure, Response>> removeLikedPet(String? petId) {
+    return petRemoteDataSource.removeLikedPet(petId);
+  }
+
+  @override
+  Future<Either<Failure, Response>> getLikedPets(String? petId) {
+    return petRemoteDataSource.getLikedPets(petId);
   }
 }

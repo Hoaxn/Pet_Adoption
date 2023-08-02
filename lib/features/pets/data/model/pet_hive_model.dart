@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 import 'package:pet_adoption_app/config/constants/hive_table_constant.dart';
-import 'package:pet_adoption_app/features/pets/domain/entity/pets_entity.dart';
+import 'package:pet_adoption_app/features/pets/domain/entity/pet_entity.dart';
 import 'package:uuid/uuid.dart';
 
 part 'pet_hive_model.g.dart';

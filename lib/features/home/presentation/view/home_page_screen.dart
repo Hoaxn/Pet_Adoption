@@ -8,7 +8,7 @@ import 'package:pet_adoption_app/core/common/provider/is_dark_theme.dart';
 import 'package:pet_adoption_app/features/home/data/model/home_page_model.dart';
 import 'package:pet_adoption_app/features/home/presentation/view/adoption_screen.dart';
 import 'package:pet_adoption_app/features/home/presentation/viewmodel/home_viewmodel.dart';
-import 'package:pet_adoption_app/features/pets/domain/entity/pets_entity.dart';
+import 'package:pet_adoption_app/features/pets/domain/entity/pet_entity.dart';
 import 'package:pet_adoption_app/features/pets/presentation/viewmodel/pet_viewmodel.dart';
 
 class HomePageScreen extends ConsumerStatefulWidget {
@@ -114,6 +114,7 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
+              backgroundColor: Theme.of(context).colorScheme.background,
               title: const Text('Confirm Delete'),
               content: const Text('Are you sure you want to delete this pet?'),
               actions: [
@@ -138,17 +139,17 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
         false; // If showDialog returns null, consider it as "Cancel".
   }
 
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void openDrawer() {
+    scaffoldKey.currentState?.openDrawer();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
     final deviceWidth = MediaQuery.of(context).size.width;
 
     final petState = ref.watch(petViewModelProvider);
-
-    void openDrawer() {
-      scaffoldKey.currentState?.openDrawer();
-    }
 
     // final internetStatus = ref.watch(connectivityStatusProvider);
 
@@ -176,6 +177,7 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
             ),
             InkWell(
               onTap: () {
+                Navigator.pop(context);
                 Navigator.pushReplacementNamed(context, AppRoute.homeRoute);
               },
               child: Row(
@@ -202,6 +204,7 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
             ),
             InkWell(
               onTap: () {
+                Navigator.pop(context);
                 Navigator.pushReplacementNamed(context, AppRoute.addPetRoute);
               },
               child: Row(
@@ -215,6 +218,33 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                   ),
                   Text(
                     "Add Pet",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushReplacementNamed(context, AppRoute.likedPetRoute);
+              },
+              child: Row(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Icon(FontAwesomeIcons.solidHeart),
+                  ),
+                  const SizedBox(
+                    width: 16.0,
+                  ),
+                  Text(
+                    "Favorites",
                     style: TextStyle(
                       fontSize: 15,
                       color: Theme.of(context).colorScheme.primary,
@@ -370,325 +400,304 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                     ],
                   ),
                 ),
-                LiquidPullToRefresh(
-                  onRefresh: _handleRefresh,
-                  color: ThemeConstant.secondaryColor,
-                  animSpeedFactor: 3,
-                  height: 300,
-                  backgroundColor: ThemeConstant.mainColor,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 30),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(40.0),
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withOpacity(0.07),
-                      ),
-                      child: Column(
-                        children: [
-                          Padding(
+                Padding(
+                  padding: const EdgeInsets.only(top: 30),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(40.0),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withOpacity(0.07),
+                    ),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 20.0,
+                            horizontal: 25.0,
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
                             padding: const EdgeInsets.symmetric(
-                              vertical: 20.0,
-                              horizontal: 25.0,
+                              horizontal: 11.0,
                             ),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 11.0,
-                              ),
-                              // child: Row(
-                              //   children: [
-                              //     Icon(
-                              //       FontAwesomeIcons.magnifyingGlass,
-                              //       color: Colors.grey[500],
-                              //     ),
-                              //     Expanded(
-                              //       child: TextField(
-                              //         style: const TextStyle(
-                              //           fontSize: 17,
-                              //         ),
-                              //         decoration: InputDecoration(
-                              //           border: const OutlineInputBorder(
-                              //             borderSide: BorderSide.none,
-                              //           ),
-                              //           hintText: "Search ...",
-                              //           hintStyle: TextStyle(
-                              //             color: Colors.grey[500],
-                              //           ),
-                              //         ),
-                              //       ),
-                              //     ),
-                              //     Icon(
-                              //       FontAwesomeIcons.filter,
-                              //       color: Colors.grey[500],
-                              //     ),
-                              //   ],
-                              // ),
-                            ),
+                            // child: Row(
+                            //   children: [
+                            //     Icon(
+                            //       FontAwesomeIcons.magnifyingGlass,
+                            //       color: Colors.grey[500],
+                            //     ),
+                            //     Expanded(
+                            //       child: TextField(
+                            //         style: const TextStyle(
+                            //           fontSize: 17,
+                            //         ),
+                            //         decoration: InputDecoration(
+                            //           border: const OutlineInputBorder(
+                            //             borderSide: BorderSide.none,
+                            //           ),
+                            //           hintText: "Search ...",
+                            //           hintStyle: TextStyle(
+                            //             color: Colors.grey[500],
+                            //           ),
+                            //         ),
+                            //       ),
+                            //     ),
+                            //     Icon(
+                            //       FontAwesomeIcons.filter,
+                            //       color: Colors.grey[500],
+                            //     ),
+                            //   ],
+                            // ),
                           ),
-                          SizedBox(
-                            height: 120.0,
-                            child: ListView.builder(
-                              padding: const EdgeInsets.only(left: 20.0),
-                              scrollDirection: Axis.horizontal,
-                              itemCount: animalTypes.length,
-                              itemBuilder: ((context, index) {
-                                return buildAnimalIcons(index);
-                              }),
-                            ),
+                        ),
+                        SizedBox(
+                          height: 120.0,
+                          child: ListView.builder(
+                            padding: const EdgeInsets.only(left: 20.0),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: animalTypes.length,
+                            itemBuilder: ((context, index) {
+                              return buildAnimalIcons(index);
+                            }),
                           ),
-                          if (petState.isLoading) ...{
-                            const Center(
-                              child: CircularProgressIndicator(),
-                            )
-                          } else if (petState.error != null) ...{
-                            Center(
-                              child: Text(petState.error!),
-                            )
-                          } else if (petState.pets.isEmpty) ...{
-                            const Center(
-                              child: Text("No Pets"),
-                            ),
-                          } else ...{
-                            ListView.builder(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              // itemCount: petState.pets.length,
-                              itemCount: filteredPets.length,
-                              itemBuilder: (content, index) {
-                                // final pet = petState.pets[index];
-                                final pet = filteredPets[index];
+                        ),
+                        if (petState.isLoading) ...{
+                          const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        } else if (petState.pets.isEmpty) ...{
+                          const Center(
+                            child: Text("No Pets"),
+                          ),
+                        } else ...{
+                          ListView.builder(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            // itemCount: petState.pets.length,
+                            itemCount: filteredPets.length,
+                            itemBuilder: (content, index) {
+                              // final pet = petState.pets[index];
+                              final pet = filteredPets[index];
 
-                                return InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => AdoptionScreen(
-                                          pet: pet,
-                                        ),
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => AdoptionScreen(
+                                        pet: pet,
                                       ),
-                                    );
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                      bottom: 10.0,
-                                      left: 20.0,
-                                      right: 20.0,
                                     ),
-                                    child: Stack(
-                                      alignment: Alignment.centerLeft,
-                                      children: [
-                                        Material(
-                                          borderRadius:
-                                              BorderRadius.circular(30.0),
-                                          elevation: 5.0,
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                              vertical: 20.0,
-                                              horizontal: 12.0,
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                SizedBox(
-                                                  width: deviceWidth * 0.4,
-                                                ),
-                                                Flexible(
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          Text(
-                                                            pet.name,
-                                                            style: TextStyle(
-                                                              fontSize: 25.0,
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .colorScheme
-                                                                  .primary,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w800,
-                                                            ),
-                                                          ),
-                                                          PopupMenuButton<
-                                                              String>(
-                                                            onSelected:
-                                                                (value) async {
-                                                              // Handle action selection
-                                                              if (value ==
-                                                                  'edit') {
-                                                                // Handle edit action
-                                                                Navigator
-                                                                    .pushNamed(
-                                                                  context,
-                                                                  AppRoute
-                                                                      .addPetRoute,
-                                                                  arguments:
-                                                                      pet,
-                                                                );
-                                                              } else if (value ==
-                                                                  'delete') {
-                                                                // Show confirmation dialog for delete action
-                                                                bool
-                                                                    confirmDelete =
-                                                                    await showConfirmationDialog(
-                                                                        context);
-                                                                if (confirmDelete) {
-                                                                  // Handle delete action
-                                                                  final petViewModel =
-                                                                      ref.read(
-                                                                          petViewModelProvider
-                                                                              .notifier);
-                                                                  await petViewModel
-                                                                      .deletePet(
-                                                                    context,
-                                                                    pet.petId!,
-                                                                  );
-                                                                }
-                                                              }
-                                                            },
-                                                            itemBuilder:
-                                                                (BuildContext
-                                                                    context) {
-                                                              return [
-                                                                const PopupMenuItem<
-                                                                    String>(
-                                                                  value: 'edit',
-                                                                  child: Text(
-                                                                    'Edit',
-                                                                  ),
-                                                                ),
-                                                                const PopupMenuItem<
-                                                                    String>(
-                                                                  value:
-                                                                      'delete',
-                                                                  child: Text(
-                                                                    'Delete',
-                                                                  ),
-                                                                ),
-                                                              ];
-                                                            },
-                                                          ),
-                                                          Icon(
-                                                            pet.gender ==
-                                                                    'female'
-                                                                ? FontAwesomeIcons
-                                                                    .venus
-                                                                : FontAwesomeIcons
-                                                                    .mars,
-                                                            color: Colors.grey,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 10.0,
-                                                      ),
-                                                      Text(
-                                                        pet.species,
-                                                        style: TextStyle(
-                                                          fontSize: 19.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .colorScheme
-                                                                  .primary,
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 10.0,
-                                                      ),
-                                                      Text(
-                                                        pet.breed,
-                                                        style: TextStyle(
-                                                          fontSize: 15.0,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          color: Theme.of(
-                                                                  context)
-                                                              .colorScheme
-                                                              .primary
-                                                              .withOpacity(0.8),
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 10.0,
-                                                      ),
-                                                      Text(
-                                                        "${pet.age} years old",
-                                                        style: TextStyle(
-                                                          color: Theme.of(
-                                                                  context)
-                                                              .colorScheme
-                                                              .primary
-                                                              .withOpacity(0.5),
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                                  );
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                    bottom: 10.0,
+                                    left: 20.0,
+                                    right: 20.0,
+                                  ),
+                                  child: Stack(
+                                    alignment: Alignment.centerLeft,
+                                    children: [
+                                      Material(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0),
+                                        elevation: 5.0,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 20.0,
+                                            horizontal: 12.0,
                                           ),
-                                        ),
-                                        Stack(
-                                          alignment: Alignment.center,
-                                          children: [
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                color: pet.color != null &&
-                                                        pet.color!.isNotEmpty
-                                                    ? Color(
-                                                        int.parse(
-                                                          '0xFF${pet.color?.substring(0)}',
-                                                        ),
-                                                      )
-                                                    : Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(20.0),
-                                              ),
-                                              height: 200.0,
-                                              width: deviceWidth * 0.4,
-                                            ),
-                                            Hero(
-                                              tag: pet.name,
-                                              child: Image.network(
-                                                "http://localhost:3000/uploads/${pet.image}",
-                                                height: 220.0,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SizedBox(
                                                 width: deviceWidth * 0.4,
                                               ),
-                                            ),
-                                          ],
+                                              Flexible(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      children: [
+                                                        Text(
+                                                          pet.name,
+                                                          style: TextStyle(
+                                                            fontSize: 25.0,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .colorScheme
+                                                                .primary,
+                                                            fontWeight:
+                                                                FontWeight.w800,
+                                                          ),
+                                                        ),
+                                                        PopupMenuButton<String>(
+                                                          onSelected:
+                                                              (value) async {
+                                                            // Handle action selection
+                                                            if (value ==
+                                                                'edit') {
+                                                              // Handle edit action
+                                                              Navigator
+                                                                  .pushNamed(
+                                                                context,
+                                                                AppRoute
+                                                                    .addPetRoute,
+                                                                arguments: pet,
+                                                              );
+                                                            } else if (value ==
+                                                                'delete') {
+                                                              // Show confirmation dialog for delete action
+                                                              bool
+                                                                  confirmDelete =
+                                                                  await showConfirmationDialog(
+                                                                      context);
+                                                              if (confirmDelete) {
+                                                                // Handle delete action
+                                                                final petViewModel =
+                                                                    ref.read(
+                                                                        petViewModelProvider
+                                                                            .notifier);
+                                                                await petViewModel
+                                                                    .deletePet(
+                                                                  context,
+                                                                  pet.petId!,
+                                                                );
+                                                              }
+                                                            }
+                                                          },
+                                                          itemBuilder:
+                                                              (BuildContext
+                                                                  context) {
+                                                            return [
+                                                              const PopupMenuItem<
+                                                                  String>(
+                                                                value: 'edit',
+                                                                child: Text(
+                                                                  'Edit',
+                                                                ),
+                                                              ),
+                                                              const PopupMenuItem<
+                                                                  String>(
+                                                                value: 'delete',
+                                                                child: Text(
+                                                                  'Delete',
+                                                                ),
+                                                              ),
+                                                            ];
+                                                          },
+                                                        ),
+                                                        Icon(
+                                                          pet.gender == 'female'
+                                                              ? FontAwesomeIcons
+                                                                  .venus
+                                                              : FontAwesomeIcons
+                                                                  .mars,
+                                                          color: Colors.grey,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 10.0,
+                                                    ),
+                                                    Text(
+                                                      pet.species,
+                                                      style: TextStyle(
+                                                        fontSize: 19.0,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primary,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 10.0,
+                                                    ),
+                                                    Text(
+                                                      pet.breed,
+                                                      style: TextStyle(
+                                                        fontSize: 15.0,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primary
+                                                            .withOpacity(0.8),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 10.0,
+                                                    ),
+                                                    Text(
+                                                      "${pet.age} years old",
+                                                      style: TextStyle(
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primary
+                                                            .withOpacity(0.5),
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                      Stack(
+                                        alignment: Alignment.center,
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: pet.color != null &&
+                                                      pet.color!.isNotEmpty
+                                                  ? Color(
+                                                      int.parse(
+                                                        '0xFF${pet.color?.substring(0)}',
+                                                      ),
+                                                    )
+                                                  : Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                            ),
+                                            height: 200.0,
+                                            width: deviceWidth * 0.4,
+                                          ),
+                                          Hero(
+                                            tag: pet.petId!,
+                                            child: Image.network(
+                                              "http://localhost:3000/uploads/${pet.image}",
+                                              height: 220.0,
+                                              width: deviceWidth * 0.4,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                );
-                              },
-                            ),
-                          },
-                        ],
-                      ),
+                                ),
+                              );
+                            },
+                          ),
+                        },
+                      ],
                     ),
                   ),
                 ),

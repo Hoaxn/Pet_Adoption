@@ -101,7 +101,11 @@ class AuthRemoteDataSource {
       if (response.statusCode == 200) {
         // retrieve token
         String token = response.data["token"];
-        await userSharedPrefs.setUserToken(token);
+
+        String userId = response.data["userId"];
+
+        await userSharedPrefs.setUserToken(token, userId);
+
         return const Right(true);
       } else {
         return Left(

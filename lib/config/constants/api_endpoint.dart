@@ -25,7 +25,7 @@ class ApiEndpoints {
   static const String getAllAdoptionForms = "/adoptionForm";
 
   // ====================== Liked Pet Routes ======================
-  static const String likePet = "/liked-pets";
+  static const String saveLikedPet = "/liked-pets";
   static const String getLikedPetsByUserId = "/liked-pets";
-  static const String unlikePet = "/liked-pets";
+  static const String removeLikedPet = "/liked-pets";
 }

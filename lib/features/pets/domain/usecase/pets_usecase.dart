@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_adoption_app/core/failure/failure.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/adoption_form_entity.dart';
-import 'package:pet_adoption_app/features/pets/domain/entity/pets_entity.dart';
+import 'package:pet_adoption_app/features/pets/domain/entity/pet_entity.dart';
 import 'package:pet_adoption_app/features/pets/domain/repository/pets_repository.dart';
 
 final petUseCaseProvider = Provider<PetUseCase>(
@@ -34,5 +34,17 @@ class PetUseCase {
   Future<Either<Failure, bool>> adoptPet(
       AdoptionFormEntity adoptFormData) async {
     return petRepository.adoptPet(adoptFormData);
+  }
+
+  Future<Either<Failure, bool>> saveLikedPet(String? petId) {
+    return petRepository.saveLikedPet(petId);
+  }
+
+  Future<Either<Failure, Response>> removeLikedPet(String? petId) async {
+    return await petRepository.removeLikedPet(petId);
+  }
+
+  Future<Either<Failure, Response>> getLikedPets(String? petId) {
+    return petRepository.getLikedPets(petId);
   }
 }

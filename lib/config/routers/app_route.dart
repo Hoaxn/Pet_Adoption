@@ -3,6 +3,7 @@ import 'package:pet_adoption_app/features/auth/presentation/view/register_screen
 import 'package:pet_adoption_app/features/home/presentation/view/home_page_screen.dart';
 import 'package:pet_adoption_app/features/splash/presentation/view/splash_view.dart';
 import 'package:pet_adoption_app/screen/add_pet_screen.dart';
+import 'package:pet_adoption_app/screen/liked_pet_screen.dart';
 
 class AppRoute {
   AppRoute._();
@@ -21,6 +22,7 @@ class AppRoute {
       loginRoute: (context) => const LoginScreen(),
       registerRoute: (context) => const RegisterScreen(),
       addPetRoute: (context) => const AddPetScreen(),
+      likedPetRoute: (context) => const LikedPetScreen(),
     };
   }
 }

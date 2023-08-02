@@ -13,10 +13,15 @@ class UserSharedPrefs {
   late SharedPreferences _sharedPreferences;
 
   //Set User Token
-  Future<Either<Failure, bool>> setUserToken(String token) async {
+  Future<Either<Failure, bool>> setUserToken(
+      String token, String userId) async {
     try {
       _sharedPreferences = await SharedPreferences.getInstance();
+
       await _sharedPreferences.setString('token', token);
+
+      await _sharedPreferences.setString('userId', userId);
+
       return right(true);
     } catch (e) {
       return left(
@@ -31,8 +36,27 @@ class UserSharedPrefs {
   Future<Either<Failure, String?>> getUserToken() async {
     try {
       _sharedPreferences = await SharedPreferences.getInstance();
+
       final token = _sharedPreferences.getString('token');
+
       return right(token);
+    } catch (e) {
+      return left(
+        Failure(
+          error: e.toString(),
+        ),
+      );
+    }
+  }
+
+  //Get UserId
+  Future<Either<Failure, String?>> getUserId() async {
+    try {
+      _sharedPreferences = await SharedPreferences.getInstance();
+
+      final userId = _sharedPreferences.getString('userId');
+
+      return right(userId);
     } catch (e) {
       return left(
         Failure(
