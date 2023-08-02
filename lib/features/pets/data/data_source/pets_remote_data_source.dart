@@ -12,7 +12,7 @@ import 'package:pet_adoption_app/core/network/remote/http_service.dart';
 import 'package:pet_adoption_app/core/shared_pref/user_shared_pref.dart';
 import 'package:pet_adoption_app/features/pets/data/model/pet_api_model.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/adoption_form_entity.dart';
-import 'package:pet_adoption_app/features/pets/domain/entity/pets_entity.dart';
+import 'package:pet_adoption_app/features/pets/domain/entity/pet_entity.dart';
 
 final petRemoteDataSourceProvider = Provider<PetRemoteDataSource>(
   (ref) {
@@ -135,11 +135,196 @@ class PetRemoteDataSource {
           "email": adoptFormData.email,
           "phone": adoptFormData.phone,
           "address": adoptFormData.address,
-          "petId": adoptFormData.petId
+          "petId": adoptFormData.petId,
         },
       );
       if (response.statusCode == 201) {
         return const Right(true);
+      } else {
+        return Left(
+          Failure(
+            error: response.data["message"],
+            statusCode: response.statusCode.toString(),
+          ),
+        );
+      }
+    } on DioException catch (e) {
+      return Left(
+        Failure(
+          error: e.error.toString(),
+          statusCode: e.response?.statusCode.toString() ?? '0',
+        ),
+      );
+    }
+  }
+
+  Future<Either<Failure, bool>> saveLikedPet(String? petId) async {
+    try {
+      final data = await userSharedPrefs.getUserId();
+      final tokenData = await userSharedPrefs.getUserToken();
+
+      String? userId;
+      String? token;
+
+      data.fold(
+        (failure) {
+          // Handle the failure case here
+        },
+        (userIdValue) {
+          userId = userIdValue;
+        },
+      );
+      tokenData.fold(
+        (failure) {
+          // Handle the failure case here
+        },
+        (tokenValue) {
+          token = tokenValue;
+        },
+      );
+
+      final response = await dio.post(
+        ApiEndpoints.saveLikedPet,
+        data: {
+          "petId": petId,
+          "userId": userId,
+        },
+        options: Options(
+          headers: {
+            "authorization": 'Bearer $token',
+          },
+        ),
+      );
+
+      if (response.statusCode == 201) {
+        return const Right(true);
+      } else {
+        return Left(
+          Failure(
+            error: response.data["message"],
+            statusCode: response.statusCode.toString(),
+          ),
+        );
+      }
+    } on DioException catch (e) {
+      return Left(
+        Failure(
+          error: e.error.toString(),
+          statusCode: e.response?.statusCode.toString() ?? '0',
+        ),
+      );
+    }
+  }
+
+  Future<Either<Failure, Response>> removeLikedPet(String? petId) async {
+    final data = await userSharedPrefs.getUserId();
+    final tokenData = await userSharedPrefs.getUserToken();
+
+    String? userId;
+    String? token;
+
+    data.fold(
+      (failure) {
+        // Handle the failure case here
+      },
+      (userIdValue) {
+        userId = userIdValue;
+      },
+    );
+    tokenData.fold(
+      (failure) {
+        // Handle the failure case here
+      },
+      (tokenValue) {
+        token = tokenValue;
+      },
+    );
+    try {
+      Response response = await dio.delete(
+        "${ApiEndpoints.removeLikedPet}/$userId/$petId",
+        options: Options(
+          headers: {
+            "authorization": 'Bearer $token',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        return Right(response);
+      } else {
+        return Left(
+          Failure(
+            error: response.data["message"],
+            statusCode: response.statusCode.toString(),
+          ),
+        );
+      }
+    } on DioException catch (e) {
+      return Left(
+        Failure(
+          error: e.error.toString(),
+          statusCode: e.response?.statusCode.toString() ?? '0',
+        ),
+      );
+    }
+  }
+
+  // Future<Either<Failure, Response>> getLikedPets(String petId) async {
+  //   try {
+  //     Response response = await dio.get(ApiEndpoints.getLikedPetsByUserId);
+  //     if (response.statusCode == 200) {
+  //       return Right(response);
+  //     } else {
+  //       return Left(
+  //         Failure(
+  //           error: response.data["message"],
+  //           statusCode: response.statusCode.toString(),
+  //         ),
+  //       );
+  //     }
+  //   } on DioException catch (e) {
+  //     return Left(
+  //       Failure(
+  //         error: e.error.toString(),
+  //         statusCode: e.response?.statusCode.toString() ?? '0',
+  //       ),
+  //     );
+  //   }
+  // }
+
+  Future<Either<Failure, Response>> getLikedPets(String? petId) async {
+    final data = await userSharedPrefs.getUserId();
+    final tokenData = await userSharedPrefs.getUserToken();
+
+    String? userId;
+    String? token;
+
+    data.fold(
+      (failure) {
+        // Handle the failure case here
+      },
+      (userIdValue) {
+        userId = userIdValue;
+      },
+    );
+    tokenData.fold(
+      (failure) {
+        // Handle the failure case here
+      },
+      (tokenValue) {
+        token = tokenValue;
+      },
+    );
+    try {
+      Response response = await dio.get(
+        "${ApiEndpoints.getLikedPetsByUserId}/$userId",
+        options: Options(
+          headers: {
+            "authorization": 'Bearer $token',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        return Right(response);
       } else {
         return Left(
           Failure(

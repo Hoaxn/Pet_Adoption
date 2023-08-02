@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_adoption_app/core/failure/failure.dart';
 import 'package:pet_adoption_app/core/network/local/hive_service.dart';
 import 'package:pet_adoption_app/features/pets/data/model/pet_hive_model.dart';
-import 'package:pet_adoption_app/features/pets/domain/entity/pets_entity.dart';
+import 'package:pet_adoption_app/features/pets/domain/entity/pet_entity.dart';
 
 // Dependency Injection using Riverpod
 final petLocalDataSourceProvider = Provider<PetLocalDataSource>(

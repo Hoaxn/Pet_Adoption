@@ -29,8 +29,8 @@ class _RegisterViewState extends ConsumerState<RegisterScreen> {
 
   String image1 = "assets/images/image_1.png";
 
-  String userIcon = "assets/images/user_icon.svg";
-  String keyIcon = "assets/images/key_icon.svg";
+  String userIcon = "assets/icons/user_icon.svg";
+  String keyIcon = "assets/icons/key_icon.svg";
 
   @override
   Widget build(BuildContext context) {
@@ -298,7 +298,7 @@ class _RegisterViewState extends ConsumerState<RegisterScreen> {
                     },
                   ),
                   SizedBox(height: size.height * 0.0),
-                  SvgPicture.asset("assets/images/deisgn.svg"),
+                  SvgPicture.asset("assets/icons/deisgn.svg"),
                   SizedBox(height: size.height * 0.0),
                   PrimaryButton(
                     text: "LogIn",

@@ -24,6 +24,7 @@ class HomeViewModel extends StateNotifier<bool> {
     );
 
     await _userSharedPrefs.removeUserToken();
+
     Future.delayed(
       const Duration(milliseconds: 2000),
       () {
@@ -31,7 +32,7 @@ class HomeViewModel extends StateNotifier<bool> {
         Navigator.pushNamedAndRemoveUntil(
           context,
           AppRoute.loginRoute,
-          (route) => false,
+          (route) => true,
         );
       },
     );

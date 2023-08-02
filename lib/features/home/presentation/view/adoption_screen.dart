@@ -4,7 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
 import 'package:pet_adoption_app/config/routers/app_route.dart';
 import 'package:pet_adoption_app/core/common/widget/primary_button.dart';
-import 'package:pet_adoption_app/features/pets/domain/entity/pets_entity.dart';
+import 'package:pet_adoption_app/features/pets/domain/entity/pet_entity.dart';
+import 'package:pet_adoption_app/features/pets/presentation/viewmodel/pet_viewmodel.dart';
 import 'package:pet_adoption_app/screen/adoption_form_screen.dart';
 
 class AdoptionScreen extends ConsumerStatefulWidget {
@@ -22,6 +23,19 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
       context,
       ModalRoute.withName(AppRoute.homeRoute),
     );
+  }
+
+  Future<bool> onLikeButtonTap(bool isLiked) async {
+    if (isLiked) {
+      await ref
+          .read(petViewModelProvider.notifier)
+          .removeLikedPet(context, widget.pet.petId);
+    } else {
+      await ref
+          .read(petViewModelProvider.notifier)
+          .saveLikedPet(context, widget.pet.petId);
+    }
+    return !isLiked;
   }
 
   @override
@@ -83,7 +97,7 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: screenHeight * 0.33,
+                    height: screenHeight * 0.34,
                     // height: screenHeight * 0.2,
                     child: Hero(
                       tag: widget.pet.name,
@@ -197,9 +211,35 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.all(20.0),
-                        child: LikeButton(),
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: LikeButton(
+                          onTap: onLikeButtonTap,
+                        ),
+                        // child: PopupMenuButton<String>(
+                        //   onSelected: (value) async {
+                        //     // Handle action selection
+                        //     if (value == 'delete') {
+                        //       // Handle delete action
+                        //       final petViewModel =
+                        //           ref.read(petViewModelProvider.notifier);
+                        //       await petViewModel.removeLikedPet(
+                        //           context, widget.pet.petId);
+                        //     }
+                        //   },
+                        //   itemBuilder: (BuildContext context) {
+                        //     return [
+                        //       const PopupMenuItem<String>(
+                        //         value: 'edit',
+                        //         child: Text('Edit'),
+                        //       ),
+                        //       const PopupMenuItem<String>(
+                        //         value: 'delete',
+                        //         child: Text('Delete'),
+                        //       ),
+                        //     ];
+                        //   },
+                        // ),
                       ),
                       const SizedBox(
                         width: 25.0,

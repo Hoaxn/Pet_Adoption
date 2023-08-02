@@ -5,7 +5,6 @@ import 'package:pet_adoption_app/config/constants/theme_constant.dart';
 import 'package:pet_adoption_app/core/common/widget/primary_button.dart';
 import 'package:pet_adoption_app/features/auth/presentation/view/register_screen.dart';
 import 'package:pet_adoption_app/features/auth/presentation/viewmodel/auth_view_model.dart';
-import 'package:pet_adoption_app/features/pets/presentation/viewmodel/pet_viewmodel.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -25,8 +24,8 @@ class _LoginViewState extends ConsumerState<LoginScreen> {
 
   String image1 = "assets/images/image_1.png";
 
-  String userIcon = "assets/images/user_icon.svg";
-  String keyIcon = "assets/images/key_icon.svg";
+  String userIcon = "assets/icons/user_icon.svg";
+  String keyIcon = "assets/icons/key_icon.svg";
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +141,7 @@ class _LoginViewState extends ConsumerState<LoginScreen> {
                   ),
                   PrimaryButton(
                     text: "LogIn",
-                    isLoading: ref.watch(petViewModelProvider).isLoading,
+                    isLoading: ref.watch(authViewModelProvider).isLoading,
                     buttonHeight: size.height * 0.080,
                     borderRadius: BorderRadius.circular(37),
                     boxShadow: const [],
@@ -159,7 +158,7 @@ class _LoginViewState extends ConsumerState<LoginScreen> {
                     },
                   ),
                   SizedBox(height: size.height * 0.0),
-                  SvgPicture.asset("assets/images/deisgn.svg"),
+                  SvgPicture.asset("assets/icons/deisgn.svg"),
                   SizedBox(height: size.height * 0.0),
                   PrimaryButton(
                     text: "Create an Account",
