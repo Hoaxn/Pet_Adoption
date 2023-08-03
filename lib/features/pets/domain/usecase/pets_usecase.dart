@@ -35,16 +35,4 @@ class PetUseCase {
       AdoptionFormEntity adoptFormData) async {
     return petRepository.adoptPet(adoptFormData);
   }
-
-  Future<Either<Failure, bool>> saveLikedPet(String? petId) {
-    return petRepository.saveLikedPet(petId);
-  }
-
-  Future<Either<Failure, Response>> removeLikedPet(String? petId) async {
-    return await petRepository.removeLikedPet(petId);
-  }
-
-  Future<Either<Failure, Response>> getLikedPets(String? petId) {
-    return petRepository.getLikedPets(petId);
-  }
 }

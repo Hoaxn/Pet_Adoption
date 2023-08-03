@@ -39,19 +39,4 @@ class PetRemoteRepositoryImpl implements IPetRepository {
   Future<Either<Failure, bool>> adoptPet(AdoptionFormEntity adoptFormData) {
     return petRemoteDataSource.adoptPet(adoptFormData);
   }
-
-  @override
-  Future<Either<Failure, bool>> saveLikedPet(String? petId) {
-    return petRemoteDataSource.saveLikedPet(petId);
-  }
-
-  @override
-  Future<Either<Failure, Response>> removeLikedPet(String? petId) {
-    return petRemoteDataSource.removeLikedPet(petId);
-  }
-
-  @override
-  Future<Either<Failure, Response>> getLikedPets(String? petId) {
-    return petRemoteDataSource.getLikedPets(petId);
-  }
 }

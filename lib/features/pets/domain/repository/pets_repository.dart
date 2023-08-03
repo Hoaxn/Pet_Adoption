@@ -17,7 +17,4 @@ abstract class IPetRepository {
   Future<Either<Failure, bool>> addPet(PetEntity pet, File file);
   Future<Either<Failure, Response>> deletePet(String petId);
   Future<Either<Failure, bool>> adoptPet(AdoptionFormEntity adoptFormData);
-  Future<Either<Failure, bool>> saveLikedPet(String? petId);
-  Future<Either<Failure, Response>> removeLikedPet(String? petId);
-  Future<Either<Failure, Response>> getLikedPets(String? petId);
 }

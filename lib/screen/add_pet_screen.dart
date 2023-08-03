@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pet_adoption_app/config/constants/theme_constant.dart';
-import 'package:pet_adoption_app/config/routers/app_route.dart';
 import 'package:pet_adoption_app/core/common/provider/is_dark_theme.dart';
+import 'package:pet_adoption_app/core/common/widget/drawer_widget.dart';
 import 'package:pet_adoption_app/core/common/widget/primary_button.dart';
-import 'package:pet_adoption_app/features/home/presentation/viewmodel/home_viewmodel.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/pet_entity.dart';
 import 'package:pet_adoption_app/features/pets/presentation/viewmodel/pet_viewmodel.dart';
 
@@ -22,6 +20,8 @@ class AddPetScreen extends ConsumerStatefulWidget {
 class _AddPetScreenState extends ConsumerState<AddPetScreen> {
   PetEntity? pet;
 
+  late bool isDark;
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _nameController = TextEditingController();
@@ -31,8 +31,6 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
   final TextEditingController _genderController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _colorController = TextEditingController();
-
-  String? _imagePath;
 
   File? _imageFile;
 
@@ -47,24 +45,12 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
     }
   }
 
-  // void _selectImage() async {
-  //   FilePickerResult? result = await FilePicker.platform.pickFiles(
-  //     type: FileType.image,
-  //   );
-  //   if (result != null) {
-  //     setState(() {
-  //       _imagePath = result.files.single.path!;
-  //     });
-  //   }
-  // }
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
     // Retrieve the passed pet argument
     pet = ModalRoute.of(context)!.settings.arguments as PetEntity?;
-    // print("pet ${pet?.petId}");
     // Populate the form fields with the pet data
     if (pet != null) {
       _nameController.text = pet!.name;
@@ -87,171 +73,19 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
     _colorController.clear();
   }
 
-  late bool isDark;
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  @override
-  void initState() {
-    super.initState();
-
-    isDark = ref.read(isDarkThemeProvider);
+  void openDrawer() {
+    scaffoldKey.currentState?.openDrawer();
   }
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
-    void openDrawer() {
-      scaffoldKey.currentState?.openDrawer();
-    }
+    isDark = ref.read(isDarkThemeProvider);
 
     return Scaffold(
       key: scaffoldKey,
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(color: ThemeConstant.secondaryColor),
-              child: const Center(
-                child: Text(
-                  'Menu',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 27,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pushReplacementNamed(context, AppRoute.homeRoute);
-              },
-              child: Row(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Icon(FontAwesomeIcons.paw),
-                  ),
-                  const SizedBox(
-                    width: 16.0,
-                  ),
-                  Text(
-                    "Home",
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pushReplacementNamed(context, AppRoute.addPetRoute);
-              },
-              child: Row(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Icon(FontAwesomeIcons.plus),
-                  ),
-                  const SizedBox(
-                    width: 16.0,
-                  ),
-                  Text(
-                    "Add Pet",
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Icon(Icons.dark_mode),
-                ),
-                const SizedBox(
-                  width: 16.0,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      "Dark Mode",
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Switch(
-                      value: isDark,
-                      onChanged: (value) {
-                        setState(
-                          () {
-                            isDark = value;
-                            ref
-                                .read(isDarkThemeProvider.notifier)
-                                .updateTheme(value);
-                          },
-                        );
-                      },
-                    ),
-                  ],
-                ),
-                // Text(
-                //   "Settings",
-                //   style: TextStyle(
-                //     fontSize: 15,
-                //     // color: Theme.of(context).primaryColor,
-                //     color: Theme.of(context).colorScheme.primary,
-                //   ),
-                // ),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            InkWell(
-              onTap: () {
-                ref.read(homeViewModelProvider.notifier).logout(context);
-              },
-              child: Row(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Icon(FontAwesomeIcons.rightFromBracket),
-                  ),
-                  const SizedBox(
-                    width: 16.0,
-                  ),
-                  Text(
-                    "Log out",
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+      drawer: CustomDrawer(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(top: 50.0),

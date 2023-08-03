@@ -4,10 +4,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:pet_adoption_app/config/constants/theme_constant.dart';
 import 'package:pet_adoption_app/config/routers/app_route.dart';
-import 'package:pet_adoption_app/core/common/provider/is_dark_theme.dart';
+import 'package:pet_adoption_app/core/common/widget/drawer_widget.dart';
 import 'package:pet_adoption_app/features/home/data/model/home_page_model.dart';
 import 'package:pet_adoption_app/features/home/presentation/view/adoption_screen.dart';
-import 'package:pet_adoption_app/features/home/presentation/viewmodel/home_viewmodel.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/pet_entity.dart';
 import 'package:pet_adoption_app/features/pets/presentation/viewmodel/pet_viewmodel.dart';
 
@@ -21,15 +20,28 @@ class HomePageScreen extends ConsumerStatefulWidget {
 class _HomePageScreenState extends ConsumerState<HomePageScreen> {
   int selectedAnimalIconIndex = 0;
 
-  late bool isDark;
-
   List<PetEntity> filteredPets = [];
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // Delay the call using Future.microtask to ensure it runs after the widget tree is built
+  //   Future.microtask(
+  //     () {
+  //       _handleRefresh(); // Trigger data refresh when the widget is first created
+  //     },
+  //   );
+  // }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    isDark = ref.read(isDarkThemeProvider);
+    Future.microtask(
+      () {
+        _handleRefresh(); // Trigger data refresh when the widget is first created
+      },
+    );
 
     // Filter pets with species "dog" when the app is opened
     filterPetsBySpecies("dog");
@@ -109,14 +121,17 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
     // await Future.delayed(const Duration(seconds: 2));
   }
 
-  Future<bool> showConfirmationDialog(BuildContext context) async {
+  Future<bool> showConfirmationDialog(
+    BuildContext context,
+    PetEntity pet,
+  ) async {
     return await showDialog<bool>(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
               backgroundColor: Theme.of(context).colorScheme.background,
               title: const Text('Confirm Delete'),
-              content: const Text('Are you sure you want to delete this pet?'),
+              content: Text('Are you sure you want to delete ${pet.name}?'),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -156,181 +171,7 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       key: scaffoldKey,
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(color: ThemeConstant.secondaryColor),
-              child: const Center(
-                child: Text(
-                  'Menu',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 27,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushReplacementNamed(context, AppRoute.homeRoute);
-              },
-              child: Row(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Icon(FontAwesomeIcons.paw),
-                  ),
-                  const SizedBox(
-                    width: 16.0,
-                  ),
-                  Text(
-                    "Home",
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushReplacementNamed(context, AppRoute.addPetRoute);
-              },
-              child: Row(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Icon(FontAwesomeIcons.plus),
-                  ),
-                  const SizedBox(
-                    width: 16.0,
-                  ),
-                  Text(
-                    "Add Pet",
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushReplacementNamed(context, AppRoute.likedPetRoute);
-              },
-              child: Row(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Icon(FontAwesomeIcons.solidHeart),
-                  ),
-                  const SizedBox(
-                    width: 16.0,
-                  ),
-                  Text(
-                    "Favorites",
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Icon(Icons.dark_mode),
-                ),
-                const SizedBox(
-                  width: 16.0,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      "Dark Mode",
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Switch(
-                      value: isDark,
-                      onChanged: (value) {
-                        setState(
-                          () {
-                            isDark = value;
-                            ref
-                                .read(isDarkThemeProvider.notifier)
-                                .updateTheme(value);
-                          },
-                        );
-                      },
-                    ),
-                  ],
-                ),
-                // Text(
-                //   "Settings",
-                //   style: TextStyle(
-                //     fontSize: 15,
-                //     // color: Theme.of(context).primaryColor,
-                //     color: Theme.of(context).colorScheme.primary,
-                //   ),
-                // ),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            InkWell(
-              onTap: () {
-                ref.read(homeViewModelProvider.notifier).logout(context);
-              },
-              child: Row(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Icon(FontAwesomeIcons.rightFromBracket),
-                  ),
-                  const SizedBox(
-                    width: 16.0,
-                  ),
-                  Text(
-                    "Log out",
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+      drawer: CustomDrawer(),
       body: LiquidPullToRefresh(
         onRefresh: _handleRefresh,
         height: 250,
@@ -471,8 +312,14 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                             child: CircularProgressIndicator(),
                           )
                         } else if (petState.pets.isEmpty) ...{
-                          const Center(
-                            child: Text("No Pets"),
+                          Center(
+                            child: Text(
+                              "No Pets Available",
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
                           ),
                         } else ...{
                           ListView.builder(
@@ -565,13 +412,16 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                                                               bool
                                                                   confirmDelete =
                                                                   await showConfirmationDialog(
-                                                                      context);
+                                                                context,
+                                                                pet,
+                                                              );
                                                               if (confirmDelete) {
                                                                 // Handle delete action
                                                                 final petViewModel =
                                                                     ref.read(
-                                                                        petViewModelProvider
-                                                                            .notifier);
+                                                                  petViewModelProvider
+                                                                      .notifier,
+                                                                );
                                                                 await petViewModel
                                                                     .deletePet(
                                                                   context,

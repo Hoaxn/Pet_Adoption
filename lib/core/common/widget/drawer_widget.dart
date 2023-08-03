@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pet_adoption_app/config/constants/theme_constant.dart';
 import 'package:pet_adoption_app/config/routers/app_route.dart';
 import 'package:pet_adoption_app/core/common/provider/is_dark_theme.dart';
-import 'package:pet_adoption_app/features/home/presentation/viewmodel/home_viewmodel.dart';
+import 'package:pet_adoption_app/core/shared_pref/user_shared_pref.dart';
 
 class CustomDrawer extends ConsumerStatefulWidget {
   const CustomDrawer({super.key});
@@ -17,15 +17,10 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
   late bool isDark;
 
   @override
-  void initState() {
-    super.initState();
-
-    isDark = ref.read(isDarkThemeProvider);
-  }
-
-  @override
   Widget build(BuildContext context) {
     final deviceWidth = MediaQuery.of(context).size.width;
+
+    isDark = ref.read(isDarkThemeProvider);
 
     const gap = SizedBox(height: 10);
 
@@ -113,8 +108,7 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
           gap,
           InkWell(
             onTap: () {
-              // Navigator.pushReplacementNamed(context, AppRoute.addPetRoute);
-              Navigator.pop(context);
+              Navigator.pushReplacementNamed(context, AppRoute.likedPetRoute);
             },
             child: Row(
               children: [
@@ -176,8 +170,29 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
           ),
           gap,
           InkWell(
+            // onTap: () async {
+            //   ref.read(homeViewModelProvider.notifier).logout(context);
+            // },
             onTap: () async {
-              ref.read(homeViewModelProvider.notifier).logout(context);
+              // Handle drawer item tap for Analytics
+
+              final userSharedPrefsProvider = Provider<UserSharedPrefs>((ref) {
+                return UserSharedPrefs();
+              });
+
+              // Inside the class or widget where you want to perform logout
+              final userSharedPrefs = ref.read(userSharedPrefsProvider);
+              final result = await userSharedPrefs.removeUserToken();
+              result.fold(
+                (failure) {
+                  // Handle the failure, e.g., display an error message
+                  print('Failed to remove token: ${failure.error}');
+                },
+                (success) {
+                  print('Token removed successfully');
+                  Navigator.pushNamed(context, AppRoute.loginRoute);
+                },
+              );
             },
             child: const Row(
               children: [

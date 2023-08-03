@@ -4,8 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
 import 'package:pet_adoption_app/config/routers/app_route.dart';
 import 'package:pet_adoption_app/core/common/widget/primary_button.dart';
+import 'package:pet_adoption_app/features/liked_pets/presentation/viewmodel/liked_pet_viewmodel.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/pet_entity.dart';
-import 'package:pet_adoption_app/features/pets/presentation/viewmodel/pet_viewmodel.dart';
 import 'package:pet_adoption_app/screen/adoption_form_screen.dart';
 
 class AdoptionScreen extends ConsumerStatefulWidget {
@@ -28,11 +28,11 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
   Future<bool> onLikeButtonTap(bool isLiked) async {
     if (isLiked) {
       await ref
-          .read(petViewModelProvider.notifier)
+          .read(likedPetViewModelProvider.notifier)
           .removeLikedPet(context, widget.pet.petId);
     } else {
       await ref
-          .read(petViewModelProvider.notifier)
+          .read(likedPetViewModelProvider.notifier)
           .saveLikedPet(context, widget.pet.petId);
     }
     return !isLiked;
@@ -100,7 +100,7 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                     height: screenHeight * 0.34,
                     // height: screenHeight * 0.2,
                     child: Hero(
-                      tag: widget.pet.name,
+                      tag: widget.pet.petId!,
                       child: Image.network(
                         "http://localhost:3000/uploads/${widget.pet.image}",
                         fit: BoxFit.fitHeight,

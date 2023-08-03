@@ -1,5 +1,5 @@
 class LikedPetEntity {
-  final String? userId;
+  // final String? userId;
   final String? petId;
   final String name;
   final String age;
@@ -11,8 +11,8 @@ class LikedPetEntity {
   final String? image;
 
   LikedPetEntity({
-    required this.userId,
-    required this.petId,
+    // this.userId,
+    this.petId,
     required this.name,
     required this.age,
     required this.species,
