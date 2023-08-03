@@ -85,7 +85,7 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
 
     return Scaffold(
       key: scaffoldKey,
-      drawer: CustomDrawer(),
+      drawer: const CustomDrawer(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(top: 50.0),

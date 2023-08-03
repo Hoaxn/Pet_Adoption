@@ -130,6 +130,31 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
             ),
           ),
           gap,
+          InkWell(
+            onTap: () {
+              Navigator.pushReplacementNamed(
+                  context, AppRoute.getAllAdoptionFormRoute);
+            },
+            child: Row(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Icon(FontAwesomeIcons.scroll),
+                ),
+                const SizedBox(
+                  width: 16.0,
+                ),
+                Text(
+                  "Adoption Form",
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          gap,
           Row(
             children: [
               const Padding(

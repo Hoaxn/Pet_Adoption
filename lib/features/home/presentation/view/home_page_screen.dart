@@ -171,7 +171,7 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       key: scaffoldKey,
-      drawer: CustomDrawer(),
+      drawer: const CustomDrawer(),
       body: LiquidPullToRefresh(
         onRefresh: _handleRefresh,
         height: 250,

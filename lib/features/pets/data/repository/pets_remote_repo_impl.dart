@@ -4,8 +4,8 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_adoption_app/core/failure/failure.dart';
+import 'package:pet_adoption_app/features/adoption_form/domain/entity/adoption_form_entity.dart';
 import 'package:pet_adoption_app/features/pets/data/data_source/pets_remote_data_source.dart';
-import 'package:pet_adoption_app/features/pets/domain/entity/adoption_form_entity.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/pet_entity.dart';
 import 'package:pet_adoption_app/features/pets/domain/repository/pets_repository.dart';
 

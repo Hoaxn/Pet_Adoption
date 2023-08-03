@@ -5,26 +5,27 @@ import 'package:pet_adoption_app/config/constants/api_endpoint.dart';
 import 'package:pet_adoption_app/core/failure/failure.dart';
 import 'package:pet_adoption_app/core/network/remote/http_service.dart';
 import 'package:pet_adoption_app/core/shared_pref/user_shared_pref.dart';
-import 'package:pet_adoption_app/features/pets/data/model/pet_api_model.dart';
+import 'package:pet_adoption_app/features/adoption_form/domain/entity/adoption_form_entity.dart';
 
-final likedPetRemoteDataSourceProvider = Provider<LikedPetRemoteDataSource>(
+final adoptionFormRemoteDataSourceProvider =
+    Provider<AdoptionFormRemoteDataSource>(
   (ref) {
-    return LikedPetRemoteDataSource(
+    return AdoptionFormRemoteDataSource(
       ref.read(httpServiceProvider),
       ref.read(userSharedPrefsProvider),
-      ref.read(petApiModelProvider),
+      // ref.read(petApiModelProvider),
     );
   },
 );
 
-class LikedPetRemoteDataSource {
+class AdoptionFormRemoteDataSource {
   final Dio dio;
-  final PetApiModel petApiModel;
+  // final PetApiModel petApiModel;
   final UserSharedPrefs userSharedPrefs;
 
-  LikedPetRemoteDataSource(this.dio, this.userSharedPrefs, this.petApiModel);
+  AdoptionFormRemoteDataSource(this.dio, this.userSharedPrefs);
 
-  Future<Either<Failure, Response>> getLikedPets() async {
+  Future<Either<Failure, Response>> getAdoptionForm() async {
     final data = await userSharedPrefs.getUserId();
     final tokenData = await userSharedPrefs.getUserToken();
 
@@ -49,7 +50,7 @@ class LikedPetRemoteDataSource {
     );
     try {
       Response response = await dio.get(
-        "${ApiEndpoints.getLikedPetsByUserId}/$userId",
+        "${ApiEndpoints.getAdoptionFormsByUserId}/$userId",
         options: Options(
           headers: {
             "authorization": 'Bearer $token',
@@ -76,7 +77,8 @@ class LikedPetRemoteDataSource {
     }
   }
 
-  Future<Either<Failure, bool>> saveLikedPet(String? petId) async {
+  Future<Either<Failure, bool>> postAdoptionForm(
+      AdoptionFormEntity adoptFormData) async {
     try {
       final data = await userSharedPrefs.getUserId();
       final tokenData = await userSharedPrefs.getUserToken();
@@ -100,11 +102,14 @@ class LikedPetRemoteDataSource {
           token = tokenValue;
         },
       );
-
-      final response = await dio.post(
-        ApiEndpoints.saveLikedPet,
+      Response response = await dio.post(
+        ApiEndpoints.postAdoptionForm,
         data: {
-          "petId": petId,
+          "fullName": adoptFormData.fullName,
+          "email": adoptFormData.email,
+          "phone": adoptFormData.phone,
+          "address": adoptFormData.address,
+          "petId": adoptFormData.petId,
           "userId": userId,
         },
         options: Options(
@@ -113,7 +118,6 @@ class LikedPetRemoteDataSource {
           },
         ),
       );
-
       if (response.statusCode == 201) {
         return const Right(true);
       } else {
@@ -134,7 +138,7 @@ class LikedPetRemoteDataSource {
     }
   }
 
-  Future<Either<Failure, Response>> removeLikedPet(String? petId) async {
+  Future<Either<Failure, Response>> deleteAdoptionForm(String? petId) async {
     final data = await userSharedPrefs.getUserId();
     final tokenData = await userSharedPrefs.getUserToken();
 
@@ -159,7 +163,7 @@ class LikedPetRemoteDataSource {
     );
     try {
       Response response = await dio.delete(
-        "${ApiEndpoints.removeLikedPet}/$userId/$petId",
+        "${ApiEndpoints.deleteAdoptionForm}/$userId/$petId",
         options: Options(
           headers: {
             "authorization": 'Bearer $token',

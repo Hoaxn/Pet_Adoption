@@ -10,8 +10,8 @@ import 'package:pet_adoption_app/config/constants/api_endpoint.dart';
 import 'package:pet_adoption_app/core/failure/failure.dart';
 import 'package:pet_adoption_app/core/network/remote/http_service.dart';
 import 'package:pet_adoption_app/core/shared_pref/user_shared_pref.dart';
+import 'package:pet_adoption_app/features/adoption_form/domain/entity/adoption_form_entity.dart';
 import 'package:pet_adoption_app/features/pets/data/model/pet_api_model.dart';
-import 'package:pet_adoption_app/features/pets/domain/entity/adoption_form_entity.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/pet_entity.dart';
 
 final petRemoteDataSourceProvider = Provider<PetRemoteDataSource>(

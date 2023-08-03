@@ -21,8 +21,9 @@ class ApiEndpoints {
   static const String imageUrl = "http://localhost:3000/uploads/";
 
   // ====================== Adoption Form Routes ======================
-  static const String postAdoptionForm = "/adoptionForm";
-  static const String getAllAdoptionForms = "/adoptionForm";
+  static const String postAdoptionForm = "/form/adoptionForm";
+  static const String getAdoptionFormsByUserId = "/form/adoptionForm";
+  static const String deleteAdoptionForm = "/form/adoptionForm";
 
   // ====================== Liked Pet Routes ======================
   static const String saveLikedPet = "/liked-pets";

@@ -3,14 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:pet_adoption_app/config/constants/theme_constant.dart';
-import 'package:pet_adoption_app/core/common/provider/is_dark_theme.dart';
 import 'package:pet_adoption_app/core/common/widget/drawer_widget.dart';
-import 'package:pet_adoption_app/features/liked_pets/domain/entity/liked_pet_entity.dart';
+import 'package:pet_adoption_app/features/home/presentation/view/adoption_screen.dart';
 import 'package:pet_adoption_app/features/liked_pets/presentation/viewmodel/liked_pet_viewmodel.dart';
+import 'package:pet_adoption_app/features/pets/domain/entity/pet_entity.dart';
 
 class LikedPetScreen extends ConsumerStatefulWidget {
-  final LikedPetEntity? pet;
-  const LikedPetScreen({super.key, this.pet});
+  const LikedPetScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _LikedPetScreenState();
@@ -18,8 +17,6 @@ class LikedPetScreen extends ConsumerStatefulWidget {
 
 class _LikedPetScreenState extends ConsumerState<LikedPetScreen> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
-  late bool isDark;
 
   void openDrawer() {
     scaffoldKey.currentState?.openDrawer();
@@ -45,7 +42,7 @@ class _LikedPetScreenState extends ConsumerState<LikedPetScreen> {
 
   Future<bool> showConfirmationDialog(
     BuildContext context,
-    LikedPetEntity pet,
+    PetEntity pet,
   ) async {
     return await showDialog<bool>(
           context: context,
@@ -82,14 +79,12 @@ class _LikedPetScreenState extends ConsumerState<LikedPetScreen> {
 
     final likedPetState = ref.watch(likedPetViewModelProvider);
 
-    isDark = ref.read(isDarkThemeProvider);
-
     // final internetStatus = ref.watch(connectivityStatusProvider);
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       key: scaffoldKey,
-      drawer: CustomDrawer(),
+      drawer: const CustomDrawer(),
       body: LiquidPullToRefresh(
         onRefresh: _handleRefresh,
         height: 250,
@@ -188,7 +183,7 @@ class _LikedPetScreenState extends ConsumerState<LikedPetScreen> {
                           const Center(
                             child: CircularProgressIndicator(),
                           )
-                        } else if (likedPetState.petz.isEmpty) ...{
+                        } else if (likedPetState.pets.isEmpty) ...{
                           Center(
                             child: Text(
                               "No Liked Pets",
@@ -203,21 +198,21 @@ class _LikedPetScreenState extends ConsumerState<LikedPetScreen> {
                             padding: const EdgeInsets.only(top: 10.0),
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount: likedPetState.petz.length,
+                            itemCount: likedPetState.pets.length,
                             itemBuilder: (content, index) {
-                              final pet = likedPetState.petz[index];
+                              final likedPet = likedPetState.pets[index];
 
                               return InkWell(
-                                // onTap: () {
-                                //   Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //       builder: (context) => AdoptionScreen(
-                                //         pet: pet,
-                                //       ),
-                                //     ),
-                                //   );
-                                // },
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => AdoptionScreen(
+                                        pet: likedPet,
+                                      ),
+                                    ),
+                                  );
+                                },
                                 child: Padding(
                                   padding: const EdgeInsets.only(
                                     bottom: 10.0,
@@ -256,7 +251,7 @@ class _LikedPetScreenState extends ConsumerState<LikedPetScreen> {
                                                           MainAxisSize.max,
                                                       children: [
                                                         Text(
-                                                          pet.name,
+                                                          likedPet.name,
                                                           style: TextStyle(
                                                             fontSize: 25.0,
                                                             color: Theme.of(
@@ -272,7 +267,7 @@ class _LikedPetScreenState extends ConsumerState<LikedPetScreen> {
                                                             bool confirmDelete =
                                                                 await showConfirmationDialog(
                                                                     context,
-                                                                    pet);
+                                                                    likedPet);
                                                             if (confirmDelete) {
                                                               // Handle delete action
                                                               final likedPetViewModel =
@@ -282,7 +277,7 @@ class _LikedPetScreenState extends ConsumerState<LikedPetScreen> {
                                                               await likedPetViewModel
                                                                   .removeLikedPet(
                                                                 context,
-                                                                pet.petId!,
+                                                                likedPet.petId!,
                                                               );
                                                             }
                                                             // final likedPetViewModel =
@@ -302,7 +297,8 @@ class _LikedPetScreenState extends ConsumerState<LikedPetScreen> {
                                                           ),
                                                         ),
                                                         Icon(
-                                                          pet.gender == 'female'
+                                                          likedPet.gender ==
+                                                                  'female'
                                                               ? FontAwesomeIcons
                                                                   .venus
                                                               : FontAwesomeIcons
@@ -315,7 +311,7 @@ class _LikedPetScreenState extends ConsumerState<LikedPetScreen> {
                                                       height: 10.0,
                                                     ),
                                                     Text(
-                                                      pet.species,
+                                                      likedPet.species,
                                                       style: TextStyle(
                                                         fontSize: 19.0,
                                                         fontWeight:
@@ -329,7 +325,7 @@ class _LikedPetScreenState extends ConsumerState<LikedPetScreen> {
                                                       height: 10.0,
                                                     ),
                                                     Text(
-                                                      pet.breed,
+                                                      likedPet.breed,
                                                       style: TextStyle(
                                                         fontSize: 15.0,
                                                         fontWeight:
@@ -344,7 +340,7 @@ class _LikedPetScreenState extends ConsumerState<LikedPetScreen> {
                                                       height: 10.0,
                                                     ),
                                                     Text(
-                                                      "${pet.age} years old",
+                                                      "${likedPet.age} years old",
                                                       style: TextStyle(
                                                         color: Theme.of(context)
                                                             .colorScheme
@@ -366,11 +362,11 @@ class _LikedPetScreenState extends ConsumerState<LikedPetScreen> {
                                         children: [
                                           Container(
                                             decoration: BoxDecoration(
-                                              color: pet.color != null &&
-                                                      pet.color!.isNotEmpty
+                                              color: likedPet.color != null &&
+                                                      likedPet.color!.isNotEmpty
                                                   ? Color(
                                                       int.parse(
-                                                        '0xFF${pet.color?.substring(0)}',
+                                                        '0xFF${likedPet.color?.substring(0)}',
                                                       ),
                                                     )
                                                   : Colors.white,
@@ -381,9 +377,9 @@ class _LikedPetScreenState extends ConsumerState<LikedPetScreen> {
                                             width: deviceWidth * 0.4,
                                           ),
                                           Hero(
-                                            tag: pet.petId!,
+                                            tag: likedPet.petId!,
                                             child: Image.network(
-                                              "http://localhost:3000/uploads/${pet.image}",
+                                              "http://localhost:3000/uploads/${likedPet.image}",
                                               height: 220.0,
                                               width: deviceWidth * 0.4,
                                             ),

@@ -4,9 +4,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
 import 'package:pet_adoption_app/config/routers/app_route.dart';
 import 'package:pet_adoption_app/core/common/widget/primary_button.dart';
+import 'package:pet_adoption_app/features/adoption_form/presentation/view/adoption_form_fill_up_screen.dart';
 import 'package:pet_adoption_app/features/liked_pets/presentation/viewmodel/liked_pet_viewmodel.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/pet_entity.dart';
-import 'package:pet_adoption_app/screen/adoption_form_screen.dart';
 
 class AdoptionScreen extends ConsumerStatefulWidget {
   final PetEntity pet;
@@ -256,7 +256,7 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    AdoptionFormScreen(pet: widget.pet),
+                                    AdoptionFormFillUpScreen(pet: widget.pet),
                               ),
                             );
                           },

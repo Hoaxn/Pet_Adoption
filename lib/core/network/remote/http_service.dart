@@ -20,8 +20,13 @@ class HttpService {
       ..options.connectTimeout = ApiEndpoints.connectionTimeout
       ..options.receiveTimeout = ApiEndpoints.receiveTimeout
       ..interceptors.add(DioErrorInterceptor())
-      ..interceptors.add(PrettyDioLogger(
-          requestHeader: true, requestBody: true, responseHeader: true))
+      ..interceptors.add(
+        PrettyDioLogger(
+          requestHeader: true,
+          requestBody: true,
+          responseHeader: true,
+        ),
+      )
       ..options.headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json',

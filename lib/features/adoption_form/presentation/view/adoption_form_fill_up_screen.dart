@@ -3,21 +3,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pet_adoption_app/config/constants/theme_constant.dart';
 import 'package:pet_adoption_app/core/common/widget/primary_button.dart';
-import 'package:pet_adoption_app/features/pets/domain/entity/adoption_form_entity.dart';
+import 'package:pet_adoption_app/features/adoption_form/domain/entity/adoption_form_entity.dart';
+import 'package:pet_adoption_app/features/adoption_form/presentation/viewmodel/adoption_form_viewmodel.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/pet_entity.dart';
-import 'package:pet_adoption_app/features/pets/presentation/viewmodel/pet_viewmodel.dart';
 
-class AdoptionFormScreen extends ConsumerStatefulWidget {
+class AdoptionFormFillUpScreen extends ConsumerStatefulWidget {
   final PetEntity pet;
 
-  const AdoptionFormScreen({Key? key, required this.pet}) : super(key: key);
+  const AdoptionFormFillUpScreen({Key? key, required this.pet})
+      : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _AdoptionFormScreenState();
+      _AdoptionFormFillUpScreenState();
 }
 
-class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
+class _AdoptionFormFillUpScreenState
+    extends ConsumerState<AdoptionFormFillUpScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   TextEditingController nameController = TextEditingController();
@@ -338,8 +340,9 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                           const SizedBox(height: 24.0),
                           PrimaryButton(
                             text: 'Adopt ${widget.pet.name}',
-                            isLoading:
-                                ref.watch(petViewModelProvider).isLoading,
+                            isLoading: ref
+                                .watch(adoptionFormViewModelProvider)
+                                .isLoading,
                             buttonHeight: size.height * 0.050,
                             borderRadius: BorderRadius.circular(10),
                             onPressed: () async {
@@ -359,8 +362,9 @@ class _AdoptionFormScreenState extends ConsumerState<AdoptionFormScreen> {
                                   petId: petId,
                                 );
                                 await ref
-                                    .read(petViewModelProvider.notifier)
-                                    .adoptPet(
+                                    .read(
+                                        adoptionFormViewModelProvider.notifier)
+                                    .postAdoptionForm(
                                       context,
                                       currentPet,
                                       _resetFields,
