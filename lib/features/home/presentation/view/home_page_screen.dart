@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:pet_adoption_app/config/constants/api_endpoint.dart';
 import 'package:pet_adoption_app/config/constants/theme_constant.dart';
 import 'package:pet_adoption_app/config/routers/app_route.dart';
 import 'package:pet_adoption_app/core/common/widget/drawer_widget.dart';
@@ -129,6 +130,7 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
+              elevation: 4.0,
               backgroundColor: Theme.of(context).colorScheme.background,
               title: const Text('Confirm Delete'),
               content: Text('Are you sure you want to delete ${pet.name}?'),
@@ -164,6 +166,8 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
   Widget build(BuildContext context) {
     final deviceWidth = MediaQuery.of(context).size.width;
 
+    final deviceHeight = MediaQuery.of(context).size.height;
+
     final petState = ref.watch(petViewModelProvider);
 
     // final internetStatus = ref.watch(connectivityStatusProvider);
@@ -174,7 +178,8 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
       drawer: const CustomDrawer(),
       body: LiquidPullToRefresh(
         onRefresh: _handleRefresh,
-        height: 250,
+        // height: 250,
+        height: deviceHeight * 0.25,
         color: ThemeConstant.secondaryColor,
         // animSpeedFactor: 3,
         child: SingleChildScrollView(
@@ -253,48 +258,48 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                     ),
                     child: Column(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
+                        const Padding(
+                          padding: EdgeInsets.symmetric(
                             vertical: 20.0,
                             horizontal: 25.0,
                           ),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20.0),
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 11.0,
-                            ),
-                            // child: Row(
-                            //   children: [
-                            //     Icon(
-                            //       FontAwesomeIcons.magnifyingGlass,
-                            //       color: Colors.grey[500],
-                            //     ),
-                            //     Expanded(
-                            //       child: TextField(
-                            //         style: const TextStyle(
-                            //           fontSize: 17,
-                            //         ),
-                            //         decoration: InputDecoration(
-                            //           border: const OutlineInputBorder(
-                            //             borderSide: BorderSide.none,
-                            //           ),
-                            //           hintText: "Search ...",
-                            //           hintStyle: TextStyle(
-                            //             color: Colors.grey[500],
-                            //           ),
-                            //         ),
-                            //       ),
-                            //     ),
-                            //     Icon(
-                            //       FontAwesomeIcons.filter,
-                            //       color: Colors.grey[500],
-                            //     ),
-                            //   ],
-                            // ),
-                          ),
+                          // child: Container(
+                          //   decoration: BoxDecoration(
+                          //     color: Colors.white,
+                          //     borderRadius: BorderRadius.circular(20.0),
+                          //   ),
+                          //   padding: const EdgeInsets.symmetric(
+                          //     horizontal: 11.0,
+                          //   ),
+                          //   child: Row(
+                          //     children: [
+                          //       Icon(
+                          //         FontAwesomeIcons.magnifyingGlass,
+                          //         color: Colors.grey[500],
+                          //       ),
+                          //       Expanded(
+                          //         child: TextField(
+                          //           style: const TextStyle(
+                          //             fontSize: 17,
+                          //           ),
+                          //           decoration: InputDecoration(
+                          //             border: const OutlineInputBorder(
+                          //               borderSide: BorderSide.none,
+                          //             ),
+                          //             hintText: "Search ...",
+                          //             hintStyle: TextStyle(
+                          //               color: Colors.grey[500],
+                          //             ),
+                          //           ),
+                          //         ),
+                          //       ),
+                          //       Icon(
+                          //         FontAwesomeIcons.filter,
+                          //         color: Colors.grey[500],
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
                         ),
                         SizedBox(
                           height: 120.0,
@@ -346,8 +351,8 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                                 child: Padding(
                                   padding: const EdgeInsets.only(
                                     bottom: 10.0,
-                                    left: 20.0,
-                                    right: 20.0,
+                                    left: 16.0,
+                                    right: 16.0,
                                   ),
                                   child: Stack(
                                     alignment: Alignment.centerLeft,
@@ -367,6 +372,7 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                                             children: [
                                               SizedBox(
                                                 width: deviceWidth * 0.4,
+                                                height: deviceHeight * 0.10,
                                               ),
                                               Flexible(
                                                 child: Column(
@@ -528,13 +534,19 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                                                   BorderRadius.circular(20.0),
                                             ),
                                             height: 200.0,
+                                            // height: deviceHeight * 0.21,
                                             width: deviceWidth * 0.4,
                                           ),
                                           Hero(
                                             tag: pet.petId!,
                                             child: Image.network(
-                                              "http://localhost:3000/uploads/${pet.image}",
+                                              // "http://192.168.1.67:3000/uploads/${pet.image}",
+                                              // "http://localhost:3000/uploads/${pet.image}",
+                                              ApiEndpoints.baseImageUrl(
+                                                  pet.image),
                                               height: 220.0,
+                                              // height: deviceHeight * 0.236,
+                                              // height: deviceHeight * 0.25,
                                               width: deviceWidth * 0.4,
                                             ),
                                           ),

@@ -53,15 +53,6 @@ android {
         versionName flutterVersionName
     }
 
-    // signingConfigs {
-    //     debug {
-    //         keyAlias 'androiddebugkey'
-    //         keyPassword 'forsakenEnigma'
-    //         storeFile file ('petadoption-keystore.jks')
-    //         storePassword 'forsakenEnigma'
-    //     }
-    }
-
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.

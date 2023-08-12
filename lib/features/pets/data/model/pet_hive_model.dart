@@ -75,7 +75,8 @@ class PetHiveModel {
 
   // Convert Entity to Hive Object
   PetHiveModel toHiveModel(PetEntity entity) => PetHiveModel(
-        petId: const Uuid().v4(),
+        // petId: const Uuid().v4(),
+        // petId: petId,
         name: entity.name,
         age: entity.age,
         species: entity.species,
@@ -93,7 +94,7 @@ class PetHiveModel {
   //     .toList();
 
   // Convert Hive List to Entity List
-  List<PetEntity> toEntityList(List<PetHiveModel> models) => models
+  static List<PetEntity> toEntityList(List<PetHiveModel> models) => models
       .map(
         (model) => model.toEntity(),
       )

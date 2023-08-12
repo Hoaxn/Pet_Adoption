@@ -3,14 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:pet_adoption_app/config/constants/theme_constant.dart';
-import 'package:pet_adoption_app/config/routers/app_route.dart';
 import 'package:pet_adoption_app/core/common/widget/drawer_widget.dart';
 import 'package:pet_adoption_app/features/adoption_form/domain/entity/adoption_form_entity.dart';
 import 'package:pet_adoption_app/features/adoption_form/presentation/viewmodel/adoption_form_viewmodel.dart';
 
 class GetAllAdoptionFormScreen extends ConsumerStatefulWidget {
-  final AdoptionFormEntity? adoptionForm;
-  const GetAllAdoptionFormScreen({super.key, this.adoptionForm});
+  const GetAllAdoptionFormScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -259,16 +257,7 @@ class _GetAllAdoptionFormScreenState
                                                         onSelected:
                                                             (value) async {
                                                           // Handle action selection
-                                                          if (value == 'edit') {
-                                                            // Handle edit action
-                                                            Navigator.pushNamed(
-                                                              context,
-                                                              AppRoute
-                                                                  .homeRoute,
-                                                              arguments:
-                                                                  adoptionForm,
-                                                            );
-                                                          } else if (value ==
+                                                          if (value ==
                                                               'delete') {
                                                             // Show confirmation dialog for delete action
                                                             bool confirmDelete =
@@ -296,13 +285,6 @@ class _GetAllAdoptionFormScreenState
                                                             (BuildContext
                                                                 context) {
                                                           return [
-                                                            const PopupMenuItem<
-                                                                String>(
-                                                              value: 'edit',
-                                                              child: Text(
-                                                                'Edit',
-                                                              ),
-                                                            ),
                                                             const PopupMenuItem<
                                                                 String>(
                                                               value: 'delete',

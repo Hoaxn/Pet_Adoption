@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pet_adoption_app/core/common/my_snackbar.dart';
+import 'package:pet_adoption_app/core/common/snackbar/my_snackbar.dart';
 import 'package:pet_adoption_app/features/liked_pets/domain/usecase/liked_pet_usecase.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/pet_entity.dart';
 import 'package:pet_adoption_app/features/pets/presentation/state/pet_state.dart';

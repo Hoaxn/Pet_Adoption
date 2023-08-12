@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pet_adoption_app/config/constants/api_endpoint.dart';
 import 'package:pet_adoption_app/config/constants/theme_constant.dart';
 import 'package:pet_adoption_app/core/common/widget/primary_button.dart';
 import 'package:pet_adoption_app/features/adoption_form/domain/entity/adoption_form_entity.dart';
@@ -182,7 +183,9 @@ class _AdoptionFormFillUpScreenState
                         AspectRatio(
                           aspectRatio: 16 / 10,
                           child: Image.network(
-                            "http://localhost:3000/uploads/${widget.pet.image}",
+                            // "http://192.168.1.67:3000/uploads/${widget.pet.image}",
+                            // "http://localhost:3000/uploads/${widget.pet.image}",
+                            ApiEndpoints.baseImageUrl(widget.pet.image),
                           ),
                         ),
                       ],

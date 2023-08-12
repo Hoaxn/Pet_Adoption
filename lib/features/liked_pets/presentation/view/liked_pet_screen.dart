@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:pet_adoption_app/config/constants/api_endpoint.dart';
 import 'package:pet_adoption_app/config/constants/theme_constant.dart';
 import 'package:pet_adoption_app/core/common/widget/drawer_widget.dart';
 import 'package:pet_adoption_app/features/home/presentation/view/adoption_screen.dart';
@@ -76,6 +77,8 @@ class _LikedPetScreenState extends ConsumerState<LikedPetScreen> {
   @override
   Widget build(BuildContext context) {
     final deviceWidth = MediaQuery.of(context).size.width;
+
+    final deviceHeight = MediaQuery.of(context).size.height;
 
     final likedPetState = ref.watch(likedPetViewModelProvider);
 
@@ -237,6 +240,7 @@ class _LikedPetScreenState extends ConsumerState<LikedPetScreen> {
                                             children: [
                                               SizedBox(
                                                 width: deviceWidth * 0.4,
+                                                height: deviceHeight * 0.08,
                                               ),
                                               Flexible(
                                                 child: Column(
@@ -374,16 +378,22 @@ class _LikedPetScreenState extends ConsumerState<LikedPetScreen> {
                                                   BorderRadius.circular(20.0),
                                             ),
                                             height: 200.0,
+                                            // height: deviceHeight * 0.147,
                                             width: deviceWidth * 0.4,
                                           ),
                                           Hero(
                                             tag: likedPet.petId!,
                                             child: Image.network(
-                                              "http://localhost:3000/uploads/${likedPet.image}",
+                                              // "http://192.168.1.67:3000/uploads/${likedPet.image}",
+                                              // "http://localhost:3000/uploads/${likedPet.image}",
+                                              ApiEndpoints.baseImageUrl(
+                                                  likedPet.image),
                                               height: 220.0,
+                                              // height:
+                                              //     deviceHeight * 0.161,
                                               width: deviceWidth * 0.4,
                                             ),
-                                          ),
+                                          )
                                         ],
                                       ),
                                     ],

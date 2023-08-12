@@ -3,8 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_adoption_app/config/routers/app_route.dart';
-import 'package:pet_adoption_app/core/common/my_snackbar.dart';
-import 'package:pet_adoption_app/features/adoption_form/domain/entity/adoption_form_entity.dart';
+import 'package:pet_adoption_app/core/common/snackbar/my_snackbar.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/pet_entity.dart';
 import 'package:pet_adoption_app/features/pets/domain/usecase/pets_usecase.dart';
 import 'package:pet_adoption_app/features/pets/presentation/state/pet_state.dart';
@@ -63,6 +62,16 @@ class PetViewModel extends StateNotifier<PetState> {
       },
     );
   }
+
+  // getAllPets() async {
+  //   state = state.copyWith(isLoading: true);
+  //   var data = await petUseCase.getAllPets();
+
+  //   data.fold(
+  //     (l) => state = state.copyWith(isLoading: false, error: l.error),
+  //     (r) => state = state.copyWith(isLoading: false, pets: r),
+  //   );
+  // }
 
   Future<void> addPet(
     BuildContext context,
@@ -124,45 +133,6 @@ class PetViewModel extends StateNotifier<PetState> {
         await getAllPets();
 
         Navigator.pushNamed(context, AppRoute.homeRoute);
-      },
-    );
-  }
-
-  Future<void> adoptPet(
-    BuildContext context,
-    AdoptionFormEntity pet,
-    Function resetFields,
-  ) async {
-    state = state.copyWith(isLoading: true);
-    var data = await petUseCase.adoptPet(pet);
-    data.fold(
-      (failure) {
-        state = state.copyWith(
-          isLoading: false,
-          error: failure.error,
-        );
-        showSnackBar(
-          message: failure.error,
-          context: context,
-          color: Colors.red,
-        );
-      },
-      (success) {
-        state = state.copyWith(
-          isLoading: false,
-          error: null,
-        );
-        showSnackBar(
-          message: "Pet Adoption Successful !",
-          context: context,
-          color: Colors.green,
-        );
-        resetFields();
-
-        // Call the resetFields function to reset the input fields
-        resetFields();
-
-        // Navigator.pushNamed(context, AppRoute.homeRoute);
       },
     );
   }

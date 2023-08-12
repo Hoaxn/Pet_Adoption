@@ -45,6 +45,7 @@ class HiveService {
   Future<void> addPet(PetHiveModel pet) async {
     var box = await Hive.openBox<PetHiveModel>(HiveTableConstant.petBox);
     await box.put(pet.petId, pet);
+    // box.close();
   }
 
   Future<List<PetHiveModel>> getAllPets() async {
@@ -54,35 +55,42 @@ class HiveService {
     return pets;
   }
 
+  // Future<void> clearPet() async {
+  //   final box = await Hive.openBox<PetHiveModel>(HiveTableConstant.petBox);
+  //   box.clear();
+  // }
+
   // ======================== Insert Dummy Data ========================
   // Pet Dummy Data
   Future<void> addDummyPet() async {
     // check of pet box is empty
     var box = await Hive.openBox<PetHiveModel>(HiveTableConstant.petBox);
     if (box.isEmpty) {
-      final pet1 = PetHiveModel(
-          name: 'Max',
-          age: '4',
-          species: 'dog',
-          breed: 'golden retriever',
-          gender: 'male',
-          description: 'friendly and playful');
-      final pet2 = PetHiveModel(
-          name: 'Luna',
-          age: '2',
-          species: 'cat',
-          breed: 'persian',
-          gender: 'female',
-          description: 'fiesty and cute');
+      // final pet1 = PetHiveModel(
+      //   name: 'Max',
+      //   age: '4',
+      //   species: 'dog',
+      //   breed: 'golden retriever',
+      //   gender: 'male',
+      //   description: 'friendly and playful',
+      // );
+      // final pet2 = PetHiveModel(
+      //   name: 'Luna',
+      //   age: '2',
+      //   species: 'cat',
+      //   breed: 'persian',
+      //   gender: 'female',
+      //   description: 'fiesty and cute',
+      // );
       // final batch3 = BatchHiveModel(batchName: '30-A');
       // final batch4 = BatchHiveModel(batchName: '30-B');
 
-      List<PetHiveModel> pets = [pet1, pet2];
+      // List<PetHiveModel> pets = [pet1, pet2];
 
-      // Insert pet with key
-      for (var pet in pets) {
-        await addPet(pet);
-      }
+      // // Insert pet with key
+      // for (var pet in pets) {
+      //   await addPet(pet);
+      // }
     }
   }
 
@@ -102,7 +110,7 @@ class HiveService {
     var directory = await getApplicationDocumentsDirectory();
     Hive.init(directory.path);
     await Hive.deleteBoxFromDisk(HiveTableConstant.userBox);
-    await Hive.deleteBoxFromDisk(HiveTableConstant.petBox);
+    // await Hive.deleteBoxFromDisk(HiveTableConstant.petBox);
     await Hive.deleteFromDisk();
   }
 }

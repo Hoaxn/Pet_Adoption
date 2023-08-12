@@ -3,13 +3,17 @@ class ApiEndpoints {
 
   static const Duration connectionTimeout = Duration(seconds: 1000);
   static const Duration receiveTimeout = Duration(seconds: 1000);
-  static const String baseUrl = "http://localhost:3000/";
-  // static const String baseUrl = "http://192.168.1.64:3000/api/v1/";
+  // static const String baseUrl = "http://localhost:3000/";
+  // static const String baseUrl = "http://192.168.1.67:3000/";
+  static const String baseUrl = "http://172.26.1.253:3000/";
+  static String baseImageUrl(String? image) {
+    return "http://172.26.1.253:3000/uploads/$image";
+  }
 
   // ====================== Auth Routes ======================
   static const String login = "/auth/login";
   static const String register = "/auth/register";
-  static const String getAllUser = "/auth/users";
+  static const String getAllUsers = "/auth/users";
   static const String deleteUser = "/auth/users";
   static const String updateUser = "/auth/users";
   // static const String uploadImage = "auth/uploadImage";

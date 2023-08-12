@@ -10,7 +10,6 @@ import 'package:pet_adoption_app/config/constants/api_endpoint.dart';
 import 'package:pet_adoption_app/core/failure/failure.dart';
 import 'package:pet_adoption_app/core/network/remote/http_service.dart';
 import 'package:pet_adoption_app/core/shared_pref/user_shared_pref.dart';
-import 'package:pet_adoption_app/features/adoption_form/domain/entity/adoption_form_entity.dart';
 import 'package:pet_adoption_app/features/pets/data/model/pet_api_model.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/pet_entity.dart';
 
@@ -53,6 +52,35 @@ class PetRemoteDataSource {
       );
     }
   }
+
+  // Future<Either<Failure, List<PetEntity>>> getAllPets() async {
+  //   try {
+  //     final response = await dio.get(
+  //       ApiEndpoints.getAllPets,
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       final petAddDTO = GetAllPetsDTO.fromJson(response.data);
+
+  //       final entities = petApiModel.toEntityList(petAddDTO.data);
+
+  //       return Right(entities);
+  //     } else {
+  //       return Left(
+  //         Failure(
+  //           error: 'Failed to retrieve Pets. ${response.statusCode}',
+  //           statusCode: response.statusCode.toString(),
+  //         ),
+  //       );
+  //     }
+  //   } on DioException catch (e) {
+  //     return Left(
+  //       Failure(
+  //         error: 'Failed to retrieve Pets. ${e.error.toString()}',
+  //       ),
+  //     );
+  //   }
+  // }
 
   Future<Either<Failure, bool>> addPet(PetEntity pet, File? file) async {
     try {
@@ -107,39 +135,6 @@ class PetRemoteDataSource {
       Response response = await dio.delete("${ApiEndpoints.deletePet}/$petId");
       if (response.statusCode == 200) {
         return Right(response);
-      } else {
-        return Left(
-          Failure(
-            error: response.data["message"],
-            statusCode: response.statusCode.toString(),
-          ),
-        );
-      }
-    } on DioException catch (e) {
-      return Left(
-        Failure(
-          error: e.error.toString(),
-          statusCode: e.response?.statusCode.toString() ?? '0',
-        ),
-      );
-    }
-  }
-
-  Future<Either<Failure, bool>> adoptPet(
-      AdoptionFormEntity adoptFormData) async {
-    try {
-      Response response = await dio.post(
-        ApiEndpoints.postAdoptionForm,
-        data: {
-          "fullName": adoptFormData.fullName,
-          "email": adoptFormData.email,
-          "phone": adoptFormData.phone,
-          "address": adoptFormData.address,
-          "petId": adoptFormData.petId,
-        },
-      );
-      if (response.statusCode == 201) {
-        return const Right(true);
       } else {
         return Left(
           Failure(

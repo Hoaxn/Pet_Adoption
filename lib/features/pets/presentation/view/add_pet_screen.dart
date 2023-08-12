@@ -241,7 +241,7 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
                                   pet != null &&
                                   pet!.image != null)
                                 Image.network(
-                                  'http://localhost:3000/uploads/${pet!.image!}',
+                                  'http://192.168.1.67:3000/uploads/${pet!.image!}',
                                   fit: BoxFit.contain,
                                   width: 200,
                                   height: 200,

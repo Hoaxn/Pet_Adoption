@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_adoption_app/config/routers/app_route.dart';
-import 'package:pet_adoption_app/core/common/my_snackbar.dart';
+import 'package:pet_adoption_app/core/common/snackbar/my_snackbar.dart';
 import 'package:pet_adoption_app/features/auth/domain/entity/user_entity.dart';
 import 'package:pet_adoption_app/features/auth/domain/usecase/auth_usecase.dart';
 import 'package:pet_adoption_app/features/auth/presentation/state/auth_state.dart';

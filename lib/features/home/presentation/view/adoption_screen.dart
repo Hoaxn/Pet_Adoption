@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
+import 'package:pet_adoption_app/config/constants/api_endpoint.dart';
 import 'package:pet_adoption_app/config/routers/app_route.dart';
 import 'package:pet_adoption_app/core/common/widget/primary_button.dart';
 import 'package:pet_adoption_app/features/adoption_form/presentation/view/adoption_form_fill_up_screen.dart';
@@ -41,6 +42,7 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    // final screenWidth = MediaQuery.of(context).size.width;
 
     Size size = MediaQuery.of(context).size;
 
@@ -50,14 +52,14 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
         alignment: Alignment.center,
         children: [
           Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: MainAxisSize.max,
             children: [
               Stack(
                 alignment: Alignment.center,
                 children: [
                   Container(
                     height: screenHeight * 0.5,
-                    // height: screenHeight * 0.35,
+                    // width: screenWidth * 1,
                     color:
                         widget.pet.color != null && widget.pet.color!.isNotEmpty
                             ? Color(
@@ -97,12 +99,14 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: screenHeight * 0.34,
-                    // height: screenHeight * 0.2,
+                    height: screenHeight * 0.30,
+                    // width: screenWidth * 1.0,
                     child: Hero(
                       tag: widget.pet.petId!,
                       child: Image.network(
-                        "http://localhost:3000/uploads/${widget.pet.image}",
+                        // "http://192.168.1.67:3000/uploads/${widget.pet.image}",
+                        // "http://localhost:3000/uploads/${widget.pet.image}",
+                        ApiEndpoints.baseImageUrl(widget.pet.image),
                         fit: BoxFit.fitHeight,
                       ),
                     ),
@@ -177,8 +181,9 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 20.0,
+                      SizedBox(
+                        // height: 20.0,
+                        height: screenHeight * 0.0212,
                       ),
                       Text(
                         widget.pet.description,
@@ -196,7 +201,8 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
 
               // End Like and Adopt Me ! part start
               Container(
-                height: 150,
+                // height: 150,
+                height: screenHeight * 0.155,
                 decoration: BoxDecoration(
                   // color: Theme.of(context).primaryColor.withOpacity(0.07),
                   color:
@@ -216,30 +222,6 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                         child: LikeButton(
                           onTap: onLikeButtonTap,
                         ),
-                        // child: PopupMenuButton<String>(
-                        //   onSelected: (value) async {
-                        //     // Handle action selection
-                        //     if (value == 'delete') {
-                        //       // Handle delete action
-                        //       final petViewModel =
-                        //           ref.read(petViewModelProvider.notifier);
-                        //       await petViewModel.removeLikedPet(
-                        //           context, widget.pet.petId);
-                        //     }
-                        //   },
-                        //   itemBuilder: (BuildContext context) {
-                        //     return [
-                        //       const PopupMenuItem<String>(
-                        //         value: 'edit',
-                        //         child: Text('Edit'),
-                        //       ),
-                        //       const PopupMenuItem<String>(
-                        //         value: 'delete',
-                        //         child: Text('Delete'),
-                        //       ),
-                        //     ];
-                        //   },
-                        // ),
                       ),
                       const SizedBox(
                         width: 25.0,
@@ -279,14 +261,10 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
               child: Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 20.0,
-                  vertical: 20.0,
+                  vertical: 5.0,
                 ),
-                height: 140.0,
-                decoration: BoxDecoration(
-                  // color: Colors.white,
-                  // color: Theme.of(context).colorScheme.background,
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
+                // height: 140.0,
+                height: screenHeight * 0.15,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
