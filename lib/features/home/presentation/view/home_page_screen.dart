@@ -5,7 +5,9 @@ import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:pet_adoption_app/config/constants/api_endpoint.dart';
 import 'package:pet_adoption_app/config/constants/theme_constant.dart';
 import 'package:pet_adoption_app/config/routers/app_route.dart';
+import 'package:pet_adoption_app/core/common/provider/is_dark_theme.dart';
 import 'package:pet_adoption_app/core/common/widget/drawer_widget.dart';
+import 'package:pet_adoption_app/core/utils/sensor_utils.dart';
 import 'package:pet_adoption_app/features/home/data/model/home_page_model.dart';
 import 'package:pet_adoption_app/features/home/presentation/view/adoption_screen.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/pet_entity.dart';
@@ -46,6 +48,18 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
 
     // Filter pets with species "dog" when the app is opened
     filterPetsBySpecies("dog");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    SensorUtils.listen();
+    SensorUtils.accelerometer(
+      fun: () {
+        final isDark = ref.read(isDarkThemeProvider);
+        ref.read(isDarkThemeProvider.notifier).updateTheme(!isDark);
+      },
+    );
   }
 
   void filterPetsBySpecies(String species) {
@@ -242,7 +256,7 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen> {
                         backgroundImage: NetworkImage(
                           'https://www.pexels.com/photo/2486168/download/',
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),

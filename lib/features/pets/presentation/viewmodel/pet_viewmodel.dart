@@ -3,7 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_adoption_app/config/routers/app_route.dart';
+import 'package:pet_adoption_app/core/common/provider/internet_connectivity.dart';
 import 'package:pet_adoption_app/core/common/snackbar/my_snackbar.dart';
+import 'package:pet_adoption_app/core/network/local/hive_service.dart';
+import 'package:pet_adoption_app/features/pets/data/data_source/pets_local_data_source.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/pet_entity.dart';
 import 'package:pet_adoption_app/features/pets/domain/usecase/pets_usecase.dart';
 import 'package:pet_adoption_app/features/pets/presentation/state/pet_state.dart';
@@ -21,46 +24,129 @@ class PetViewModel extends StateNotifier<PetState> {
     getAllPets();
   }
 
+  // Future<void> getAllPets() async {
+  //   state = state.copyWith(isLoading: true);
+  //   var data = await petUseCase.getAllPets();
+  //   data.fold(
+  //     (failure) {
+  //       state = state.copyWith(
+  //         isLoading: false,
+  //         error: failure.error,
+  //       );
+  //       // showSnackBar(message: failure.error, context: context, color: Colors.red);
+  //     },
+  //     (success) {
+  //       final List<PetEntity> pets = [];
+
+  //       if (success.data.containsKey('pets')) {
+  //         final List<dynamic> items = success.data['pets'];
+
+  //         pets.addAll(
+  //           items.map<PetEntity>(
+  //             (item) => PetEntity(
+  //               petId: item['_id']?.toString(),
+  //               name: item['name'],
+  //               age: item['age'].toString(),
+  //               species: item['species'],
+  //               breed: item['breed'],
+  //               gender: item['gender'],
+  //               description: item['description'],
+  //               color: item['color'],
+  //               image: item['image'],
+  //             ),
+  //           ),
+  //         );
+  //       }
+  //       state = state.copyWith(
+  //         isLoading: false,
+  //         error: null,
+  //         pets: pets,
+  //       );
+  //     },
+  //   );
+  // }
+
   Future<void> getAllPets() async {
-    state = state.copyWith(isLoading: true);
-    var data = await petUseCase.getAllPets();
-    data.fold(
-      (failure) {
-        state = state.copyWith(
-          isLoading: false,
-          error: failure.error,
-        );
-        // showSnackBar(message: failure.error, context: context, color: Colors.red);
-      },
-      (success) {
-        final List<PetEntity> pets = [];
-
-        if (success.data.containsKey('pets')) {
-          final List<dynamic> items = success.data['pets'];
-
-          pets.addAll(
-            items.map<PetEntity>(
-              (item) => PetEntity(
-                petId: item['_id']?.toString(),
-                name: item['name'],
-                age: item['age'].toString(),
-                species: item['species'],
-                breed: item['breed'],
-                gender: item['gender'],
-                description: item['description'],
-                color: item['color'],
-                image: item['image'],
-              ),
-            ),
+    // final internetStatus = connectivityStatusProvider;
+    final connectivity = InternetConnectivity();
+    final isConnected = await connectivity.checkConnectivity();
+    if (isConnected) {
+      state = state.copyWith(isLoading: true);
+      var data = await petUseCase.getAllPets();
+      data.fold(
+        (failure) {
+          state = state.copyWith(
+            isLoading: false,
+            error: failure.error,
           );
-        }
-        state = state.copyWith(
-          isLoading: false,
-          error: null,
-          pets: pets,
+          // showSnackBar(message: failure.error, context: context, color: Colors.red);
+        },
+        (success) {
+          final List<PetEntity> pets = [];
+
+          if (success.data.containsKey('pets')) {
+            final List<dynamic> items = success.data['pets'];
+
+            pets.addAll(
+              items.map<PetEntity>(
+                (item) => PetEntity(
+                  petId: item['_id']?.toString(),
+                  name: item['name'],
+                  age: item['age'].toString(),
+                  species: item['species'],
+                  breed: item['breed'],
+                  gender: item['gender'],
+                  description: item['description'],
+                  color: item['color'],
+                  image: item['image'],
+                ),
+              ),
+            );
+          }
+          state = state.copyWith(
+            isLoading: false,
+            error: null,
+            pets: pets,
+          );
+        },
+      );
+    } else {
+      PetLocalDataSource localDataSource = PetLocalDataSource(
+        hiveService: HiveService(),
+      );
+      final data = await localDataSource.retrieveDataFromHive();
+      final List<PetEntity> pets = [];
+
+      if (true) {
+        final List<dynamic> items = data;
+
+        pets.addAll(
+          items.map<PetEntity>(
+            (item) => PetEntity(
+              petId: item['_id']?.toString(),
+              name: item['name'],
+              age: item['age'].toString(),
+              species: item['species'],
+              breed: item['breed'],
+              gender: item['gender'],
+              description: item['description'],
+              color: item['color'],
+              image: item['image'],
+            ),
+          ),
         );
-      },
-    );
+      }
+      print('data $pets');
+      state = state.copyWith(
+        isLoading: false,
+        error: null,
+        pets: pets,
+      );
+      // showSnackBar(
+      //     message: 'No Internet Connection',
+      //     context: context,
+      //     color: Colors.red,);
+    }
   }
 
   // getAllPets() async {

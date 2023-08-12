@@ -66,31 +66,29 @@ class HiveService {
     // check of pet box is empty
     var box = await Hive.openBox<PetHiveModel>(HiveTableConstant.petBox);
     if (box.isEmpty) {
-      // final pet1 = PetHiveModel(
-      //   name: 'Max',
-      //   age: '4',
-      //   species: 'dog',
-      //   breed: 'golden retriever',
-      //   gender: 'male',
-      //   description: 'friendly and playful',
-      // );
-      // final pet2 = PetHiveModel(
-      //   name: 'Luna',
-      //   age: '2',
-      //   species: 'cat',
-      //   breed: 'persian',
-      //   gender: 'female',
-      //   description: 'fiesty and cute',
-      // );
-      // final batch3 = BatchHiveModel(batchName: '30-A');
-      // final batch4 = BatchHiveModel(batchName: '30-B');
+      final pet1 = PetHiveModel(
+        name: 'Max',
+        age: '4',
+        species: 'dog',
+        breed: 'golden retriever',
+        gender: 'male',
+        description: 'friendly and playful',
+      );
+      final pet2 = PetHiveModel(
+        name: 'Luna',
+        age: '2',
+        species: 'cat',
+        breed: 'persian',
+        gender: 'female',
+        description: 'fiesty and cute',
+      );
 
-      // List<PetHiveModel> pets = [pet1, pet2];
+      List<PetHiveModel> pets = [pet1, pet2];
 
-      // // Insert pet with key
-      // for (var pet in pets) {
-      //   await addPet(pet);
-      // }
+      // Insert pet with key
+      for (var pet in pets) {
+        await addPet(pet);
+      }
     }
   }
 

@@ -36,18 +36,6 @@ class PetHiveModel {
   // @HiveField(7)
   // final String password;
 
-  // Constructor
-  PetHiveModel({
-    String? petId,
-    required this.name,
-    required this.age,
-    required this.species,
-    required this.breed,
-    required this.gender,
-    required this.description,
-    // required this.password,
-  }) : petId = petId ?? const Uuid().v4();
-
   // empty constructor
   PetHiveModel.empty()
       : this(
@@ -60,6 +48,18 @@ class PetHiveModel {
           description: '',
           // password: '',
         );
+
+  // Constructor
+  PetHiveModel({
+    String? petId,
+    required this.name,
+    required this.age,
+    required this.species,
+    required this.breed,
+    required this.gender,
+    required this.description,
+    // required this.password,
+  }) : petId = petId ?? const Uuid().v4();
 
   // Convert Hive Object to Entity
   PetEntity toEntity() => PetEntity(
@@ -80,8 +80,8 @@ class PetHiveModel {
         name: entity.name,
         age: entity.age,
         species: entity.species,
-        breed: breed,
-        gender: gender,
+        breed: entity.breed,
+        gender: entity.gender,
         description: entity.description,
         // password: entity.password,
       );
@@ -94,7 +94,7 @@ class PetHiveModel {
   //     .toList();
 
   // Convert Hive List to Entity List
-  static List<PetEntity> toEntityList(List<PetHiveModel> models) => models
+  List<PetEntity> toEntityList(List<PetHiveModel> models) => models
       .map(
         (model) => model.toEntity(),
       )

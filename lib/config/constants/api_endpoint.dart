@@ -4,10 +4,10 @@ class ApiEndpoints {
   static const Duration connectionTimeout = Duration(seconds: 1000);
   static const Duration receiveTimeout = Duration(seconds: 1000);
   // static const String baseUrl = "http://localhost:3000/";
-  // static const String baseUrl = "http://192.168.1.67:3000/";
-  static const String baseUrl = "http://172.26.1.253:3000/";
+  static const String baseUrl = "http://192.168.1.67:3000/";
+  // static const String baseUrl = "http://172.26.1.253:3000/";
   static String baseImageUrl(String? image) {
-    return "http://172.26.1.253:3000/uploads/$image";
+    return "http://192.168.1.67:3000/uploads/$image";
   }
 
   // ====================== Auth Routes ======================

@@ -8,7 +8,7 @@ part of 'get_all_pet_dto.dart';
 
 GetAllPetsDTO _$GetAllPetsDTOFromJson(Map<String, dynamic> json) =>
     GetAllPetsDTO(
-      success: json['success'] as bool,
+      success: json['success'] as bool?,
       count: json['count'] as int,
       data: (json['data'] as List<dynamic>)
           .map((e) => PetApiModel.fromJson(e as Map<String, dynamic>))

@@ -48,6 +48,8 @@ class _AdoptionFormFillUpScreenState
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
+    // final internetStatus = ref.watch(connectivityStatusProvider);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -181,13 +183,12 @@ class _AdoptionFormFillUpScreenState
                           ),
                         ),
                         AspectRatio(
-                          aspectRatio: 16 / 10,
-                          child: Image.network(
-                            // "http://192.168.1.67:3000/uploads/${widget.pet.image}",
-                            // "http://localhost:3000/uploads/${widget.pet.image}",
-                            ApiEndpoints.baseImageUrl(widget.pet.image),
-                          ),
-                        ),
+                            aspectRatio: 16 / 10,
+                            child: Image.network(
+                              // "http://192.168.1.67:3000/uploads/${widget.pet.image}",
+                              // "http://localhost:3000/uploads/${widget.pet.image}",
+                              ApiEndpoints.baseImageUrl(widget.pet.image),
+                            )),
                       ],
                     ),
                   ),

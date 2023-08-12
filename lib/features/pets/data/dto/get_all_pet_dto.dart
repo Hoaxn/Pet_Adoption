@@ -5,12 +5,12 @@ part 'get_all_pet_dto.g.dart';
 
 @JsonSerializable()
 class GetAllPetsDTO {
-  final bool success;
+  final bool? success;
   final int count;
   final List<PetApiModel> data;
 
   GetAllPetsDTO({
-    required this.success,
+    this.success,
     required this.count,
     required this.data,
   });

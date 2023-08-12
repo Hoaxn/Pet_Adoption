@@ -8,8 +8,10 @@ import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
 import 'package:pet_adoption_app/config/constants/api_endpoint.dart';
 import 'package:pet_adoption_app/core/failure/failure.dart';
+import 'package:pet_adoption_app/core/network/local/hive_service.dart';
 import 'package:pet_adoption_app/core/network/remote/http_service.dart';
 import 'package:pet_adoption_app/core/shared_pref/user_shared_pref.dart';
+import 'package:pet_adoption_app/features/pets/data/data_source/pets_local_data_source.dart';
 import 'package:pet_adoption_app/features/pets/data/model/pet_api_model.dart';
 import 'package:pet_adoption_app/features/pets/domain/entity/pet_entity.dart';
 
@@ -34,6 +36,10 @@ class PetRemoteDataSource {
     try {
       Response response = await dio.get(ApiEndpoints.getAllPets);
       if (response.statusCode == 200) {
+        final pets = response.data['pets'] as List<dynamic>;
+        PetLocalDataSource ls = PetLocalDataSource(hiveService: HiveService());
+        await ls.storePetDataInHive(pets);
+        print('pets ${response.data}');
         return Right(response);
       } else {
         return Left(

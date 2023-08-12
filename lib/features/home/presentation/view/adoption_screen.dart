@@ -44,6 +44,8 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
     // final screenWidth = MediaQuery.of(context).size.width;
 
+    // final internetStatus = ref.watch(connectivityStatusProvider);
+
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -102,14 +104,13 @@ class _AdoptionScreenState extends ConsumerState<AdoptionScreen> {
                     height: screenHeight * 0.30,
                     // width: screenWidth * 1.0,
                     child: Hero(
-                      tag: widget.pet.petId!,
-                      child: Image.network(
-                        // "http://192.168.1.67:3000/uploads/${widget.pet.image}",
-                        // "http://localhost:3000/uploads/${widget.pet.image}",
-                        ApiEndpoints.baseImageUrl(widget.pet.image),
-                        fit: BoxFit.fitHeight,
-                      ),
-                    ),
+                        tag: widget.pet.petId!,
+                        child: Image.network(
+                          // "http://192.168.1.67:3000/uploads/${widget.pet.image}",
+                          // "http://localhost:3000/uploads/${widget.pet.image}",
+                          ApiEndpoints.baseImageUrl(widget.pet.image),
+                          fit: BoxFit.fitHeight,
+                        )),
                   ),
                 ],
               ),
