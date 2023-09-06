@@ -52,13 +52,13 @@ class SecondaryButton extends StatelessWidget {
             Container(
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: ThemeConstant.kButtonColor,
+                color: ThemeConstant.buttonColor,
                 borderRadius: borderRadius ?? BorderRadius.circular(10),
               ),
               child: Text(
                 text,
-                style: TextStyle(
-                  color: ThemeConstant.kWhiteColor,
+                style: const TextStyle(
+                  color: Colors.white,
                   fontWeight: FontWeight.w700,
                 ),
               ),

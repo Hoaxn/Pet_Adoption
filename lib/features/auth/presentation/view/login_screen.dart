@@ -22,11 +22,6 @@ class _LoginViewState extends ConsumerState<LoginScreen> {
 
   bool isObscure = true;
 
-  String image1 = "assets/images/image_1.png";
-
-  String userIcon = "assets/icons/user_icon.svg";
-  String keyIcon = "assets/icons/key_icon.svg";
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -51,7 +46,7 @@ class _LoginViewState extends ConsumerState<LoginScreen> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 30),
-                    child: Image.asset(image1),
+                    child: Image.asset("assets/images/image_1.png"),
                   ),
                   Text(
                     "Welcome !",
@@ -59,23 +54,23 @@ class _LoginViewState extends ConsumerState<LoginScreen> {
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 20,
-                      color: ThemeConstant.kWhiteColor.withOpacity(0.7),
+                      color: Colors.white.withOpacity(0.7),
                     ),
                   ),
-                  Text(
+                  const Text(
                     "Please, Log In.",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 34,
-                      color: ThemeConstant.kWhiteColor,
+                      color: Colors.white,
                     ),
                   ),
                   SizedBox(height: size.height * 0.024),
                   TextFormField(
                     controller: _emailController,
                     keyboardType: TextInputType.text,
-                    style: TextStyle(color: ThemeConstant.kInputColor),
+                    style: TextStyle(color: ThemeConstant.inputColor),
                     decoration: InputDecoration(
                       contentPadding:
                           const EdgeInsets.symmetric(vertical: 25.0),
@@ -83,9 +78,9 @@ class _LoginViewState extends ConsumerState<LoginScreen> {
                       hintText: "Email",
                       prefixIcon: IconButton(
                         onPressed: () {},
-                        icon: SvgPicture.asset(userIcon),
+                        icon: SvgPicture.asset("assets/icons/user_icon.svg"),
                       ),
-                      fillColor: ThemeConstant.kWhiteColor,
+                      fillColor: Colors.white,
                       border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(37),
@@ -102,7 +97,7 @@ class _LoginViewState extends ConsumerState<LoginScreen> {
                     controller: _passwordController,
                     obscureText: isObscure,
                     keyboardType: TextInputType.text,
-                    style: TextStyle(color: ThemeConstant.kInputColor),
+                    style: TextStyle(color: ThemeConstant.inputColor),
                     decoration: InputDecoration(
                       contentPadding:
                           const EdgeInsets.symmetric(vertical: 25.0),
@@ -110,7 +105,7 @@ class _LoginViewState extends ConsumerState<LoginScreen> {
                       hintText: "Password",
                       prefixIcon: IconButton(
                         onPressed: () {},
-                        icon: SvgPicture.asset(keyIcon),
+                        icon: SvgPicture.asset("assets/icons/key_icon.svg"),
                       ),
                       suffixIcon: IconButton(
                         icon: Icon(
@@ -126,7 +121,7 @@ class _LoginViewState extends ConsumerState<LoginScreen> {
                           );
                         },
                       ),
-                      fillColor: ThemeConstant.kWhiteColor,
+                      fillColor: Colors.white,
                       border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(37),

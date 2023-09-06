@@ -27,11 +27,6 @@ class _RegisterViewState extends ConsumerState<RegisterScreen> {
 
   bool isObscure = true;
 
-  String image1 = "assets/images/image_1.png";
-
-  String userIcon = "assets/icons/user_icon.svg";
-  String keyIcon = "assets/icons/key_icon.svg";
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -56,7 +51,7 @@ class _RegisterViewState extends ConsumerState<RegisterScreen> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 30),
-                    child: Image.asset(image1),
+                    child: Image.asset("assets/images/image_1.png"),
                   ),
                   Text(
                     "Hi There !",
@@ -64,23 +59,23 @@ class _RegisterViewState extends ConsumerState<RegisterScreen> {
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 20,
-                      color: ThemeConstant.kWhiteColor.withOpacity(0.7),
+                      color: Colors.white.withOpacity(0.7),
                     ),
                   ),
-                  Text(
+                  const Text(
                     "Let's Get Started",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 34,
-                      color: ThemeConstant.kWhiteColor,
+                      color: Colors.white,
                     ),
                   ),
                   SizedBox(height: size.height * 0.024),
                   TextFormField(
                     controller: _firstNameController,
                     keyboardType: TextInputType.text,
-                    style: TextStyle(color: ThemeConstant.kInputColor),
+                    style: TextStyle(color: ThemeConstant.inputColor),
                     decoration: InputDecoration(
                       contentPadding:
                           const EdgeInsets.symmetric(vertical: 25.0),
@@ -88,9 +83,9 @@ class _RegisterViewState extends ConsumerState<RegisterScreen> {
                       hintText: "First Name",
                       prefixIcon: IconButton(
                         onPressed: () {},
-                        icon: SvgPicture.asset(userIcon),
+                        icon: SvgPicture.asset("assets/icons/user_icon.svg"),
                       ),
-                      fillColor: ThemeConstant.kWhiteColor,
+                      fillColor: Colors.white,
                       border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(37),
@@ -106,7 +101,7 @@ class _RegisterViewState extends ConsumerState<RegisterScreen> {
                   TextFormField(
                     controller: _lastNameController,
                     keyboardType: TextInputType.text,
-                    style: TextStyle(color: ThemeConstant.kInputColor),
+                    style: TextStyle(color: ThemeConstant.inputColor),
                     decoration: InputDecoration(
                       contentPadding:
                           const EdgeInsets.symmetric(vertical: 25.0),
@@ -114,9 +109,9 @@ class _RegisterViewState extends ConsumerState<RegisterScreen> {
                       hintText: "Last Name",
                       prefixIcon: IconButton(
                         onPressed: () {},
-                        icon: SvgPicture.asset(userIcon),
+                        icon: SvgPicture.asset("assets/icons/user_icon.svg"),
                       ),
-                      fillColor: ThemeConstant.kWhiteColor,
+                      fillColor: Colors.white,
                       border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(37),
@@ -132,7 +127,7 @@ class _RegisterViewState extends ConsumerState<RegisterScreen> {
                   TextFormField(
                     controller: _phoneNumController,
                     keyboardType: TextInputType.text,
-                    style: TextStyle(color: ThemeConstant.kInputColor),
+                    style: TextStyle(color: ThemeConstant.inputColor),
                     decoration: InputDecoration(
                       contentPadding:
                           const EdgeInsets.symmetric(vertical: 25.0),
@@ -141,7 +136,7 @@ class _RegisterViewState extends ConsumerState<RegisterScreen> {
                       prefixIcon: const Icon(
                         Icons.phone_iphone,
                       ),
-                      fillColor: ThemeConstant.kWhiteColor,
+                      fillColor: Colors.white,
                       border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(37),
@@ -157,7 +152,7 @@ class _RegisterViewState extends ConsumerState<RegisterScreen> {
                   TextFormField(
                     controller: _cityController,
                     keyboardType: TextInputType.text,
-                    style: TextStyle(color: ThemeConstant.kInputColor),
+                    style: TextStyle(color: ThemeConstant.inputColor),
                     decoration: InputDecoration(
                       contentPadding:
                           const EdgeInsets.symmetric(vertical: 25.0),
@@ -166,7 +161,7 @@ class _RegisterViewState extends ConsumerState<RegisterScreen> {
                       prefixIcon: const Icon(
                         Icons.location_city,
                       ),
-                      fillColor: ThemeConstant.kWhiteColor,
+                      fillColor: Colors.white,
                       border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(37),
@@ -182,7 +177,7 @@ class _RegisterViewState extends ConsumerState<RegisterScreen> {
                   TextFormField(
                     controller: _countryController,
                     keyboardType: TextInputType.text,
-                    style: TextStyle(color: ThemeConstant.kInputColor),
+                    style: TextStyle(color: ThemeConstant.inputColor),
                     decoration: InputDecoration(
                       contentPadding:
                           const EdgeInsets.symmetric(vertical: 25.0),
@@ -191,7 +186,7 @@ class _RegisterViewState extends ConsumerState<RegisterScreen> {
                       prefixIcon: const Icon(
                         Icons.location_city,
                       ),
-                      fillColor: ThemeConstant.kWhiteColor,
+                      fillColor: Colors.white,
                       border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(37),
@@ -207,7 +202,7 @@ class _RegisterViewState extends ConsumerState<RegisterScreen> {
                   TextFormField(
                     controller: _emailController,
                     keyboardType: TextInputType.text,
-                    style: TextStyle(color: ThemeConstant.kInputColor),
+                    style: TextStyle(color: ThemeConstant.inputColor),
                     decoration: InputDecoration(
                       contentPadding:
                           const EdgeInsets.symmetric(vertical: 25.0),
@@ -215,9 +210,9 @@ class _RegisterViewState extends ConsumerState<RegisterScreen> {
                       hintText: "Email",
                       prefixIcon: IconButton(
                         onPressed: () {},
-                        icon: SvgPicture.asset(userIcon),
+                        icon: SvgPicture.asset("assets/icons/user_icon.svg"),
                       ),
-                      fillColor: ThemeConstant.kWhiteColor,
+                      fillColor: Colors.white,
                       border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(37),
@@ -234,7 +229,7 @@ class _RegisterViewState extends ConsumerState<RegisterScreen> {
                     controller: _passwordController,
                     obscureText: isObscure,
                     keyboardType: TextInputType.text,
-                    style: TextStyle(color: ThemeConstant.kInputColor),
+                    style: TextStyle(color: ThemeConstant.inputColor),
                     decoration: InputDecoration(
                       contentPadding:
                           const EdgeInsets.symmetric(vertical: 25.0),
@@ -242,7 +237,7 @@ class _RegisterViewState extends ConsumerState<RegisterScreen> {
                       hintText: "Password",
                       prefixIcon: IconButton(
                         onPressed: () {},
-                        icon: SvgPicture.asset(keyIcon),
+                        icon: SvgPicture.asset("assets/icons/key_icon.svg"),
                       ),
                       suffixIcon: IconButton(
                         icon: Icon(
@@ -258,7 +253,7 @@ class _RegisterViewState extends ConsumerState<RegisterScreen> {
                           );
                         },
                       ),
-                      fillColor: ThemeConstant.kWhiteColor,
+                      fillColor: Colors.white,
                       border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(37),

@@ -225,7 +225,7 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
                                 onPressed: () {
                                   _pickImage(ImageSource.gallery);
                                 },
-                                buttonWidth: 150,
+                                buttonWidth: 120,
                                 isLoading: false,
                               ),
                               const SizedBox(
@@ -243,7 +243,7 @@ class _AddPetScreenState extends ConsumerState<AddPetScreen> {
                                 Image.network(
                                   'http://192.168.1.67:3000/uploads/${pet!.image!}',
                                   fit: BoxFit.contain,
-                                  width: 200,
+                                  width: 190,
                                   height: 200,
                                 ),
                             ],

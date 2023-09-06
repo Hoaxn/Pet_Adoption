@@ -13,10 +13,8 @@ class ThemeConstant {
   static Color secondaryColor = const Color(0xffCD82DE);
   // static Color thirdColor = const Color.fromARGB(255, 197, 143, 211);
 
-  static Color kInputColor = const Color(0xff3C3C43);
-  static Color kButtonColor = const Color(0xff78258B);
-
-  static Color kWhiteColor = Colors.white;
+  static Color inputColor = const Color(0xff3C3C43);
+  static Color buttonColor = const Color(0xff78258B);
 
   // ThemeData darkTheme = ThemeData(
   //   brightness: Brightness.dark,
